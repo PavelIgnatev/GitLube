@@ -9,6 +9,7 @@ module.exports = async (req, res) => {
     const message = await getCommitMessage(req.params.commitHash),
       author = await getAuthor(req.params.commitHash),
       branch = await getBranch(req.params.commitHash);
+
     global.axios
       .post('https://shri.yandex/hw/api/build/request', {
         commitMessage: message,
@@ -17,8 +18,8 @@ module.exports = async (req, res) => {
         authorName: author,
       })
       .then((response) => res.json(response.data.data))
-      .catch((error) => res.send(error));
+      .catch((error) => res.json(error));
   } catch (error) {
-    res.send(error);
+    res.json(error);
   }
 };
