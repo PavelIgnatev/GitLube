@@ -17,23 +17,26 @@ module.exports = async (req, res) => {
         branchName: branch,
         authorName: author,
       })
-      .then((response) => {
-        global.axios.post('https://shri.yandex/hw/api/build/start', {
-          buildid: response.data.data.id,
-          dateTime: new Date(),
-        });
+      .then(async (response) => {
+        await global.axios
+          .post('https://shri.yandex/hw/api/build/start', {
+            buildid: response.data.data.id,
+            dateTime: new Date(),
+          })
+          .catch((error) => error);
         return response.data.data.id;
       })
-      .then((buildId) =>{
-        global.axios.post('https://shri.yandex/hw/api/build/finish', {
-          buildId: buildId,
-          duration: 0,
-          success: true,
-          buildLog: 'Тут пока ещё нет нормальных логов',
-        })
-        return buildId
-      }
-      )
+      .then(async (id) => {
+        await global.axios
+          .post('https://shri.yandex/hw/api/build/finish', {
+            buildId: id,
+            duration: 0,
+            success: true,
+            buildLog: 'Тут должна была быть ваша реклама',
+          })
+          .catch((error) => error);
+        return { buildId: id };
+      })
       .then((response) => res.json(response))
       .catch((error) => res.json(error));
   } catch (error) {
