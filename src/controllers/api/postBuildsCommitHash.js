@@ -10,18 +10,32 @@ module.exports = async (req, res) => {
       author = await getAuthor(req.params.commitHash),
       branch = await getBranch(req.params.commitHash);
 
-    await global.axios
+    global.axios
       .post('https://shri.yandex/hw/api/build/request', {
         commitMessage: message,
         commitHash: `${req.params.commitHash}`,
         branchName: branch,
         authorName: author,
       })
-      .then((response) => res.json(response.data.data))
+      .then((response) => {
+        global.axios.post('https://shri.yandex/hw/api/build/start', {
+          buildid: response.data.data.id,
+          dateTime: new Date(),
+        });
+        return response.data.data.id;
+      })
+      .then((buildId) =>{
+        global.axios.post('https://shri.yandex/hw/api/build/finish', {
+          buildId: buildId,
+          duration: 0,
+          success: true,
+          buildLog: 'Тут пока ещё нет нормальных логов',
+        })
+        return buildId
+      }
+      )
+      .then((response) => res.json(response))
       .catch((error) => res.json(error));
-    await global.axios 
-      .post('https://shri.yandex/hw/api/build/request', 
-    )
   } catch (error) {
     res.json(error);
   }
