@@ -10,7 +10,7 @@ module.exports.getAuthor = (commitHash) => {
       { cwd: path.resolve(__dirname, '../../repo') },
       (err, out) => {
         if (err) reject(err);
-        resolve(out);
+        resolve(out.trim());
       }
     );
   });
