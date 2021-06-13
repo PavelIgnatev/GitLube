@@ -5,5 +5,5 @@ module.exports = (req, res) => {
       params: { buildid: req.params.buildId },
     })
     .then((response) => res.json(response.data.data))
-    .catch((error) => res.json(error));
+    .catch((error) => res.send(error));
 };
