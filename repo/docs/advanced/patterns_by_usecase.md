@@ -10,7 +10,7 @@ sidebar_label: Useful Patterns by Use Case
 
 Usecase: you want to make a `<Button>` that takes all the normal props of `<button>` and does extra stuff.
 
-Strategy: extend `React.ComponentPropsWithoutRef<'button'>`
+Strategy: extend `React.ComponentProps<'button'>`
 
 ```tsx
 // usage
@@ -23,7 +23,7 @@ function App() {
 }
 
 // implementation
-export interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
+export interface ButtonProps extends React.ComponentProps<"button"> {
   specialProp?: string;
 }
 export function Button(props: ButtonProps) {
@@ -35,26 +35,16 @@ export function Button(props: ButtonProps) {
 
 [_See this in the TS Playground_](https://www.typescriptlang.org/play?#code/JYWwDg9gTgLgBAKjgQwM5wEoFNkGN4BmUEIcA5FDvmQNwCwAUI4wPQtwCuqyA5lowQ4A7fMAhC4AQTBgAFAEo4Ab0Zw4bOABUAnmCzkARAQgQDZOMHRCI8NKmA8hyAEYAbfTAhwYu-WQPOHDCeQgZwAD5wBqgcziDAMGGRBpSoWIkRnEIAJlgEwEJY2WQAdLIATADM5eXyqurslDAcUBIAPABCQSHevgC8RiYGAHxwqK7ZANYAVnBtLF3B4sP19RrWcFhQxFD1TS3tiz0+egOBS6GjMFgAHvDzR8uMAL7MDBqgYO4gWEIwyDAxEJGLdILALH8tgQ8PpHkIAArEMDoW7XHLobB4GAlADCJEghT+iIgyLaZHOITIoxUDDUqD0uGAyFcxLAAH4AFxjGBQAo8egMV4MUHQQjCUTiOBw2RgJGoLlw1moRQ0tS4cSoeBKMYMpkspEAGjgJRNqXgzzgfTgspJqAFag02S8qBI6QAFny4AB3BJunVYRnM1l7dIHOYUyVKE0lM0WljDAXPIA)
 
-**Forwarding Refs**: As [the React docs themselves note](https://reactjs.org/docs/forwarding-refs.html), most usecases will not need to obtain a ref to the inner element. But for people making reusable component libraries, you will need to `forwardRef` the underlying element, and then you can use `ComponentPropsWithRef` to grab props for your wrapper component. Check [our docs on forwarding Refs](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forward_and_create_ref/) for more.
-
-In future, the need to `forwardRef` may go away in React 17+, but for now we still have to deal with this. 🙃
-
 <details>
 <summary>
 
-Why not `ComponentProps` or `IntrinsicElements` or `[Element]HTMLAttributes` or `HTMLProps` or `HTMLAttributes`?
+Why not `JSX.IntrinsicElements` or `React.[Element]HTMLAttributes` or `React.HTMLProps` or `React.HTMLAttributes`?
 
 </summary>
 
-## `ComponentProps`
+### Using `JSX.IntrinsicElements` or `React.[Element]HTMLAttributes`
 
-You CAN use `ComponentProps` in place of `ComponentPropsWithRef`, but you may prefer to be explicit about whether or not the component's refs are forwarded, which is what we have chosen to demonstrate. The tradeoff is slightly more intimidating terminology.
-
-More info: https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forward_and_create_ref/
-
-### Maybe `JSX.IntrinsicElements` or `React.[Element]HTMLAttributes`
-
-There are at least 2 other equivalent ways to do this, but they are more verbose:
+There are at least 2 other equivalent ways to do this:
 
 ```tsx
 // Method 1: JSX.IntrinsicElements
@@ -69,7 +59,7 @@ Looking at [the source for `ComponentProps`](https://github.com/DefinitelyTyped/
 
 > Note: There are over 50 of these specialized interfaces available - look for `HTMLAttributes` in our [`@types/react` commentary](https://react-typescript-cheatsheet.netlify.app/docs/advanced/types_react_api#typesreact).
 
-Ultimately, [we picked the `ComponentProps` method](https://github.com/typescript-cheatsheets/react/pull/276) as it involves the least TS specific jargon and has the most ease of use. But you'll be fine with either of these methods if you prefer.
+Ultimately, [we picked the `ComponentProps` method](https://github.com/typescript-cheatsheets/react/pull/276/files) as it involves the least TS specific jargon and has the most ease of use. But you'll be fine with either of these methods if you prefer.
 
 ### Definitely not `React.HTMLProps` or `React.HTMLAttributes`
 
@@ -105,9 +95,7 @@ function App() {
 
 ### Wrapping/Mirroring a Component
 
-> TODO: this section needs work to make it simplified.
-
-Usecase: same as above, but for a React Component you don't have access to the underlying props
+Usecase: same as above, but for a React Component you don't have access to
 
 ```tsx
 const Box = (props: React.CSSProperties) => <div style={props} />;
@@ -150,41 +138,7 @@ export const defaultProps = <
 
 _thanks [dmisdm](https://github.com/typescript-cheatsheets/react/issues/23)_
 
-:new: You should also consider whether to explicitly forward refs:
-
-```tsx
-// base button, with ref forwarding
-type Props = { children: React.ReactNode; type: "submit" | "button" };
-export type Ref = HTMLButtonElement;
-export const FancyButton = React.forwardRef<Ref, Props>((props, ref) => (
-  <button ref={ref} className="MyCustomButtonClass" type={props.type}>
-    {props.children}
-  </button>
-));
-
-// second layer button, no need for forwardRef (TODO: doublecheck this)
-export interface DoubleWrappedProps
-  extends React.ComponentPropsWithRef<typeof FancyButton> {
-  specialProp?: string;
-}
-export function DoubleWrappedButton(props: DoubleWrappedProps) {
-  const { specialProp, ref, ...rest } = props;
-  return <button ref={ref} {...rest} />;
-}
-
-// usage
-function App() {
-  const btnRef = React.useRef<HTMLButtonElement>(null!);
-  return (
-    <DoubleWrappedButton type="button" ref={btnRef}>
-      {" "}
-      text{" "}
-    </DoubleWrappedButton>
-  );
-}
-```
-
-_[TS Playground link](https://www.typescriptlang.org/play?#code/JYWwDg9gTgLgBAKjgQwM5wEoFNkGN4BmUEIcA5FDvmQNwCwAUIwPTNwBGaWHArjDBAB2AGjgB3YDAAWcSgTgFoY5FAAmwQQHNGMAJ5huABWJh0AXjgBvOLinAANqsqCAXJiowAdNjwwAchCqWDRwegZuAESoPOwgkhFwAD5wEex8AoIJAL70DFgAHpCwofrc2PIWABIAKgCyADIAQulCAKL2WCBYgjC5BUXwuEKo8ABiyIK4us38QnAWPvieilDKauUAPOWixhCmAHwAFIdgJqiicgCU8-twh4xwcBtps4KyWARmlnJZNvZoqD8yC6ZgitV0AGF-qhAcCsAkwlgvqc9qhPIisvsHo8rCjTJ5bA4nN0stiNswXhksQxLpdcowWGxUFghoJVHB-rosFBeK9GP1oPANDBuQQ8NwACIQGIdADqUGQYAMql2pjgBRFbPQiy8EJIkEE3RgqtQsskUk2iIg8nGk2mLUEt0s2NQBlwwGQ9lVAH43CMoBpNLlSXlCoKFDxJjBgHMpTKsPLFcqZhkTmc3HH2HKFUqsCqztdnQxHqyRlY4K6WR6vSYLh9RJ5G5Qy78LHjULlHpQYDwoG9ng73p9vh9fpZG55mzBfsx9sGGQxWHAeKhkJosIwCJH8DG3gBBJWHQvY0vwdgwQTlebuXyeFdYTY1BoptodLo9I6CHj2ewAQku2Ldr2-aZtmSZ5i+byIqClJCAkchfOel6jrcIr5PA5KgQmObJg61IhkAA)_
+_TODO: check how this conflicts/merges/duplicates with the Troubleshooting Handbook "Types I need weren't Exported" advice_
 
 ## Polymorphic Components (e.g. with `as` props)
 
@@ -459,7 +413,7 @@ Parent.propTypes = {
 
 The thing you cannot do is **specify which components** the children are, e.g. If you want to express the fact that "React Router `<Routes>` can only have `<Route>` as children, nothing else is allowed" in TypeScript.
 
-This is because when you write a JSX expression (`const foo = <MyComponent foo='foo' />`), the resultant type is blackboxed into a generic JSX.Element type. (_[thanks @ferdaber](https://github.com/typescript-cheatsheets/react/issues/271)_)
+This is because when you write a JSX expression (const foo = <MyComponent foo='foo' />), the resultant type is blackboxed into a generic JSX.Element type. (_[thanks @ferdaber](https://github.com/typescript-cheatsheets/react/issues/271)_)
 
 ## Type Narrowing based on Props
 
@@ -873,20 +827,46 @@ As you can see from the Omit example above, you can write significant logic in y
 
 ## Props: Extracting Prop Types of a Component
 
-Sometimes you want the prop types of a component, but it isn't exported.
+There are a lot of places where you want to reuse some slices of props because of prop drilling,
+so you can either export the props type as part of the module or extract them (either way works).
 
-A simple solution is to use `React.ComponentProps`:
+The advantage of extracting the prop types is that you won't need to export everything, and a refactor of the source of truth component will propagate to all consuming components.
 
-```tsx
-// a Modal component defined elsewhere
-const defaultProps: React.ComponentProps<typeof Modal> = {
-  title: "Hello World",
-  visible: true,
-  onClick: jest.fn(),
-};
+```ts
+import { ComponentProps, JSXElementConstructor } from "react";
+
+// goes one step further and resolves with propTypes and defaultProps properties
+type ApparentComponentProps<
+  C extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>
+> = C extends JSXElementConstructor<infer P>
+  ? JSX.LibraryManagedAttributes<C, P>
+  : ComponentProps<C>;
 ```
 
-There are advanced edge cases if you want to extract the prop types of a component taking into account internal props, `propTypes`, and `defaultProps` - [check our issue here for helper utilities that resolve these](https://github.com/typescript-cheatsheets/react/issues/63).
+You can also use them to strongly type custom event handlers if they're not written at the call sites themselves
+(i.e. inlined with the JSX attribute):
+
+```tsx
+// my-inner-component.tsx
+export function MyInnerComponent(props: {
+  onSomeEvent(
+    event: ComplexEventObj,
+    moreArgs: ComplexArgs
+  ): SomeWeirdReturnType;
+}) {
+  /* ... */
+}
+
+// my-consuming-component.tsx
+export function MyConsumingComponent() {
+  // event and moreArgs are contextually typed along with the return value
+  const theHandler: Props<typeof MyInnerComponent>["onSomeEvent"] = (
+    event,
+    moreArgs
+  ) => {};
+  return <MyInnerComponent onSomeEvent={theHandler} />;
+}
+```
 
 ## Props: Render Props
 

@@ -22,15 +22,13 @@ const Greet = ({ age = 21 }: GreetProps) => // etc
 Class Components:
 
 ```tsx
-type GreetProps = {
+type GreetProps =  {
   age?: number;
 };
 
 class Greet extends React.Component<GreetProps> {
-  render() {
-    const { age = 21 } = this.props;
-    /*...*/
-  }
+  const { age = 21 } = this.props
+  /*...*/
 }
 
 let el = <Greet age={3} />;
@@ -43,11 +41,7 @@ Type inference improved greatly for `defaultProps` in [TypeScript 3.0+](https://
 **Function Components**
 
 ```tsx
-// using typeof as a shortcut; note that it hoists!
-// you can also declare the type of DefaultProps if you choose
-// e.g. https://github.com/typescript-cheatsheets/react/issues/415#issuecomment-841223219
 type GreetProps = { age: number } & typeof defaultProps;
-
 const defaultProps = {
   age: 21,
 };
@@ -92,7 +86,7 @@ The insight to have here is that [`GreetProps` is the _internal_ contract for yo
 ```tsx
 // internal contract, should not be exported out
 type GreetProps = {
-  age: number;
+  age?: number;
 };
 
 class Greet extends Component<GreetProps> {
@@ -106,7 +100,8 @@ export type ApparentGreetProps = JSX.LibraryManagedAttributes<
 >;
 ```
 
-This will work properly, although hovering over`ApparentGreetProps`may be a little intimidating. You can reduce this boilerplate with the`ComponentProps` utility detailed below.
+``
+This will work properly, although hovering over `ApparentGreetProps` may be a little intimidating. You can reduce this boilerplate with the `ComponentProps` utility detailed below.
 
 </details>
 

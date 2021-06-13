@@ -90,15 +90,7 @@ _Something to add? [File an issue](https://github.com/typescript-cheatsheets/rea
 
 ## Enum Types
 
-**We recommend avoiding using enums as far as possible**.
-
-Enums have a few [documented issues](https://fettblog.eu/tidy-typescript-avoid-enums/) (the TS team [agrees](https://twitter.com/orta/status/1348966323271987201?s=20)). A simpler alternative to enums is just declaring a union type of string literals:
-
-```tsx
-export declare type Position = "left" | "right" | "top" | "bottom";
-```
-
-If you must use enums, remember that enums in TypeScript default to numbers. You will usually want to use them as strings instead:
+Enums in TypeScript default to numbers. You will usually want to use them as strings instead:
 
 ```tsx
 export enum ButtonSizes {
@@ -106,12 +98,23 @@ export enum ButtonSizes {
   small = "small",
   large = "large",
 }
+```
 
-// usage
+Usage:
+
+```tsx
 export const PrimaryButton = (
   props: Props & React.HTMLProps<HTMLButtonElement>
 ) => <Button size={ButtonSizes.default} {...props} />;
 ```
+
+A simpler alternative to enum is just declaring a bunch of strings with union:
+
+```tsx
+export declare type Position = "left" | "right" | "top" | "bottom";
+```
+
+This is handy because TypeScript will throw errors when you mistype a string for your props.
 
 ## Type Assertion
 
@@ -137,9 +140,9 @@ Note that you cannot assert your way to anything - basically it is only for refi
 You can also assert a property is non-null, when accessing it:
 
 ```ts
-element.parentNode!.removeChild(element); // ! before the period
-myFunction(document.getElementById(dialog.id!)!); // ! after the property accessing
-let userID!: string; // definite assignment assertion... be careful!
+element.parentNode!.removeChild(element) // ! before the period
+myFunction(document.getElementById(dialog.id!)! // ! after the property accessing
+let userID!: string // definite assignment assertion... be careful!
 ```
 
 Of course, try to actually handle the null case instead of asserting :)
@@ -181,18 +184,13 @@ In future you can use the `unique` keyword to brand. [See this PR](https://githu
 Adding two types together can be handy, for example when your component is supposed to mirror the props of a native component like a `button`:
 
 ```tsx
-export interface PrimaryButtonProps {
+export interface Props {
   label: string;
 }
 export const PrimaryButton = (
-  props: PrimaryButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
-) => {
-  // do custom buttony stuff
-  return <button {...props}> {props.label} </button>;
-};
+  props: Props & React.HTMLProps<HTMLButtonElement> // adding my Props together with the @types/react button provided props
+) => <Button {...props} />;
 ```
-
-_Playground [here](https://www.typescriptlang.org/play?ssl=4&ssc=1&pln=12&pc=2#code/JYWwDg9gTgLgBAJQKYEMDG8BmUIjgcilQ3wFgAoCipAD0ljmADsYkpN0k4AFKUFKAE8AQgFcYMCE14QwAZzgBvCnDgAbFACMkagFxw5MPkwDmAbgoBfanWjw0Uwzz4gBI8ZKZwAvHAAUKnBgOPL6vPxCYhJSMvJwAGSIxDAAdFGeABIAKgCyADIAghJ8muJIcgA82fnpUgCiakggSCwAfBQAlD6tSoEA9H1wACYQcGiihrhwpdFMggYwopiYgUSLUF4VM55KKXvBsnKWPYoH8ika2mqWcBV921KtFuSWQA)_
 
 You can also use Intersection Types to make reusable subsets of props for similar components:
 
@@ -496,7 +494,7 @@ declare module "use-dark-mode" {
     classNameDark?: string; // A className to set "dark mode". Default = "dark-mode".
     classNameLight?: string; // A className to set "light mode". Default = "light-mode".
     element?: HTMLElement; // The element to apply the className. Default = `document.body`
-    onChange?: (val?: boolean) => void; // Override the default className handler with a custom callback.
+    onChange?: (val?: boolean) => void; // Overide the default className handler with a custom callback.
     storageKey?: string; // Specify the `localStorage` key. Default = "darkMode". Set to `null` to disable persistent storage.
     storageProvider?: WindowLocalStorage; // A storage provider. Default = `localStorage`.
     global?: Window; // The global object. Default = `window`.
@@ -543,27 +541,3 @@ declare module "react-router-dom" {
 ```
 
 For more information on creating type definitions for class components, you can refer to this [post](https://templecoding.com/blog/2016/03/31/creating-typescript-typings-for-existing-react-components) for reference.
-
-## Frequent Known Problems with TypeScript
-
-Just a list of stuff that React developers frequently run into, that TS has no solution for. Not necessarily TSX only.
-
-### TypeScript doesn't narrow after an object element null check
-
-[![https://pbs.twimg.com/media/E0u6b9uUUAAgwAk?format=jpg&name=medium](https://pbs.twimg.com/media/E0u6b9uUUAAgwAk?format=jpg&name=medium)](https://mobile.twitter.com/tannerlinsley/status/1390409931627499523)
-
-Ref: https://mobile.twitter.com/tannerlinsley/status/1390409931627499523. see also https://github.com/microsoft/TypeScript/issues/9998
-
-### TypeScript doesn't let you restrict the type of children
-
-Guaranteeing typesafety for this kind of API isn't possible:
-
-```tsx
-<Menu>
-  <MenuItem/> {/* ok */}
-  <MenuLink/> {/* ok */}
-  <div> {/* error */}
-</Menu>
-```
-
-Source: https://twitter.com/ryanflorence/status/1085745787982700544?s=20

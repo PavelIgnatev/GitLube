@@ -6,36 +6,21 @@ title: Function Components
 These can be written as normal functions that take a `props` argument and return a JSX element.
 
 ```tsx
-// Declaring type of props - see "Typing Component Props" for more examples
-type AppProps = {
-  message: string;
-}; /* use `interface` if exporting so that consumers can extend */
-
-// Easiest way to declare a Function Component; return type is inferred.
+type AppProps = { message: string }; /* could also use interface */
 const App = ({ message }: AppProps) => <div>{message}</div>;
-
-// you can choose annotate the return type so an error is raised if you accidentally return some other type
-const App = ({ message }: AppProps): JSX.Element => <div>{message}</div>;
-
-// you can also inline the type declaration; eliminates naming the prop types, but looks repetitive
-const App = ({ message }: { message: string }) => <div>{message}</div>;
 ```
-
-> Tip: You might use [Paul Shen's VS Code Extension](https://marketplace.visualstudio.com/items?itemName=paulshen.paul-typescript-toolkit) to automate the type destructure declaration (incl a [keyboard shortcut](https://twitter.com/_paulshen/status/1392915279466745857?s=20)).
 
 <details>
 
-<summary><b>Why is `React.FC` discouraged? What about `React.FunctionComponent`/`React.VoidFunctionComponent`?</b></summary>
+<summary><b>What about `React.FC`/`React.FunctionComponent`/`React.VoidFunctionComponent`?</b></summary>
 
-You may see this in many React+TypeScript codebases:
+You can also write components with `React.FunctionComponent` (or the shorthand `React.FC` - they are the same):
 
 ```tsx
 const App: React.FunctionComponent<{ message: string }> = ({ message }) => (
   <div>{message}</div>
 );
 ```
-
-However, the general consensus today is that `React.FunctionComponent` (or the shorthand `React.FC`) is [discouraged](https://github.com/facebook/create-react-app/pull/8177). This is a nuanced opinion of course, but if you agree and want to remove `React.FC` from your codebase, you can use [this jscodeshift codemod](https://github.com/gndelia/codemod-replace-react-fc-typescript).
 
 Some differences from the "normal function" version:
 
@@ -45,7 +30,7 @@ Some differences from the "normal function" version:
 
   - Note that there are some known issues using `defaultProps` with `React.FunctionComponent`. See [this issue for details](https://github.com/typescript-cheatsheets/react-typescript-cheatsheet/issues/87). We maintain a separate `defaultProps` section you can also look up.
 
-- It provides an implicit definition of `children` (see below) - however there are some issues with the implicit `children` type (e.g. [DefinitelyTyped#33006](https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33006)), and it might be better to be explicit about components that consume `children`, anyway.
+- It provides an implicit definition of `children` (see below) - however there are some issues with the implicit `children` type (e.g. [DefinitelyTyped#33006](https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33006)), and it might considered better style to be explicit about components that consume `children`, anyway.
 
 ```tsx
 const Title: React.FunctionComponent<{ title: string }> = ({
@@ -55,9 +40,11 @@ const Title: React.FunctionComponent<{ title: string }> = ({
 ```
 
 <details>
-<summary>Using `React.VoidFunctionComponent` or `React.VFC` instead</summary>
+<summary>
 
-As of [@types/react 16.9.48](https://github.com/DefinitelyTyped/DefinitelyTyped/pull/46643), you can also use `React.VoidFunctionComponent` or `React.VFC` type if you want to type `children` explicitly. This is an interim solution until `FunctionComponent` will accept no children by default (planned for `@types/react@^18.0.0`).
+As of [@types/react PR #46643](https://github.com/DefinitelyTyped/DefinitelyTyped/pull/46643) (TODO: update with @types/react version when merged), you can use a new `React.VoidFunctionComponent` or `React.VFC` type if you wish to declare the accepted `children` explicitly. This is an interim solution until FunctionComponent will accept no children by default (planned for React 18).
+
+</summary>
 
 ```ts
 type Props = { foo: string };

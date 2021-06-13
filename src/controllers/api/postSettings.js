@@ -4,8 +4,8 @@ module.exports = async (req, res) => {
   try {
     global.linkRepo = req.body.repoName;
     global.period = req.body.period;
-
-    await cloneRepo(global.linkRepo);
+    
+    await cloneRepo(global.linkRepo, req.body.mainBranch);
 
     global.axios
       .post('https://shri.yandex/hw/api/conf', req.body)
