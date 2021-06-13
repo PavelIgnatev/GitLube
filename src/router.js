@@ -12,7 +12,7 @@ apiRouter.post('/builds/:commitHash', api.postBuildsCommitHash);
 apiRouter.get('/builds/:buildId', api.getBuildsBuildId);
 apiRouter.get(
   '/builds/:buildId/logs',
-  global.cache(100),
+  global.cache(1000),
   api.getBuildsBuildIdLogs
 );
 

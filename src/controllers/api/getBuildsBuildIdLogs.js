@@ -4,6 +4,6 @@ module.exports = (req, res) => {
     .get(`https://shri.yandex/hw/api/build/log`, {
       params: { buildid: req.params.buildId },
     })
-    .then((response) => res.json(response.data.data))
+    .then((response) =>  res.json(response.data))
     .catch((error) => res.send(error));
 };

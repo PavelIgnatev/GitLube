@@ -10,7 +10,6 @@ module.exports.getBranch = (commitHash) => {
       { cwd: path.resolve(__dirname, '../../repo') },
       (err, out) => {
         if (err) reject(err);
-        console.log(out)
         resolve(out.replace('* ', '').trim());
       }
     );
