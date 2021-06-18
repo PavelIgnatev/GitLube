@@ -1,17 +1,15 @@
+const { axios } = require('../../config/index.js');
+
 //cохранение настроек
 const cloneRepo = require('../../utils/cloneRepo.js').cloneRepo;
 module.exports = async (req, res) => {
   try {
-    global.linkRepo = req.body.repoName;
-    global.period = req.body.period;
-    
-    await cloneRepo(global.linkRepo, req.body.mainBranch);
-
-    global.axios
-      .post('https://shri.yandex/hw/api/conf', req.body)
-      .then((response) => res.json(response.data.data))
-      .catch((error) => res.json(error));
+    //Клонируем реп, если он не найден, то будет ошибка, которую обрабатываем далее
+    await cloneRepo(req.body.repoName, req.body.mainBranch);
+    return res.json(
+      (await axios.post('https://shri.yandex/hw/api/conf', req.body)).data.data
+    );
   } catch (error) {
-    res.json(error);
+    return res.json(error);
   }
 };

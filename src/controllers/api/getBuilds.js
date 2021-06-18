@@ -1,7 +1,8 @@
+const { axios } = require('../../config/index.js');
+
 //получение списка сборок
-module.exports = (req, res) => {
-  global.axios
-    .get('https://shri.yandex/hw/api/build/list')
-    .then((response) => res.json(response.data.data))
-    .catch((error) => res.json(error));
+module.exports = async (req, res) => {
+  return res.json(
+    (await axios.get('https://shri.yandex/hw/api/build/list')).data.data
+  );
 };

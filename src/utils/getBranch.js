@@ -1,17 +1,13 @@
-const { execFile } = require('child_process');
+const { execFile } = require('./promisify.js');
 
 const path = require('path');
 //Получаем branch по commitHash
-module.exports.getBranch = (commitHash) => {
-  return new Promise((resolve, reject) => {
-    execFile(
-      'git',
-      ['branch', '--contains', commitHash],
-      { cwd: path.resolve(__dirname, '../../repo') },
-      (err, out) => {
-        if (err) reject(err);
-        resolve(out.replace('* ', '').trim());
-      }
-    );
-  });
+module.exports.getBranch = async (commitHash) => {
+  return (
+    await execFile('git', ['branch', '--contains', commitHash], {
+      cwd: path.resolve(__dirname, '../../repo'),
+    })
+  ).stdout
+    .replace('* ', '')
+    .trim();
 };

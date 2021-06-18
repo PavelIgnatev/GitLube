@@ -1,17 +1,11 @@
-const { execFile } = require('child_process');
+const { execFile } = require('./promisify.js');
 
 const path = require('path');
 //Получаем автора по commitHash
-module.exports.getAuthor = (commitHash) => {
-  return new Promise((resolve, reject) => {
-    execFile(
-      'git',
-      ['show', '-s', '--format=%an', commitHash],
-      { cwd: path.resolve(__dirname, '../../repo') },
-      (err, out) => {
-        if (err) reject(err);
-        resolve(out.trim());
-      }
-    );
-  });
+module.exports.getAuthor = async (commitHash) => {
+  return (
+    await execFile('git', ['show', '-s', '--format=%an', commitHash], {
+      cwd: path.resolve(__dirname, '../../repo'),
+    })
+  ).stdout.trim();
 };
