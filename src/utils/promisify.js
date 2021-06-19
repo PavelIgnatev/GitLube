@@ -10,6 +10,6 @@ module.exports = {
     return await execFileAsync(command, array, cwd);
   },
   rmdir: async (repoPath, recursive) => {
-    await FSrmdir(repoPath, { recursive: recursive });
+    return await FSrmdir(repoPath, { recursive: recursive });
   },
 };
