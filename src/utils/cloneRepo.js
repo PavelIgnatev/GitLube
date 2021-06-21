@@ -18,18 +18,23 @@ module.exports.cloneRepo = async (url, branchName) => {
       ).stdout
     ).message !== 'Not Found'
   ) {
-    //Удаляем папочку рекурсивно если такой репозиторий существет
-    await rmdir(repoPath, true);
-    //Клонируем репозиторий
-    return await execFile('git', [
-      'clone',
-      '-b',
-      branchName,
-      `https://github.com/${url}.git`,
-      repoPath,
-    ]);
+    try {
+      //Удаляем папочку рекурсивно если такой репозиторий существет
+      await rmdir(repoPath, true);
+      //Клонируем репозиторий
+      return await execFile('git', [
+        'clone',
+        '-b',
+        branchName,
+        `https://${process.env.GITHUB_KEY}@github.com/${url}.git`,
+        repoPath,
+      ]);
+    } catch (error) {
+      console.error(error.message);
+      throw { message: 'Branch Not Found' };
+    }
   } else {
     //Кидаем ошибку, что репозиторий не существует, не удаляя предыдущую папку с репом
-    throw { message: 'Repository Not Found' };
+    throw { message: 'Repository Not Found or Repository in Privat' };
   }
 };

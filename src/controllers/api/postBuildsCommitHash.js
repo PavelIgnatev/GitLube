@@ -7,7 +7,9 @@ const { axios } = require('../../config/index.js');
 const { cloneRepo } = require('../../utils/cloneRepo.js');
 
 module.exports = async (req, res) => {
+  let buildId = null;
   try {
+    // Получаем repoName и mainBranch
     const { repoName, mainBranch } = (
       await axios.get('https://shri.yandex/hw/api/conf')
     ).data.data;
@@ -19,7 +21,7 @@ module.exports = async (req, res) => {
     const branch = await getBranch(req.params.commitHash);
 
     //Получаем buildId
-    const buildId = (
+    buildId = (
       await axios.post('https://shri.yandex/hw/api/build/request', {
         commitMessage: message,
         commitHash: `${req.params.commitHash}`,
@@ -27,12 +29,12 @@ module.exports = async (req, res) => {
         authorName: author,
       })
     ).data.data.id;
-
+    //Оповещаем о запуске билда
     await axios.post('https://shri.yandex/hw/api/build/start', {
       buildid: buildId,
       dateTime: new Date(),
     });
-
+    //Успешно завершаем
     await axios.post('https://shri.yandex/hw/api/build/finish', {
       buildId: buildId,
       duration: 0,
@@ -42,6 +44,11 @@ module.exports = async (req, res) => {
 
     return res.json({ buildId: buildId });
   } catch (error) {
+    //Если произошла ошибка, то завершаем с ошибкой соответственно
+    await axios.post('https://shri.yandex/hw/api/build/cancel', {
+      buildId: buildId,
+    });
+
     console.error(error.message);
     return res.status(500).json(error);
   }
