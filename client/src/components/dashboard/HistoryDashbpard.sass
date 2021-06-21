@@ -1,0 +1,113 @@
+.history-dashboard
+    text-decoration: none
+    background: #FFFFFF
+    box-shadow: 0px 0px 1px rgba(67, 68, 69, 0.3), 0px 1px 1px rgba(67, 68, 69, 0.3)
+    border-radius: 6px
+    box-sizing: border-box
+    padding: 12px 25px
+    display: flex
+    margin: 8px 0px
+    min-height: 68px
+    color: #000000
+    transition: box-shadow 0.15s ease-in-out
+    position: relative
+    &:hover
+        box-shadow: 0px 0px 1px rgba(67, 68, 69, 0.3), 0px 2px 8px rgba(67, 68, 69, 0.3)
+    &__line
+        display: flex
+        &:last-child
+            font-size: 13px
+            line-height: 16px
+            line-height: 16px
+            margin-top: 8px
+    &__commitHash
+        color: #595959
+    &__name_img
+        margin-left: 4px
+    &__number
+        font-weight: 500
+        font-size: 18px
+        line-height: 20px
+    &__header
+        font-size: 15px
+        line-height: 20px
+    &__description
+        flex: 1
+        .history-dashboard__line
+            div, img
+                display: block
+                margin-right: 4px
+            div:last-child
+                margin: 0
+
+    &__status
+        width: 21.31px
+        height: 21.31px
+        border-radius: 50%
+        &_Success, &_Waiting, &_InProgress, &_Canceled
+            margin-right: 9.34px
+            position: relative
+        &_Success
+            background: #00B341
+            &::after, &::before
+                content: ''
+                width: 12px
+                height: 3px
+                background: white !important
+                position: absolute
+                top: 48%
+                left: 45%
+                border-radius: 1px
+            &::after
+                transform: translate(-20%, -10%) rotate(-45deg)
+            &::before
+                width: 8px
+                transform: translate(-70%, 40%) rotate(45deg)
+
+        &_Waiting, &_InProgress
+            background: #FF9A00
+            &::after, &::before
+                content: ''
+                width: 10px
+                border-radius: 1px
+                height: 3px
+                background: white
+                position: absolute
+                top: 50%
+                border-radius: 1px
+                left: 50%
+            &::after
+                transform: translate(-50%, -100%) rotate(90deg)
+            &::before 
+                width: 6px
+                transform: translate(-15%, 80%) rotate(35deg)
+
+        &_Canceled
+            background: #FF3333
+            &::after, &::before
+                content: ''
+                width: 14px
+                height: 3px
+                background: white
+                position: absolute
+                top: 50%
+                left: 50%
+            &::after
+                transform: translate(-50%, -50%) rotate(-45deg)
+            &::before
+                transform: translate(-50%, -50%) rotate(45deg)
+    &__info
+        color: #595959
+        min-width: 100px
+        font-size: 13px
+    &__clock, &__calendar
+        margin-right: 5.5px
+    &__Success
+        .history-dashboard__number
+            color: #00B341
+    &__Waiting, &__InProgress
+        .history-dashboard__number
+            color: #FF9A00
+    &__Canceled
+        .history-dashboard__number
+            color: #FF3333

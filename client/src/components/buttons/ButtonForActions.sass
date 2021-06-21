@@ -1,0 +1,32 @@
+.button-action
+    display: flex
+    align-items: center
+    min-width: 28px
+    height: 28px
+    border-radius: 4px
+    margin-left: 8px
+    cursor: pointer
+    font-family: YS Text
+    text-decoration: none
+    box-sizing: border-box
+    &__img
+        position: absolute
+        left: 50%
+        top: 50% 
+        transform: translate(-50%, -50%)
+    &__wrapper
+        width: 28px
+        position: relative
+    &__action
+        padding-right: 13px
+        font-family: YS Text
+        font-style: normal
+        font-weight: normal
+        font-size: 13px
+        line-height: 28px
+        color: #000000
+        border-radius: 4px
+    &:active
+        padding: 0
+        .button-action__action
+            padding-right: 11px

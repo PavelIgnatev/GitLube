@@ -1,0 +1,20 @@
+import "./ButtonForActions.sass";
+import { NavLink } from "react-router-dom";
+
+const ButtonForActions = (props) => {
+  return (
+    <NavLink to="/settings" className={`button-action base-button__gray base-button__gray_${props.size}`}>
+      <div className="button-action__wrapper">
+        <img
+          className="button-action__img"
+          src={require(`./../../assets/img/icons/${props.src}`).default}
+          alt=""
+        />
+      </div>
+      {props.size === "big" && (
+        <div className="button-action__action">{props.action}</div>
+      )}
+    </NavLink>
+  );
+};
+export default ButtonForActions;

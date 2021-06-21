@@ -1,0 +1,25 @@
+@import './_fonts.sass'
+@import './_normalize.sass'
+@import './_media.sass'
+
+input, button, select, option
+    border: none
+    padding: 0 
+    margin: 0
+    background: white
+    &:focus, &:active
+        outline: 0
+        outline-offset: 0
+
+button
+    cursor: pointer
+
+.app
+    display: flex
+    flex-direction: column
+    min-height: 100vh
+    .app-page
+        position: relative
+        min-height: 300px
+        flex: 1
+        padding-bottom: 20px

@@ -31,10 +31,10 @@ module.exports.cloneRepo = async (url, branchName) => {
       ]);
     } catch (error) {
       console.error(error.message);
-      throw { message: 'Branch Not Found' };
+      throw { message: 'Main branch not found, default branch: main' };
     }
   } else {
     //Кидаем ошибку, что репозиторий не существует, не удаляя предыдущую папку с репом
-    throw { message: 'Repository Not Found or Repository in Privat' };
+    throw { message: 'This repository was not found, it may be private' };
   }
 };

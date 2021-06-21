@@ -13,6 +13,6 @@ module.exports.getBranch = async (commitHash) => {
       .trim();
   } catch (error) {
     console.error(error.message);
-    throw { message: 'Branch Not Found' };
+    throw { message: 'Branch not found' };
   }
 };

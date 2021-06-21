@@ -12,6 +12,6 @@ module.exports = async (req, res) => {
     return res.json(result.data);
   } catch (error) {
     console.error(error.message);
-    return res.status(500).end(error.message);
+    return res.send({ message: error.message });
   }
 };

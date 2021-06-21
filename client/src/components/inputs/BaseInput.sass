@@ -1,0 +1,60 @@
+.base-input
+    margin-top: 18px
+    transition: 0.1s ease-in-out
+    position: relative
+    &__clear
+        width: 16px
+        height: 16px
+        border-radius: 50%
+        position: absolute
+        top: 50% 
+        transform: translateY(calc(-50% + 12px))
+        right: 10px
+        background: #CCCCCC
+        cursor: pointer
+        &::after, &::before 
+            content: ''
+            width:  10px
+            height: 2px
+            background: white
+            position: absolute
+            top: 50%
+            left: 50%
+
+        &::after
+            transform: translate(-50%, -50%) rotate(-45deg)
+        &::before 
+            transform: translate(-50%, -50%) rotate(45deg)
+    &__label
+        font-family: YS Text
+        font-style: normal
+        font-weight: normal
+        font-size: 13px
+        line-height: 18px
+        display: flex
+        align-items: center
+        letter-spacing: 0.06px
+        margin-bottom: 6px
+        color: #000000
+    &__input
+        width: 100%
+        background: #FFFFFF
+        height: 36px
+        padding-left: 13px
+        border: 2px solid #D9D9D9
+        box-sizing: border-box
+        border-radius: 4px
+        font-size: 13px
+        line-height: 15px
+        display: flex
+        align-items: center
+        color: #000000
+        &::placeholder
+            font-size: 13px
+            line-height: 15px
+            display: flex
+            align-items: center
+            color: #000000
+            opacity: 0.2
+        &:focus
+            border: 2px solid #B3B3B3

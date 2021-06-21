@@ -1,0 +1,103 @@
+@media (min-width: 320px)
+    header, footer, section, .app-page
+        padding: 0 16px
+
+@media (min-width: 575.98px)
+    header, footer, section, .app-page
+        padding: 0 calc(50% - 270px)
+
+@media (min-width: 767.98px)
+    header, footer, section, .app-page
+        padding: 0 calc(50% - 360px)
+
+@media (min-width: 991.98px)
+    header, footer, section, .app-page
+        padding: 0 calc(50% - 412px)
+
+@media (min-width: 1119.98px)
+    header, footer, section, .app-page
+        padding: 0 calc(50% - 520px)
+
+@media (max-width: 575.98px)
+    .button-action__action
+        display: none
+    .app-footer
+        box-sizing: border-box
+        padding-top: 12px
+        padding-bottom: 12px
+        height: 68px
+        justify-content: initial
+        flex-direction: column
+        &__wrapper
+            margin-bottom: 8px
+    .page-settings
+        &__btns
+            flex-direction: column
+            button
+                display: flex
+                align-items: center
+                justify-content: center
+                padding: 0
+                width: 100%
+                text-align: center
+                &:nth-child(1)
+                    margin-right: 0
+                    margin-top: 8px
+                &:nth-child(2)
+                    margin-top: 12px
+    .history-dashboard
+        padding: 16px 12.9px
+        flex-direction: column
+        &__lines
+            display: block !important
+            margin-top: 8px !important
+            width: 93%
+            height: 1px
+            background: #F0F2F3
+            &_id
+                bottom: 0px !important
+                width: 93% !important
+        &__header
+            margin-top: 8px !important
+        &__info
+            color: #000000
+            height: 16px
+            display: flex
+            margin-top: 0 !important
+            padding-left: 31px
+            .history-dashboard__line
+                display: flex
+                align-items: center
+                margin: 0
+            .history-dashboard__line:nth-child(1)
+                margin-right: 10px
+            img
+                display: block
+                height: 16px
+        &__description
+            margin-top: 1px
+        .history-dashboard__description
+            .history-dashboard
+                &__line:nth-child(1), &__line:nth-child(2)
+                    margin-bottom: 8px
+                    flex-direction: column
+                &__line:nth-child(2)
+                    div[style]:nth-child(2)
+                        margin-top: 8px
+
+                    div:nth-child(2)
+                        img
+                            margin-left: 1.5px
+                            margin-right: 5.5px
+        .history-dashboard__status
+            margin-right: 8.9px
+            transform: scale(0.75)
+    .app-page__button
+        width: 100% !important
+        height: 36px
+    .app-header
+        height: 52px
+        &__repo, &__icon
+            font-size: 18px
+    .history-dashboard__line:last-child
+        margin-top: 0
