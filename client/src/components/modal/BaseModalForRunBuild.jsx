@@ -1,18 +1,20 @@
-import Modal from "react-modal";
-import { useState } from "react";
-import BaseInput from "../inputs/BaseInput.jsx";
-import BaseButtonOrange from "../buttons/BaseButtonOrange.jsx";
-import BaseButtonGray from "../buttons/BaseButtonGray.jsx";
-import "./BaseModal.sass";
+import Modal from 'react-modal';
+import { useState } from 'react';
+import BaseInput from '../inputs/BaseInput.jsx';
+import BaseButtonOrange from '../buttons/BaseButtonOrange.jsx';
+import BaseButtonGray from '../buttons/BaseButtonGray.jsx';
+import axios from 'axios';
+import './BaseModal.sass';
+import { ToastContainer, toast } from 'react-toastify';
 
-Modal.setAppElement("#root");
+Modal.setAppElement('#root');
 const BaseModalForRunBuild = (props) => {
-  let [errorCommitHash, changeErrorCommitHash] = useState("");
-  let [commitHash, changeCommitHash] = useState("");
+  let [errorCommitHash, changeErrorCommitHash] = useState('');
+  let [commitHash, changeCommitHash] = useState('');
 
   function chCommitHash(e) {
     //Очищаем ошибки при изменении input
-    changeErrorCommitHash("");
+    changeErrorCommitHash('');
     //Продолжаем делать свои дела
     changeCommitHash(e.currentTarget ? e.currentTarget.value : e);
     return e.currentTarget ? e.currentTarget.value : e;
@@ -22,42 +24,51 @@ const BaseModalForRunBuild = (props) => {
     let status = true;
 
     if (!commitHash.length) {
-      changeErrorCommitHash("ERROR");
+      changeErrorCommitHash('ERROR');
       status = false;
+    }
+    if(errorCommitHash){
+      status = false
     }
 
     return status;
   }
 
-  function postCommitHash() {
+  async function postCommitHash() {
     if (isInputValid()) {
-      console.log("ОтправОчка", commitHash);
-      props.closeModal();
-      changeCommitHash("");
+      try {
+        const result = await axios.post(`/api/builds/${commitHash}`);
+        console.log(result)
+        props.closeModal();
+        changeCommitHash('');
+      } catch (error) {
+        changeErrorCommitHash('Error');
+        toast.error('Commit hash not found');
+      }
     }
   }
 
-  function onClick(){
-    props.closeModal()
-    changeErrorCommitHash("");
+  function onClick() {
+    props.closeModal();
+    changeErrorCommitHash('');
   }
 
   const customStyles = {
     content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      height: "188px",
-      maxWidth: "485px",
-      width: "100%",
-      boxSizing: "border-box",
-      overflow: "hidden",
-      border: "0px",
-      margin: "",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-      padding: "20px",
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      height: '188px',
+      maxWidth: '485px',
+      width: '100%',
+      boxSizing: 'border-box',
+      overflow: 'hidden',
+      border: '0px',
+      margin: '',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      padding: '20px',
     },
   };
 
@@ -85,6 +96,7 @@ const BaseModalForRunBuild = (props) => {
           <BaseButtonGray text="Cancel" onClick={onClick} />
         </div>
       </Modal>
+      <ToastContainer />
     </>
   );
 };

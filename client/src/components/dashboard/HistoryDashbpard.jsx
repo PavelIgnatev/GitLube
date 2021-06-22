@@ -5,6 +5,7 @@ const historyDashboard = (props) => {
   //status": "Waiting"
   //"status": "Canceled",
   //"status": "Success",
+  //"status": "Fail"
   
   function getDate(date) {
     return new Date(date).toLocaleString("en-US", {
@@ -16,8 +17,8 @@ const historyDashboard = (props) => {
   }
 
   function getTime(date) {
-    const hours = Math.floor(Number(date) / 60 / 60);
-    return `${hours} h ${Math.floor(Number(date) / 60) - hours * 60} min`;
+    const hours = Math.floor(Number(date) /1000 / 60 / 60);
+    return `${hours} h ${Math.floor(Number(date) / 1000 / 60) - hours * 60} min`;
   }
 
   return (

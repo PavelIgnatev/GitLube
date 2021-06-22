@@ -5,14 +5,17 @@ const getCommitMessage =
 const getBranch = require('../../utils/getBranch.js').getBranch;
 const { axios } = require('../../config/index.js');
 const { cloneRepo } = require('../../utils/cloneRepo.js');
+const { runBuild } = require('../../utils/runBuild.js');
 
 module.exports = async (req, res) => {
   let buildId = null;
+  const start = Date.now();
   try {
     // Получаем repoName и mainBranch
-    const { repoName, mainBranch } = (
+    const { repoName, mainBranch, buildCommand } = (
       await axios.get('https://shri.yandex/hw/api/conf')
     ).data.data;
+
     //Обновляем репозиторий
     await cloneRepo(repoName, mainBranch);
 
@@ -34,22 +37,30 @@ module.exports = async (req, res) => {
       buildid: buildId,
       dateTime: new Date(),
     });
+
+    const buildLog = await runBuild(buildCommand);
+
     //Успешно завершаем
     await axios.post('https://shri.yandex/hw/api/build/finish', {
       buildId: buildId,
-      duration: 0,
+      duration: Date.now() - start,
       success: true,
-      buildLog: 'Тут должна была быть ваша реклама',
+      buildLog: buildLog,
     });
 
     return res.json({ buildId: buildId });
   } catch (error) {
     //Если произошла ошибка, то завершаем с ошибкой соответственно
-    await axios.post('https://shri.yandex/hw/api/build/cancel', {
-      buildId: buildId,
-    });
+    if (buildId) {
+      await axios.post('https://shri.yandex/hw/api/build/finish', {
+        buildId: buildId,
+        duration: Date.now() - start,
+        success: false,
+        buildLog: error.stdout,
+      });
+    }
 
     console.error(error.message);
-    return res.status(500).json(error);
+    return res.status(500).json(error.stdout);
   }
 };

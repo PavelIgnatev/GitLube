@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
       })
     ).data.data;
   } catch (error) {
-    console.error(error.response.status);
+    console.error(error.message);
     return res.status(error.response.status).end(error.message);
   }
 
