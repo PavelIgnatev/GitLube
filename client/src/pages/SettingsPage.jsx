@@ -106,7 +106,7 @@ const SettingsPage = () => {
         ) {
           changeErrorForRepository('Error');
         }
-        if (errorMessage === 'Main branch not found, default branch: main') {
+        if (errorMessage === 'Your master branch was not found, default branch: main') {
           changeErrorForMainBranch('Error');
         }
         //Если ошибки были - кидаем тост, иначе - сохраняем настройки

@@ -8,18 +8,20 @@ import './BuildHistoryPage.sass';
 const BuildsHistoryPage = () => {
   let [step, changeStep] = useState(9);
   const [appState, setAppState] = useState([]);
-  const [color, setColor] = useState('#580b10');
+  const [color, setColor] = useState('#996600');
 
   useEffect(() => {
     const apiUrl = '/api/builds';
-    try {
-      setTimeout(async () => {
+
+    (async () => {
+      try {
+        await new Promise((resolve, _) => setTimeout(() => resolve(), 500));
         setAppState((await axios.get(apiUrl)).data);
-      }, 500);
-    } catch {
-      setColor('#e74c3c');
-      toast.error(`An error has occurred, please check your settings`);
-    }
+      } catch {
+        setColor('#e74c3c');
+        toast.error(`An unknown error has occurred! Try again!`);
+      }
+    })();
   }, [setAppState]);
 
   const css = {

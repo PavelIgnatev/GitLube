@@ -11,6 +11,6 @@ module.exports.getCommitMessage = async (commitHash) => {
     ).stdout.trim();
   } catch (error) {
     console.error(error.message);
-    throw { message: 'Commit message not found' };
+    throw { message: 'Commit hash is invalid' };
   }
 };

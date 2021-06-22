@@ -11,6 +11,6 @@ module.exports.getAuthor = async (commitHash) => {
     ).stdout.trim();
   } catch (error) {
     console.error(error.message);
-    throw { message: 'Author not found' };
+    throw { message: 'Commit hash is invalid' };
   }
 };
