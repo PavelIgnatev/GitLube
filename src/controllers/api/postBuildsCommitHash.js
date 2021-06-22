@@ -10,6 +10,7 @@ const { runBuild } = require('../../utils/runBuild.js');
 module.exports = async (req, res) => {
   let buildId = null;
   const start = Date.now();
+
   try {
     // Получаем repoName и mainBranch
     const { repoName, mainBranch, buildCommand } = (
@@ -32,6 +33,7 @@ module.exports = async (req, res) => {
         authorName: author,
       })
     ).data.data.id;
+
     //Оповещаем о запуске билда
     await axios.post('https://shri.yandex/hw/api/build/start', {
       buildid: buildId,
@@ -47,7 +49,6 @@ module.exports = async (req, res) => {
       success: true,
       buildLog: buildLog,
     });
-
     return res.json({ buildId: buildId });
   } catch (error) {
     //Если произошла ошибка, то завершаем с ошибкой соответственно

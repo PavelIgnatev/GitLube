@@ -6,11 +6,15 @@ import BaseButtonGray from '../buttons/BaseButtonGray.jsx';
 import axios from 'axios';
 import './BaseModal.sass';
 import { ToastContainer, toast } from 'react-toastify';
+import { useHistory } from 'react-router';
 
 Modal.setAppElement('#root');
 const BaseModalForRunBuild = (props) => {
+  const history = useHistory()
+
   let [errorCommitHash, changeErrorCommitHash] = useState('');
   let [commitHash, changeCommitHash] = useState('');
+  let [buttonDisabled, setButtonDisabled] = useState(false)
 
   function chCommitHash(e) {
     //Очищаем ошибки при изменении input
@@ -37,11 +41,15 @@ const BaseModalForRunBuild = (props) => {
   async function postCommitHash() {
     if (isInputValid()) {
       try {
-        const result = await axios.post(`/api/builds/${commitHash}`);
-        console.log(result)
+        setButtonDisabled(true)
+        const {data} = await axios.post(`/api/builds/${commitHash}`);
+        setButtonDisabled(false)
         props.closeModal();
         changeCommitHash('');
+        console.log(data.buildId)
+        history.push('/build/' + data.buildId)
       } catch (error) {
+        setButtonDisabled(false)
         changeErrorCommitHash('Error');
         toast.error('Commit hash not found');
       }
@@ -92,8 +100,8 @@ const BaseModalForRunBuild = (props) => {
           error={errorCommitHash}
         />
         <div className="page-settings__btns">
-          <BaseButtonOrange text="Run build " onClick={postCommitHash} />
-          <BaseButtonGray text="Cancel" onClick={onClick} />
+          <BaseButtonOrange text="Run build" buttonDisabled={buttonDisabled} onClick={postCommitHash} />
+          <BaseButtonGray text="Cancel" buttonDisabled={buttonDisabled}onClick={onClick} />
         </div>
       </Modal>
       <ToastContainer />

@@ -15,7 +15,7 @@ const BuildsHistoryPage = () => {
 
     (async () => {
       try {
-        await new Promise((resolve, _) => setTimeout(() => resolve(), 500));
+        await new Promise((resolve, _) => setTimeout(() => resolve(), 200));
         setAppState((await axios.get(apiUrl)).data);
       } catch {
         setColor('#e74c3c');

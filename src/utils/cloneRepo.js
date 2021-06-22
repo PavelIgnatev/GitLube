@@ -31,7 +31,7 @@ module.exports.cloneRepo = async (url, branchName) => {
         ).find((item) => item.name === branchName)
       ) {
         //Удаляем папочку рекурсивно если такой репозиторий существет
-        //На всякий случай, чтобы точно удал
+        //На всякий случай, чтобы точно удалился
         await rmdir(repoPath, true);
         await rmdir(repoPath, true);
         await rmdir(repoPath, true);
