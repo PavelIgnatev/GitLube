@@ -1,5 +1,4 @@
 import HistoryDashbpard from '../components/dashboard/HistoryDashbpard.jsx';
-import state from '../state';
 import ClockLoader from 'react-spinners/FadeLoader';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -23,17 +22,19 @@ const BuildDetaildsPage = () => {
         setGetLogs((await axios.get(apiUrl)).data);
       } catch {}
     })();
-  }, [setGetLogs, history]);
+    return null
+  }, [setGetLogs, history.location.pathname]);
 
   useEffect(() => {
     const apiUrl = history.location.pathname.replace('build', 'api/builds');
-
+    
     (async () => {
       try {
         setGetInfo((await axios.get(apiUrl)).data);
       } catch {}
     })();
-  }, [setGetInfo, history]);
+    return null
+  }, [setGetInfo, history.location.pathname]);
 
   const css = {
     display: 'block',
@@ -48,7 +49,7 @@ const BuildDetaildsPage = () => {
   return (
     <div className="page-detail">
       <ClockLoader
-        color={'#996600'}
+        color={'#2787f5'}
         loading={!getLogs.length}
         css={css}
         size={50}

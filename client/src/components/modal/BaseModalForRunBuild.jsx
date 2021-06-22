@@ -46,7 +46,6 @@ const BaseModalForRunBuild = (props) => {
         setButtonDisabled(false)
         props.closeModal();
         changeCommitHash('');
-        console.log(data.buildId)
         history.push('/build/' + data.buildId)
       } catch (error) {
         setButtonDisabled(false)

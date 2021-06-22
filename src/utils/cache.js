@@ -9,7 +9,9 @@ const cache = (duration) => (req, res, next) => {
   res.sendResponse = res.send;
 
   res.send = (body) => {
-    mcache.put(key, body, duration * 1000);
+    if (body.length > 2) {
+      mcache.put(key, body, duration * 1000);
+    }
     res.sendResponse(body);
   };
   next();

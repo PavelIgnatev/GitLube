@@ -40,6 +40,8 @@ module.exports = async (req, res) => {
       dateTime: new Date(),
     });
 
+    res.json({ buildId: buildId });
+
     const buildLog = await runBuild(buildCommand);
 
     //Успешно завершаем
@@ -49,7 +51,6 @@ module.exports = async (req, res) => {
       success: true,
       buildLog: buildLog,
     });
-    return res.json({ buildId: buildId });
   } catch (error) {
     //Если произошла ошибка, то завершаем с ошибкой соответственно
     if (buildId) {

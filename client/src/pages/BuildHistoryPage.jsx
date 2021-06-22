@@ -8,7 +8,7 @@ import './BuildHistoryPage.sass';
 const BuildsHistoryPage = () => {
   let [step, changeStep] = useState(9);
   const [appState, setAppState] = useState([]);
-  const [color, setColor] = useState('#996600');
+  const [color, setColor] = useState('#2787f5');
 
   useEffect(() => {
     const apiUrl = '/api/builds';
@@ -22,6 +22,7 @@ const BuildsHistoryPage = () => {
         toast.error(`An unknown error has occurred! Try again!`);
       }
     })();
+    return null
   }, [setAppState]);
 
   const css = {
@@ -34,12 +35,12 @@ const BuildsHistoryPage = () => {
 
   return (
     <div className="app-page__builds">
-      <ClockLoader
-        color={color}
-        loading={!appState.length}
-        css={css}
-        size={50}
-      />
+        <ClockLoader
+          color={color}
+          loading={!appState.length}
+          css={css}
+          size={50}
+        />
       <ToastContainer />
       {appState
         .filter((_, index) => index < step)
