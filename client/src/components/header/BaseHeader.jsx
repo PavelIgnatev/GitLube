@@ -11,6 +11,7 @@ import './BaseHeader.sass';
 const BaseHeader = (props) => {
   const history = useHistory();
 
+  let [buttonDisabled, setButtonDisabled] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
@@ -22,11 +23,14 @@ const BaseHeader = (props) => {
   }
   async function postCommitHash() {
     try {
+      setButtonDisabled(true)
       const apiUrl = history.location.pathname.replace('build', 'api/builds');
       const result = (await axios.get(apiUrl)).data;
       const { data } = await axios.post(`/api/builds/${result.commitHash}`);
       history.push('/build/' + data.buildId);
+      setButtonDisabled(false)
     } catch (error) {
+      setButtonDisabled(false)
       toast.error('Sorry! An error has occurred, please try to make a request manually');
     }
   }
@@ -102,6 +106,7 @@ const BaseHeader = (props) => {
                   action="Rebuild"
                   src="rebuild.svg"
                   size="big"
+                  buttonDisabled={buttonDisabled}
                   onClick={postCommitHash}
                 />
                 <ButtonForSettings

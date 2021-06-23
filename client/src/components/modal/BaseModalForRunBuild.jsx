@@ -10,11 +10,11 @@ import { useHistory } from 'react-router';
 
 Modal.setAppElement('#root');
 const BaseModalForRunBuild = (props) => {
-  const history = useHistory()
+  const history = useHistory();
 
   let [errorCommitHash, changeErrorCommitHash] = useState('');
   let [commitHash, changeCommitHash] = useState('');
-  let [buttonDisabled, setButtonDisabled] = useState(false)
+  let [buttonDisabled, setButtonDisabled] = useState(false);
 
   function chCommitHash(e) {
     //Очищаем ошибки при изменении input
@@ -31,8 +31,8 @@ const BaseModalForRunBuild = (props) => {
       changeErrorCommitHash('ERROR');
       status = false;
     }
-    if(errorCommitHash){
-      status = false
+    if (errorCommitHash) {
+      status = false;
     }
 
     return status;
@@ -41,14 +41,14 @@ const BaseModalForRunBuild = (props) => {
   async function postCommitHash() {
     if (isInputValid()) {
       try {
-        setButtonDisabled(true)
-        const {data} = await axios.post(`/api/builds/${commitHash}`);
-        setButtonDisabled(false)
+        setButtonDisabled(true);
+        const { data } = await axios.post(`/api/builds/${commitHash}`);
+        setButtonDisabled(false);
         props.closeModal();
         changeCommitHash('');
-        history.push('/build/' + data.buildId)
+        history.push('/build/' + data.buildId);
       } catch (error) {
-        setButtonDisabled(false)
+        setButtonDisabled(false);
         changeErrorCommitHash('Error');
         toast.error('Commit hash not found');
       }
@@ -86,22 +86,32 @@ const BaseModalForRunBuild = (props) => {
         onRequestClose={props.closeModal}
         style={customStyles}
       >
-        <div className="base-modal__title">New Build</div>
-        <div className="base-modal__subtitle">
-          Enter the commit hash which you want to build
-        </div>
-        <BaseInput
-          id="hash"
-          placeholder="Commit hash"
-          onChange={chCommitHash}
-          classes="modal"
-          value={commitHash}
-          error={errorCommitHash}
-        />
-        <div className="page-settings__btns">
-          <BaseButtonOrange text="Run build" buttonDisabled={buttonDisabled} onClick={postCommitHash} />
-          <BaseButtonGray text="Cancel" buttonDisabled={buttonDisabled}onClick={onClick} />
-        </div>
+        <form>
+          <div className="base-modal__title">New Build</div>
+          <div className="base-modal__subtitle">
+            Enter the commit hash which you want to build
+          </div>
+          <BaseInput
+            id="hash"
+            placeholder="Commit hash"
+            onChange={chCommitHash}
+            classes="modal"
+            value={commitHash}
+            error={errorCommitHash}
+          />
+          <div className="page-settings__btns">
+            <BaseButtonOrange
+              text="Run build"
+              buttonDisabled={buttonDisabled}
+              onClick={postCommitHash}
+            />
+            <BaseButtonGray
+              text="Cancel"
+              buttonDisabled={buttonDisabled}
+              onClick={onClick}
+            />
+          </div>
+        </form>
       </Modal>
       <ToastContainer />
     </>

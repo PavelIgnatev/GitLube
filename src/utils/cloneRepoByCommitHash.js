@@ -1,20 +1,33 @@
-const { generateId } = require('./generateId.js');
-const { execFile } = require('../utils/promisify.js');
+const { execFile, rmdir } = require('../utils/promisify.js');
 const path = require('path');
-const id = generateId();
-const repoPath = path.resolve(__dirname, '../../CHB/' + id);
+const { exec } = require('child_process');
+const util = require('util');
+const execAsync = util.promisify(exec);
 
 module.exports.cloneRepoByCommitHash = async (
-  branchName = 'main',
-  url = 'PavelIgnatev/react-app',
-  commitHash = 'f4b93e67c4f4c598a8928249572dfc8c5c39f539'
+  branchName,
+  url,
+  commitHash,
+  command,
+  id
 ) => {
-  await execFile('git', [
-    'clone',
-    '-b',
-    branchName,
-    `https://${process.env.GITHUB_KEY}@github.com/${url}.git`,
-    repoPath,
-  ]);
-  await execFile('git', ['checkout', commitHash, repoPath]);
+  const repoPath = path.resolve(__dirname, '../../CHB/' + id);
+  try {
+    await execFile('git', [
+      'clone',
+      '-b',
+      branchName,
+      `https://${process.env.GITHUB_KEY}@github.com/${url}.git`,
+      repoPath,
+    ]);
+    await execFile('git', ['checkout', commitHash], { cwd: repoPath });
+    const result = await execAsync(command, {
+      cwd: path.resolve(__dirname, '../../CHB/' + id),
+    });
+    rmdir(repoPath, true);
+    return result.stdout;
+  } catch (error) {
+    rmdir(repoPath, true);
+    throw error.stderr;
+  }
 };

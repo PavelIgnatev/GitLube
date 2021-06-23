@@ -1,11 +1,11 @@
 const { axios } = require('../../config/index.js');
 
 //cохранение настроек
-const cloneRepo = require('../../utils/cloneRepo.js').cloneRepo;
+const cloneMainRepo = require('../../utils/cloneMainRepo.js').cloneMainRepo;
 
 module.exports = async (req, res) => {
   try {
-    await cloneRepo(req.body.repoName, req.body.mainBranch);
+    await cloneMainRepo(req.body.repoName, req.body.mainBranch);
 
     let result = await axios.post('https://shri.yandex/hw/api/conf', req.body);
 

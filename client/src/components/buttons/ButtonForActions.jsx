@@ -2,7 +2,7 @@ import "./ButtonForActions.sass";
 
 const ButtonForActions = (props) => {
   return (
-    <button className="button-action base-button__gray" onClick={props.onClick}>
+    <button disabled={props.buttonDisabled} className="button-action base-button__gray" onClick={props.onClick}>
       <div className="button-action__wrapper">
         <img
           className="button-action__img"
