@@ -5,11 +5,13 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import './BuildDetailsPage.sass';
 
+import Convert from 'ansi-to-html';
+
+const convert = new Convert();
+
 const BuildDetaildsPage = () => {
   const history = useHistory();
 
-  var Convert = require('ansi-to-html');
-  var convert = new Convert();
   const [getLogs, setGetLogs] = useState('');
   const [getInfo, setGetInfo] = useState('');
 
@@ -22,18 +24,18 @@ const BuildDetaildsPage = () => {
         setGetLogs((await axios.get(apiUrl)).data);
       } catch {}
     })();
-    return null
+    return null;
   }, [setGetLogs, history.location.pathname]);
 
   useEffect(() => {
     const apiUrl = history.location.pathname.replace('build', 'api/builds');
-    
+
     (async () => {
       try {
         setGetInfo((await axios.get(apiUrl)).data);
       } catch {}
     })();
-    return null
+    return null;
   }, [setGetInfo, history.location.pathname]);
 
   const css = {
