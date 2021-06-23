@@ -4,7 +4,7 @@ import BaseInput from '../components/inputs/BaseInput';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import './SettingsPage.sass';
 
 const SettingsPage = () => {
@@ -202,7 +202,6 @@ const SettingsPage = () => {
           <BaseButtonGray buttonDisabled={buttonDisabled} text="Cancel" onClick={onClick} />
         </div>
       </form>
-      <ToastContainer />
     </div>
   );
 };

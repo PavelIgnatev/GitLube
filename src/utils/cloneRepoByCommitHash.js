@@ -1,5 +1,6 @@
 const { execFile, rmdir } = require('../utils/promisify.js');
 const path = require('path');
+
 const { exec } = require('child_process');
 const util = require('util');
 const execAsync = util.promisify(exec);
@@ -21,9 +22,11 @@ module.exports.cloneRepoByCommitHash = async (
       repoPath,
     ]);
     await execFile('git', ['checkout', commitHash], { cwd: repoPath });
+
     const result = await execAsync(command, {
       cwd: path.resolve(__dirname, '../../CHB/' + id),
     });
+
     rmdir(repoPath, true);
     return result.stdout;
   } catch (error) {

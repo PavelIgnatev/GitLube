@@ -2,7 +2,7 @@ import ClockLoader from 'react-spinners/FadeLoader';
 import { useState, useEffect } from 'react';
 import HistoryDashbpard from '../components/dashboard/HistoryDashbpard.jsx';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import './BuildHistoryPage.sass';
 
 const BuildsHistoryPage = () => {
@@ -15,7 +15,6 @@ const BuildsHistoryPage = () => {
 
     (async () => {
       try {
-        await new Promise((resolve, _) => setTimeout(() => resolve(), 200));
         setAppState((await axios.get(apiUrl)).data);
       } catch {
         setColor('#e74c3c');
@@ -41,7 +40,6 @@ const BuildsHistoryPage = () => {
           css={css}
           size={50}
         />
-      <ToastContainer />
       {appState
         .filter((_, index) => index < step)
         .map((item) => (
