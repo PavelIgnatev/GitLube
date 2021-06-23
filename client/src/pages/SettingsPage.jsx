@@ -94,7 +94,7 @@ const SettingsPage = () => {
           repoName: Repository,
           buildCommand: BuildCommand,
           mainBranch: MainBranch.length > 0 ? MainBranch : 'main',
-          period: Period.length > 0 ? Period :  '5',
+          period: Period.length > 0 ? Period :  '1',
         });
         setButtonDisabled(false)
 
