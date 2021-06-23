@@ -5,7 +5,7 @@ import BaseButtonOrange from '../buttons/BaseButtonOrange.jsx';
 import BaseButtonGray from '../buttons/BaseButtonGray.jsx';
 import axios from 'axios';
 import './BaseModal.sass';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useHistory } from 'react-router';
 
 Modal.setAppElement('#root');
@@ -113,7 +113,6 @@ const BaseModalForRunBuild = (props) => {
           </div>
         </form>
       </Modal>
-      <ToastContainer />
     </>
   );
 };

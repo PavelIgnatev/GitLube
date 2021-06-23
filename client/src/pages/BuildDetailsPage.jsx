@@ -4,16 +4,18 @@ import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import './BuildDetailsPage.sass';
+import { toast } from 'react-toastify';
 
 import Convert from 'ansi-to-html';
-
-const convert = new Convert();
-
 const BuildDetaildsPage = () => {
   const history = useHistory();
 
+  const convert = new Convert();
+
   const [getLogs, setGetLogs] = useState('');
   const [getInfo, setGetInfo] = useState('');
+  
+  const [color, setColor] = useState('#2787f5');
 
   useEffect(() => {
     const apiUrl =
@@ -22,7 +24,10 @@ const BuildDetaildsPage = () => {
     (async () => {
       try {
         setGetLogs((await axios.get(apiUrl)).data);
-      } catch {}
+      } catch {
+        setColor('#e74c3c');
+        toast.error(`An unknown error has occurred! Try again!`);
+      }
     })();
     return null;
   }, [setGetLogs, history.location.pathname]);
@@ -33,7 +38,10 @@ const BuildDetaildsPage = () => {
     (async () => {
       try {
         setGetInfo((await axios.get(apiUrl)).data);
-      } catch {}
+      } catch {
+        setColor('#e74c3c');
+        toast.error(`An unknown error has occurred! Try again!`);
+      }
     })();
     return null;
   }, [setGetInfo, history.location.pathname]);
@@ -51,7 +59,7 @@ const BuildDetaildsPage = () => {
   return (
     <div className="page-detail">
       <ClockLoader
-        color={'#2787f5'}
+        color={color}
         loading={!getLogs.length}
         css={css}
         size={50}

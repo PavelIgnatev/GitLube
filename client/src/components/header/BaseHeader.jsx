@@ -3,7 +3,7 @@ import ButtonForActions from '../buttons/ButtonForActions';
 import BaseModalForRunBuild from '../../components/modal/BaseModalForRunBuild.jsx';
 import axios from 'axios';
 import { NavLink, useHistory } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { Route } from 'react-router-dom';
 import './BaseHeader.sass';
@@ -119,7 +119,6 @@ const BaseHeader = (props) => {
           )}
         ></Route>
       </header>
-      <ToastContainer />
     </>
   );
 };
