@@ -36,11 +36,12 @@ module.exports = async (req, res) => {
       })
     ).data.data.id;
     //Оповещаем о запуске билда
+    res.json({ buildId: buildId });
+
     await axios.post('https://shri.yandex/hw/api/build/start', {
       buildid: buildId,
       dateTime: new Date(),
     });
-    res.json({ buildId: buildId });
 
     const buildLog = await cloneRepoByCommitHash(
       branch,
@@ -57,6 +58,7 @@ module.exports = async (req, res) => {
       success: true,
       buildLog: buildLog,
     });
+
     return res;
   } catch (error) {
     //Если произошла ошибка, то завершаем с ошибкой соответственно
