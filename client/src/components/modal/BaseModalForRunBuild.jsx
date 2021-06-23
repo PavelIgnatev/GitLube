@@ -50,7 +50,9 @@ const BaseModalForRunBuild = (props) => {
       } catch (error) {
         setButtonDisabled(false);
         changeErrorCommitHash('Error');
-        toast.error('Commit hash not found');
+        toast.error(
+          'The commit hash was not found in the repository from your settings'
+        );
       }
     }
   }
@@ -58,63 +60,38 @@ const BaseModalForRunBuild = (props) => {
   function onClick() {
     props.closeModal();
     changeErrorCommitHash('');
-    changeCommitHash('')
+    changeCommitHash('');
   }
 
-  const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      height: '188px',
-      maxWidth: '485px',
-      width: '100%',
-      boxSizing: 'border-box',
-      overflow: 'hidden',
-      border: '0px',
-      margin: '',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-      padding: '20px',
-    },
-  };
-
   return (
-    <>
-      <Modal
-        isOpen={props.modalIsOpen}
-        onRequestClose={props.closeModal}
-        style={customStyles}
-      >
-        <form>
-          <div className="base-modal__title">New Build</div>
-          <div className="base-modal__subtitle">
-            Enter the commit hash which you want to build
-          </div>
-          <BaseInput
-            id="hash"
-            placeholder="Commit hash"
-            onChange={chCommitHash}
-            classes="modal"
-            value={commitHash}
-            error={errorCommitHash}
+    <Modal isOpen={props.modalIsOpen} onRequestClose={onClick}>
+      <form>
+        <div className="base-modal__title">New Build</div>
+        <div className="base-modal__subtitle">
+          Enter the commit hash which you want to build
+        </div>
+        <BaseInput
+          id="hash"
+          placeholder="Commit hash"
+          onChange={chCommitHash}
+          classes="modal"
+          value={commitHash}
+          error={errorCommitHash}
+        />
+        <div className="page-settings__btns">
+          <BaseButtonOrange
+            text="Run build"
+            buttonDisabled={buttonDisabled}
+            onClick={postCommitHash}
           />
-          <div className="page-settings__btns">
-            <BaseButtonOrange
-              text="Run build"
-              buttonDisabled={buttonDisabled}
-              onClick={postCommitHash}
-            />
-            <BaseButtonGray
-              text="Cancel"
-              buttonDisabled={buttonDisabled}
-              onClick={onClick}
-            />
-          </div>
-        </form>
-      </Modal>
-    </>
+          <BaseButtonGray
+            text="Cancel"
+            buttonDisabled={buttonDisabled}
+            onClick={onClick}
+          />
+        </div>
+      </form>
+    </Modal>
   );
 };
 export default BaseModalForRunBuild;

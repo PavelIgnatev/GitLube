@@ -105,13 +105,16 @@ const SettingsPage = () => {
           errorMessage === 'This repository was not found, it may be private'
         ) {
           changeErrorForRepository('Error');
+          toast.error(errorMessage);
         }
-        if (errorMessage === 'Your master branch was not found, default branch: main') {
+        else if (errorMessage === 'Your master branch was not found, default branch: main') {
           changeErrorForMainBranch('Error');
+          toast.error(errorMessage);
         }
         //Если ошибки были - кидаем тост, иначе - сохраняем настройки
-        if (errorMessage) {
-          toast.error(errorMessage);
+        else if (errorMessage) {
+          changeErrorForRepository('Error');
+          toast.error('Sorry, but the format of the data you entered is not correct');
         } else {
           saveSettingsToLocalStorage();
         }

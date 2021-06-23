@@ -19,9 +19,9 @@ const BuildDetaildsPage = () => {
   useEffect(() => {
     const apiUrl =
       history.location.pathname.replace('build', 'api/builds') + '/logs';
-
     (async () => {
       try {
+        setGetLogs("")
         setGetLogs((await axios.get(apiUrl)).data);
       } catch {
         setColor('#e74c3c');

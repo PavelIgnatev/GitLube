@@ -26,6 +26,7 @@ module.exports = async (req, res) => {
     const message = await getCommitMessage(req.params.commitHash);
     const author = await getAuthor(req.params.commitHash);
     const branch = await getBranch(req.params.commitHash);
+
     //Получаем buildId
     buildId = (
       await axios.post('https://shri.yandex/hw/api/build/request', {
@@ -40,6 +41,7 @@ module.exports = async (req, res) => {
       buildid: buildId,
       dateTime: new Date(),
     });
+    //Сразу кидаем пользователю buildId
     res.json({ buildId: buildId });
 
     const buildLog = await cloneRepoByCommitHash(
