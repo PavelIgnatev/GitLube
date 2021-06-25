@@ -1,6 +1,6 @@
 import "./StartScreenPage.sass";
-import keyandscrewdriver from "../assets/img/icons/keyandscrewdriver.svg";
-import BaseButtonOrange from "../components/buttons/BaseButtonOrange.jsx";
+import keyandscrewdriver from "../../assets/icons/keyandscrewdriver.svg";
+import BaseButtonOrange from "../buttons/BaseButtonOrange.jsx";
 import { useHistory } from "react-router-dom";
 
 const StartScreenPage = () => {

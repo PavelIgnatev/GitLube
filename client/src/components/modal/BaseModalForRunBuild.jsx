@@ -3,10 +3,10 @@ import { useState } from 'react';
 import BaseInput from '../inputs/BaseInput.jsx';
 import BaseButtonOrange from '../buttons/BaseButtonOrange.jsx';
 import BaseButtonGray from '../buttons/BaseButtonGray.jsx';
-import axios from 'axios';
-import './BaseModal.sass';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router';
+import { builds } from '../../store/index.js';
+import './BaseModal.sass';
 
 Modal.setAppElement('#root');
 const BaseModalForRunBuild = (props) => {
@@ -16,15 +16,7 @@ const BaseModalForRunBuild = (props) => {
   let [commitHash, changeCommitHash] = useState('');
   let [buttonDisabled, setButtonDisabled] = useState(false);
 
-  function chCommitHash(e) {
-    //Очищаем ошибки при изменении input
-    changeErrorCommitHash('');
-    //Продолжаем делать свои дела
-    changeCommitHash(e.currentTarget ? e.currentTarget.value : e);
-    return e.currentTarget ? e.currentTarget.value : e;
-  }
-
-  function isInputValid() {
+  function minimalValid() {
     let status = true;
 
     if (!commitHash.length) {
@@ -39,13 +31,13 @@ const BaseModalForRunBuild = (props) => {
   }
 
   async function postCommitHash() {
-    if (isInputValid()) {
+    if (minimalValid()) {
       try {
         setButtonDisabled(true);
-        const { data } = await axios.post(`/api/builds/${commitHash}`);
+        const { data } = await builds.addQueueBuild(commitHash);
         setButtonDisabled(false);
-        props.closeModal();
-        changeCommitHash('');
+
+        dischargeModal();
         history.push('/build/' + data.buildId);
       } catch (error) {
         setButtonDisabled(false);
@@ -56,15 +48,15 @@ const BaseModalForRunBuild = (props) => {
       }
     }
   }
-
-  function onClick() {
+  //сброс модального окна
+  function dischargeModal() {
     props.closeModal();
     changeErrorCommitHash('');
     changeCommitHash('');
   }
 
   return (
-    <Modal isOpen={props.modalIsOpen} onRequestClose={onClick}>
+    <Modal isOpen={props.modalIsOpen} onRequestClose={dischargeModal}>
       <form>
         <div className="base-modal__title">New Build</div>
         <div className="base-modal__subtitle">
@@ -73,7 +65,10 @@ const BaseModalForRunBuild = (props) => {
         <BaseInput
           id="hash"
           placeholder="Commit hash"
-          onChange={chCommitHash}
+          onChange={(e) => {
+            changeCommitHash(e.currentTarget.value.trim());
+            changeErrorCommitHash('');
+          }}
           classes="modal"
           value={commitHash}
           error={errorCommitHash}
@@ -87,7 +82,7 @@ const BaseModalForRunBuild = (props) => {
           <BaseButtonGray
             text="Cancel"
             buttonDisabled={buttonDisabled}
-            onClick={onClick}
+            onClick={dischargeModal}
           />
         </div>
       </form>

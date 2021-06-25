@@ -1,15 +1,17 @@
 import ButtonForSettings from '../buttons/ButtonForSettings';
 import ButtonForActions from '../buttons/ButtonForActions';
 import BaseModalForRunBuild from '../../components/modal/BaseModalForRunBuild.jsx';
-import axios from 'axios';
+import { builds, settings } from '../../store/index.js';
 import { NavLink, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { Route } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import './BaseHeader.sass';
 
-const BaseHeader = (props) => {
+const BaseHeader = () => {
   const history = useHistory();
+  const getter = settings.getterSettings
 
   let [buttonDisabled, setButtonDisabled] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -21,17 +23,24 @@ const BaseHeader = (props) => {
   function closeModal() {
     setIsOpen(false);
   }
-  async function postCommitHash() {
+
+  async function postCommitHashForRebuild() {
     try {
-      setButtonDisabled(true)
-      const apiUrl = history.location.pathname.replace('build', 'api/builds');
-      const result = (await axios.get(apiUrl)).data;
-      const { data } = await axios.post(`/api/builds/${result.commitHash}`);
+      setButtonDisabled(true);
+      const commitHash =
+        builds.getterBuildInfo[history.location.pathname.split('/').pop()]
+          .commitHash;
+
+      const { data } = await builds.addQueueBuild(commitHash);
+
+      setButtonDisabled(false);
+
       history.push('/build/' + data.buildId);
-      setButtonDisabled(false)
     } catch (error) {
-      setButtonDisabled(false)
-      toast.error('Sorry! An error has occurred, please try to make a request manually');
+      setButtonDisabled(false);
+      toast.error(
+        'The commit hash was not found in the repository from your settings'
+      );
     }
   }
 
@@ -43,7 +52,7 @@ const BaseHeader = (props) => {
           exact
           path="/"
           render={() =>
-            !localStorage.getItem('Repository') ? (
+            !getter.repoName ? (
               <>
                 <NavLink to="/" className="app-header__icon">
                   School CI server
@@ -61,7 +70,7 @@ const BaseHeader = (props) => {
                   closeModal={closeModal}
                 />
                 <div className="app-header__repo">
-                  {localStorage.getItem('Repository')}
+                  {getter.repoName}
                 </div>
                 <div className="app-header__wrapper ">
                   <ButtonForActions
@@ -99,7 +108,7 @@ const BaseHeader = (props) => {
           render={() => (
             <>
               <div className="app-header__repo">
-                {localStorage.getItem('Repository')}
+                {getter.repoName}
               </div>
               <div className="app-header__wrapper ">
                 <ButtonForActions
@@ -107,7 +116,7 @@ const BaseHeader = (props) => {
                   src="rebuild.svg"
                   size="big"
                   buttonDisabled={buttonDisabled}
-                  onClick={postCommitHash}
+                  onClick={postCommitHashForRebuild}
                 />
                 <ButtonForSettings
                   action="Settings"
@@ -122,4 +131,4 @@ const BaseHeader = (props) => {
     </>
   );
 };
-export default BaseHeader;
+export default observer(BaseHeader);

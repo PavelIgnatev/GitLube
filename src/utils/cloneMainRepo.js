@@ -2,7 +2,7 @@ const { execFile, rmdir } = require('./promisify.js');
 const path = require('path');
 const repoPath = path.resolve(__dirname, '../../repo');
 
-module.exports.cloneMainRepo = async (url, branchName = '') => {
+module.exports.cloneMainRepo = async (url, branchName) => {
   try {
     //Cначала проверяем, есть ли такой реп, чтобы не удалять папку с предыдущим сохраненным репом зря
     //Это может вызвать ошибки в будущем, когда мы будем менять настройки на клиенте,
@@ -20,6 +20,7 @@ module.exports.cloneMainRepo = async (url, branchName = '') => {
     ) {
       //Проверка на то, существует ли такой branch
       if (
+        !branchName.length ||
         JSON.parse(
           (
             await execFile('curl', [
@@ -33,9 +34,10 @@ module.exports.cloneMainRepo = async (url, branchName = '') => {
         //Удаляем папочку рекурсивно если такой репозиторий существет
         await rmdir(repoPath, true);
         //Клонируем репозиторий
+
         return await execFile('git', [
           'clone',
-          `https://${process.env.GITHUB_KEY}@github.com/${url}.git`,
+          `https://github.com/${url}.git`,
           repoPath,
         ]);
       } else {

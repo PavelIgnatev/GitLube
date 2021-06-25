@@ -7,7 +7,7 @@ const ButtonForActions = (props) => {
       <div className="button-action__wrapper">
         <img
           className="button-action__img"
-          src={require(`./../../assets/img/icons/${props.src}`).default}
+          src={require(`./../../assets/icons/${props.src}`).default}
           alt=""
         />
       </div>

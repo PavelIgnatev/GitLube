@@ -6,7 +6,6 @@ const historyDashboard = (props) => {
   //"status": "Canceled",
   //"status": "Success",
   //"status": "Fail"
-  
   function getDate(date) {
     return new Date(date).toLocaleString("en-US", {
       day: "numeric",
@@ -44,7 +43,7 @@ const historyDashboard = (props) => {
               <img
                 className="history-dashboard__branchName_img"
                 src={
-                  require(`./../../assets/img/icons/code-commit.svg`).default
+                  require(`./../../assets/icons/code-commit.svg`).default
                 }
                 alt="code-commit"
               />
@@ -52,13 +51,13 @@ const historyDashboard = (props) => {
                 {props.item.branchName}
               </div>
               <div className="history-dashboard__commitHash">
-                {props.item.commitHash.slice(0, 7)}
+                {String(props.item.commitHash).slice(0, 7)}
               </div>
             </div>
             <div style={{ display: "flex" }}>
               <img
                 className="history-dashboard__name_img"
-                src={require(`./../../assets/img/icons/user.svg`).default}
+                src={require(`./../../assets/icons/user.svg`).default}
                 alt=""
               />
               <div className="history-dashboard__name">
@@ -84,7 +83,7 @@ const historyDashboard = (props) => {
             <div className="history-dashboard__line">
               <img
                 className="history-dashboard__calendar"
-                src={require(`./../../assets/img/icons/calendar.svg`).default}
+                src={require(`./../../assets/icons/calendar.svg`).default}
                 alt=""
               />
               <div className="history-dashboard__date">
@@ -96,7 +95,7 @@ const historyDashboard = (props) => {
             <div className="history-dashboard__line">
               <img
                 className="history-dashboard__clock"
-                src={require(`./../../assets/img/icons/clock.svg`).default}
+                src={require(`./../../assets/icons/clock.svg`).default}
                 alt=""
               />
               <div className="history-dashboard__time">

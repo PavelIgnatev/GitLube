@@ -1,30 +1,34 @@
-import { Route } from "react-router-dom";
-import BuildDetaildsPage from "../pages/BuildDetailsPage.jsx";
-import BuildsHistoryPage from "../pages/BuildHistoryPage.jsx";
-import SettingsPage from "../pages/SettingsPage.jsx";
-import StartScreenPage from "../pages/StartScreenPage.jsx";
-import { Redirect } from "react-router-dom";
+import { Route } from 'react-router-dom';
+import BuildDetaildsPage from '../components/pages/BuildDetailsPage.jsx';
+import BuildsHistoryPage from '../components/pages/BuildHistoryPage.jsx';
+import SettingsPage from '../components/pages/SettingsPage.jsx';
+import StartScreenPage from '../components/pages/StartScreenPage.jsx';
+import { observer } from 'mobx-react-lite';
+import { settings } from '../store';
+import { useEffect } from 'react';
 
 const RepoHeader = () => {
+  const getter = settings.getterSettings
+  useEffect(() => {
+    settings.getSettings();
+  }, []);
   return (
     <div className="app-page">
       <Route
         exact
         path="/"
         render={() =>
-          localStorage.getItem("Repository") ? <BuildsHistoryPage /> : <StartScreenPage />
+          getter.repoName ? (
+            <BuildsHistoryPage />
+          ) : (
+            <StartScreenPage />
+          )
         }
       ></Route>
       <Route exact path="/settings" component={SettingsPage}></Route>
-      <Route
-        exact
-        path="/build/:number"
-        render={() =>
-          localStorage.getItem("Repository") ? <BuildDetaildsPage /> : <Redirect to="/" />
-        }
-      ></Route>
+      <Route exact path="/build/:number" component={BuildDetaildsPage}></Route>
     </div>
   );
 };
 
-export default RepoHeader;
+export default observer(RepoHeader);
