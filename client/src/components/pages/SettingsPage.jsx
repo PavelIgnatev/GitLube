@@ -31,15 +31,6 @@ const SettingsPage = () => {
   );
   const [Period, changePeriod] = useState(settings.getterSettings.period);
 
-  //Получаем предыдущие настройки
-  async function getPrevSettings() {
-    await settings.getSettings();
-    changeRepository(settings.getterSettings.repoName ?? "");
-    changeBuildCommand(settings.getterSettings.buildCommand ?? "");
-    changeMainBranch(settings.getterSettings.mainBranch ?? "");
-    changePeriod(settings.getterSettings.period ?? "");
-  }
-
   //Обновляем state настроек
   function updateSettings() {
     settings.updateSettings({
@@ -123,7 +114,7 @@ const SettingsPage = () => {
       postSettings();
     }
   }
-  
+
   function onClickCancel(e) {
     e.preventDefault();
     history.push('/');
@@ -131,9 +122,13 @@ const SettingsPage = () => {
 
   //При обновлении страницы получаем предыдущие настройки
   useEffect(() => {
-    getPrevSettings();
+    changeRepository(settings.getterSettings.repoName ?? '');
+    changeBuildCommand(settings.getterSettings.buildCommand ?? '');
+    changeMainBranch(settings.getterSettings.mainBranch ?? '');
+    changePeriod(settings.getterSettings.period ?? '');
     return null;
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [settings.getterSettings]);
 
   return (
     <div className="page-settings">

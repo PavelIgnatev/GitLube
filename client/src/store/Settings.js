@@ -6,6 +6,7 @@ class Settings {
 
   constructor() {
     makeAutoObservable(this);
+    this.getSettings();
   }
 
   updateSettings(newSettings) {

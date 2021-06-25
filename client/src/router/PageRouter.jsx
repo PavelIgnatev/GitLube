@@ -5,13 +5,9 @@ import SettingsPage from '../components/pages/SettingsPage.jsx';
 import StartScreenPage from '../components/pages/StartScreenPage.jsx';
 import { observer } from 'mobx-react-lite';
 import { settings } from '../store';
-import { useEffect } from 'react';
 
 const RepoHeader = () => {
   const getter = settings.getterSettings
-  useEffect(() => {
-    settings.getSettings();
-  }, []);
   return (
     <div className="app-page">
       <Route
