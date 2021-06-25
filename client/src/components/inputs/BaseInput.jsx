@@ -22,6 +22,7 @@ const BaseInput = (props) => {
         onChange={props.onChange}
         value={props.value}
         style={{ border: props.error ? '2px solid red' : '' }}
+        autoFocus={props.autoFocus}
       />
       {props.value && (
         <div

@@ -5,7 +5,6 @@ class Builds {
   buildList = [];
   BuildInfo = {};
   buildLog = {};
-  intervals = '';
 
   constructor() {
     makeAutoObservable(this);

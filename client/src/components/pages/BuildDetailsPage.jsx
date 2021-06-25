@@ -14,8 +14,10 @@ const BuildDetaildsPage = () => {
   const convert = new Convert();
 
   function getDetails() {
-    builds.getBuildLog(buildId);
-    builds.getBuildInfo(buildId);
+    if (buildId) {
+      builds.getBuildLog(buildId);
+      builds.getBuildInfo(buildId);
+    }
   }
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const BuildDetaildsPage = () => {
       //Обновление state каждые n времени в настройках
       update = setInterval(() => {
         getDetails();
-      }, Number(settings.settings.period) * 1000 * 60);
+      }, Number(settings.settings.period) > 0 ? Number(settings.settings.period) * 1000 * 60 : 1000 * 60);
     }
     return () => {
       clearInterval(update);

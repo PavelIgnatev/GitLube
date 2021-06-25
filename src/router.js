@@ -21,7 +21,7 @@ mainRouter.use(
     ? express.static(path.resolve(__dirname, '..', 'client', 'build'))
     : createProxyMiddleware({
         target: 'http://localhost:3001',
-        changeOrigin: true,
+        changeOrigin: false,
       })
 );
 exports.mainRouter = mainRouter;

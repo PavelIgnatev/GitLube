@@ -19,19 +19,18 @@ const BaseModalForRunBuild = (props) => {
   function minimalValid() {
     let status = true;
 
-    if (!commitHash.length) {
+    if (commitHash.length < 7) {
       changeErrorCommitHash('ERROR');
-      status = false;
-    }
-    if (errorCommitHash) {
-      status = false;
-    }
 
+      toast.error('The minimum length of the commit hash field is 7 character');
+      status = false;
+    }
     return status;
   }
 
-  async function postCommitHash() {
-    if (minimalValid()) {
+  async function postCommitHash(e) {
+    e.preventDefault()
+    if (minimalValid() !== false) {
       try {
         setButtonDisabled(true);
         const { data } = await builds.addQueueBuild(commitHash);
@@ -72,6 +71,7 @@ const BaseModalForRunBuild = (props) => {
           classes="modal"
           value={commitHash}
           error={errorCommitHash}
+          autoFocus={true}
         />
         <div className="page-settings__btns">
           <BaseButtonOrange

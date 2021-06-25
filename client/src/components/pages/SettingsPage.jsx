@@ -21,15 +21,15 @@ const SettingsPage = () => {
 
   //Для input
   const [Repository, changeRepository] = useState(
-    settings.getterSettings.repoName
+    settings.getterSettings.repoName ?? ""
   );
   const [BuildCommand, changeBuildCommand] = useState(
-    settings.getterSettings.buildCommand
+    settings.getterSettings.buildCommand ?? ""
   );
   const [MainBranch, changeMainBranch] = useState(
-    settings.getterSettings.mainBranch
+    settings.getterSettings.mainBranch ?? ""
   );
-  const [Period, changePeriod] = useState(settings.getterSettings.period);
+  const [Period, changePeriod] = useState(settings.getterSettings.period ?? "");
 
   //Обновляем state настроек
   function updateSettings() {
@@ -127,7 +127,7 @@ const SettingsPage = () => {
     changeMainBranch(settings.getterSettings.mainBranch ?? '');
     changePeriod(settings.getterSettings.period ?? '');
     return null;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings.getterSettings]);
 
   return (
@@ -155,7 +155,7 @@ const SettingsPage = () => {
           label="Build command"
           placeholder="npm ci && npm run build"
           onChange={(e) => {
-            changeBuildCommand(e.currentTarget.value.trim());
+            changeBuildCommand(e.currentTarget.value);
             changeErrorForBuildCommand('');
           }}
           value={BuildCommand}
@@ -166,7 +166,10 @@ const SettingsPage = () => {
           required="false"
           label="Main branch"
           placeholder="main"
-          onChange={(e) => changeMainBranch(e.currentTarget.value.trim())}
+          onChange={(e) => {
+            changeMainBranch(e.currentTarget.value.trim());
+            changeErrorForMainBranch('');
+          }}
           value={MainBranch}
           error={errorForMainBranch}
         />

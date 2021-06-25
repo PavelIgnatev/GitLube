@@ -11,11 +11,10 @@ const BuildsHistoryPage = () => {
   useEffect(() => {
     //Получаем все билды в геттер getterBuildList, без ожидания
     builds.getBuildList();
-
     //Обновление state каждые n времени в настройках
     const update = setInterval(() => {
       builds.getBuildList();
-    }, Number(settings.settings.period) * 1000 * 60);
+    }, Number(settings.settings.period) > 0 ? Number(settings.settings.period) * 1000 * 60 : 1000 * 60);
     return () => {
       clearInterval(update);
     };
