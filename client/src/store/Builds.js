@@ -5,6 +5,7 @@ class Builds {
   buildList = [];
   BuildInfo = {};
   buildLog = {};
+  status = 'data';
 
   constructor() {
     makeAutoObservable(this);
@@ -25,6 +26,9 @@ class Builds {
   //Функции для асинхронных запросов
   async getBuildList() {
     this.updateBuildList((await api.get('/api/builds')).data);
+    if (this.buildList.length < 1) {
+      this.status = 'no data';
+    }
   }
 
   async getBuildInfo(BuildId) {

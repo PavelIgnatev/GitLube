@@ -7,6 +7,8 @@ module.exports = async (req, res) => {
   try {
     await cloneMainRepo(req.body.repoName, req.body.mainBranch);
 
+    await axios.delete('https://shri.yandex/hw/api/conf');
+
     let result = await axios.post('https://shri.yandex/hw/api/conf', req.body);
 
     return res.json(result.data);

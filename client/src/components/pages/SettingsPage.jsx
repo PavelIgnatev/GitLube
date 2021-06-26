@@ -6,11 +6,13 @@ import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { settings } from '../../store';
 import { observer } from 'mobx-react-lite';
+import makeMobxLocation from 'mobx-location';
+import { toJS } from 'mobx';
 import './SettingsPage.sass';
 
 const SettingsPage = () => {
   const history = useHistory();
-
+  const mobxLocation = makeMobxLocation({ arrayFormat: 'bracket' });
   //Для определения ошибок
   const [errorForRepository, changeErrorForRepository] = useState('');
   const [errorForBuildCommand, changeErrorForBuildCommand] = useState('');
@@ -21,15 +23,15 @@ const SettingsPage = () => {
 
   //Для input
   const [Repository, changeRepository] = useState(
-    settings.getterSettings.repoName ?? ""
+    settings.getterSettings.repoName ?? ''
   );
   const [BuildCommand, changeBuildCommand] = useState(
-    settings.getterSettings.buildCommand ?? ""
+    settings.getterSettings.buildCommand ?? ''
   );
   const [MainBranch, changeMainBranch] = useState(
-    settings.getterSettings.mainBranch ?? ""
+    settings.getterSettings.mainBranch ?? ''
   );
-  const [Period, changePeriod] = useState(settings.getterSettings.period ?? "");
+  const [Period, changePeriod] = useState(settings.getterSettings.period ?? '');
 
   //Обновляем state настроек
   function updateSettings() {
@@ -124,11 +126,13 @@ const SettingsPage = () => {
   useEffect(() => {
     changeRepository(settings.getterSettings.repoName ?? '');
     changeBuildCommand(settings.getterSettings.buildCommand ?? '');
+    //Branch стандартно всегда main, если что - пользователю вылетит ошибка
     changeMainBranch(settings.getterSettings.mainBranch ?? '');
+    //Period стандартно 1, пользователю и не обязательно это знать
     changePeriod(settings.getterSettings.period ?? '');
     return null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [settings.getterSettings]);
+  }, [settings.getterSettings, toJS(mobxLocation).href]);
 
   return (
     <div className="page-settings">

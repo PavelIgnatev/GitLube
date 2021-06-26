@@ -3,10 +3,10 @@ import ClockLoader from 'react-spinners/FadeLoader';
 import Convert from 'ansi-to-html';
 import { useEffect } from 'react';
 import { builds, settings } from '../../store';
-import { observer } from 'mobx-react-lite';
-import './BuildDetailsPage.sass';
 import makeMobxLocation from 'mobx-location';
 import { toJS } from 'mobx';
+import { observer } from 'mobx-react-lite';
+import './BuildDetailsPage.sass';
 
 const BuildDetaildsPage = () => {
   const mobxLocation = makeMobxLocation({ arrayFormat: 'bracket' });
@@ -28,9 +28,14 @@ const BuildDetaildsPage = () => {
       getDetails();
 
       //Обновление state каждые n времени в настройках
-      update = setInterval(() => {
-        getDetails();
-      }, Number(settings.settings.period) > 0 ? Number(settings.settings.period) * 1000 * 60 : 1000 * 60);
+      update = setInterval(
+        () => {
+          getDetails();
+        },
+        Number(settings.settings.period) > 0
+          ? Number(settings.settings.period) * 1000 * 60
+          : 1000 * 60
+      );
     }
     return () => {
       clearInterval(update);
@@ -56,8 +61,9 @@ const BuildDetaildsPage = () => {
           className="page-detail__pre"
           dangerouslySetInnerHTML={{
             __html: convert.toHtml(
-              builds.getterBuildLog[toJS(mobxLocation).href.split('/').pop()], {
-                colors: ["red"]
+              builds.getterBuildLog[toJS(mobxLocation).href.split('/').pop()],
+              {
+                colors: ['red'],
               }
             ),
           }}
