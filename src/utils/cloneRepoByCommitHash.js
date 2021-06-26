@@ -25,8 +25,8 @@ module.exports.cloneRepoByCommitHash = async (
 
     const result = await execAsync(command, {
       cwd: path.resolve(__dirname, '../../CHB/' + id),
+      env: { ...process.env, FORCE_COLOR: 3, TERM: 'xterm-256color' },
     });
-
     rmdir(repoPath, true);
     return result.stdout;
   } catch (error) {

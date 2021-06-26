@@ -56,7 +56,9 @@ const BuildDetaildsPage = () => {
           className="page-detail__pre"
           dangerouslySetInnerHTML={{
             __html: convert.toHtml(
-              builds.getterBuildLog[toJS(mobxLocation).href.split('/').pop()]
+              builds.getterBuildLog[toJS(mobxLocation).href.split('/').pop()], {
+                colors: ["red"]
+              }
             ),
           }}
         ></pre>
