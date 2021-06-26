@@ -7,20 +7,18 @@ import { observer } from 'mobx-react-lite';
 import { settings } from '../store';
 
 const RepoHeader = () => {
-  const getter = settings.getterSettings
+  const getter = settings.getterSettings;
   return (
     <div className="app-page">
-      <Route
-        exact
-        path="/"
-        render={() =>
-          getter.repoName ? (
-            <BuildsHistoryPage />
-          ) : (
-            <StartScreenPage />
-          )
-        }
-      ></Route>
+      {settings.status !== 'pending' && (
+        <Route
+          exact
+          path="/"
+          render={() =>
+            getter.repoName ? <BuildsHistoryPage /> : <StartScreenPage />
+          }
+        ></Route>
+      )}
       <Route exact path="/settings" component={SettingsPage}></Route>
       <Route exact path="/build/:number" component={BuildDetaildsPage}></Route>
     </div>

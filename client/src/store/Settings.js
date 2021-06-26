@@ -3,9 +3,11 @@ import api from '../api';
 
 class Settings {
   settings = { repoName: '', buildCommand: '', mainBranch: '', period: '' };
+  status = 'pending';
 
   constructor() {
     makeAutoObservable(this);
+    //Сразу получаем настройки и они автоматически запишутся в state.settings
     this.getSettings();
   }
 
@@ -18,7 +20,9 @@ class Settings {
   }
 
   async getSettings() {
+    this.status = 'pending';
     this.updateSettings((await api.get('/api/settings')).data);
+    this.status = 'done';
   }
 
   get getterSettings() {

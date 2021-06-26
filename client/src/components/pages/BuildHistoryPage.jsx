@@ -22,6 +22,7 @@ const BuildsHistoryPage = () => {
 
   return (
     <div className="app-page__builds">
+
       <ClockLoader
         color={'#2787f5'}
         loading={!builds.getterBuildList.length}
