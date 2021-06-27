@@ -4,7 +4,7 @@ import BaseInput from '../inputs/BaseInput';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { settings, builds } from '../../store';
+import { settings  } from '../../store';
 import { observer } from 'mobx-react-lite';
 import makeMobxLocation from 'mobx-location';
 import { toJS } from 'mobx';
@@ -100,8 +100,9 @@ const SettingsPage = () => {
       //Раздизейблим кнопку
       setButtonDisabled(false);
       maximalValid(result.data.message);
-      builds.buildList = []
-      builds.status = "data"
+      //Если будем очищать настройки вместе с билдами на node, то расскоментить следующие
+      //builds.buildList = []
+      //builds.status = "data"
     } catch (error) {
       //Раздизейблим кнопку
       setButtonDisabled(false);

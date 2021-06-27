@@ -1,14 +1,25 @@
-.app-page__button
-    height: 28px
-    padding: 0 13px
-    font-style: normal
-    font-weight: normal
-    font-size: 13px
-    border-radius: 3px
-    box-sizing: border-box
-    &:active
-        padding: 0 11px !important
-        padding-bottom: 0px !important
-    .Toastify__toast-container
-        top: 2em !important
-
+.app-page
+    &__button
+        height: 28px
+        padding: 0 13px
+        font-style: normal
+        font-weight: normal
+        font-size: 13px
+        border-radius: 3px
+        box-sizing: border-box
+        &:active
+            padding: 0 11px !important
+            padding-bottom: 0px !important
+        .Toastify__toast-container
+            top: 2em !important
+    &__builds
+        &_sorry
+            pointer-events: none
+            user-select: none
+            position: absolute
+            left: 50%
+            top: 50%
+            color: #fd3f1d
+            font-weight: 500
+            font-size: 22px
+            transform: translate(-50%, -50%)

@@ -10,7 +10,13 @@ const BuildsHistoryPage = () => {
 
   useEffect(() => {
     //Получаем все билды в геттер getterBuildList, без ожидания
-    builds.getBuildList();
+    //Только в том случае, если мы уже явно добавли в очередь какой-то билд
+    //Или в случае, если у нас еще не получен BuildList
+    if (
+      builds.status === 'pending' ||
+      (builds.status === 'data' && !builds.getterBuildList.length)
+    )
+      builds.getBuildList();
     //Обновление state каждые n времени в настройках
     const update = setInterval(
       () => {
@@ -27,18 +33,22 @@ const BuildsHistoryPage = () => {
 
   return (
     <div className="app-page__builds">
+      {builds.status === 'no data' && (
+        <div className="app-page__builds_sorry">
+          Please add the build to the queue
+        </div>
+      )}
       {!Object.values(builds.getterBuildList).length &&
         builds.status === 'data' && (
-          <object
-            type="image/svg+xml"
-            data={loader}
-          >
+          <object type="image/svg+xml" data={loader}>
             {' '}
           </object>
         )}
-      {builds.status === "pending" && (
-        <div style={{position: 'relative' }}>
-          <div style={{opacity: '0' }}><HistoryDashbpard item={[]} key={'buildstatuspending'} /></div>
+      {builds.status === 'pending' && (
+        <div style={{ position: 'relative' }}>
+          <div style={{ opacity: '0' }}>
+            <HistoryDashbpard item={[]} key={'buildstatuspending'} />
+          </div>
           <object type="image/svg+xml" data={loader}>
             {' '}
           </object>
