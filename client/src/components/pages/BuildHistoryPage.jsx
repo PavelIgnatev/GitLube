@@ -10,13 +10,8 @@ const BuildsHistoryPage = () => {
 
   useEffect(() => {
     //Получаем все билды в геттер getterBuildList, без ожидания
-    //Только в том случае, если мы уже явно добавли в очередь какой-то билд
-    //Или в случае, если у нас еще не получен BuildList
-    if (
-      builds.status === 'pending' ||
-      (builds.status === 'data' && !builds.getterBuildList.length)
-    )
-      builds.getBuildList();
+
+    builds.getBuildList();
     //Обновление state каждые n времени в настройках
     const update = setInterval(
       () => {
