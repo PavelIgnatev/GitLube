@@ -23,11 +23,19 @@ class Builds {
     this.buildLog[buildId] = newBuildLog;
   }
 
+  sleep(time) {
+    return new Promise((res, rej) => setTimeout(() => res(), time));
+  }
+
   //Функции для асинхронных запросов
   async getBuildList() {
+    //Решил замедлить, чтобы лоадер хоть видно было)
+    await this.sleep(1000);
     this.updateBuildList((await api.get('/api/builds')).data);
     if (this.buildList.length < 1) {
       this.status = 'no data';
+    } else {
+      this.status = 'data';
     }
   }
 

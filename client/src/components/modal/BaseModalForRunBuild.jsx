@@ -29,13 +29,13 @@ const BaseModalForRunBuild = (props) => {
   }
 
   async function postCommitHash(e) {
-    e.preventDefault()
+    e.preventDefault();
     if (minimalValid() !== false) {
       try {
         setButtonDisabled(true);
         const { data } = await builds.addQueueBuild(commitHash);
+        builds.status = "pending"
         setButtonDisabled(false);
-
         dischargeModal();
         history.push('/build/' + data.buildId);
       } catch (error) {

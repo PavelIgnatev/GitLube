@@ -28,8 +28,9 @@ module.exports.cloneRepoByCommitHash = async (
       env: { ...process.env, FORCE_COLOR: 3, TERM: 'xterm-256color' },
     });
     rmdir(repoPath, true);
+    rmdir(repoPath, true);
 
-    return result.stdout + `\n[1;31m${result.stderr}`;
+    return result.stdout + `\n[1;33m${result.stderr}`;
   } catch (error) {
     rmdir(repoPath, true);
     throw error.stderr;

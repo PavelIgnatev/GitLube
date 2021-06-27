@@ -32,9 +32,8 @@ const BaseHeader = () => {
           .commitHash;
 
       const { data } = await builds.addQueueBuild(commitHash);
-
+      builds.status = "pending"
       setButtonDisabled(false);
-
       history.push('/build/' + data.buildId);
     } catch (error) {
       setButtonDisabled(false);
@@ -100,7 +99,7 @@ const BaseHeader = () => {
         path="/build/:id"
         render={() => (
           <>
-            <div className="app-header__repo">{getter.repoName}</div>
+            <NavLink to="/" className="app-header__repo">{getter.repoName}</NavLink>
             <div className="app-header__wrapper ">
               <ButtonForActions
                 action="Rebuild"

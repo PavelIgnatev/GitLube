@@ -8,6 +8,9 @@ const historyDashboard = (props) => {
   //"status": "Fail"
   function getDate(date) {
     return new Date(date).toLocaleString("en-US", {
+      hour12: false,
+      timeZone: 'Europe/Moscow',
+      timeZoneName: "short",
       day: "numeric",
       month: "short",
       hour: "numeric",

@@ -1,5 +1,5 @@
 import HistoryDashbpard from '../dashboard/HistoryDashbpard.jsx';
-import ClockLoader from 'react-spinners/FadeLoader';
+import loader from '../../assets/icons/loader.svg';
 import Convert from 'ansi-to-html';
 import { useEffect } from 'react';
 import { builds, settings } from '../../store';
@@ -45,11 +45,10 @@ const BuildDetaildsPage = () => {
 
   return (
     <div className="page-detail">
-      <ClockLoader
-        color={'#2787f5'}
-        loading={!builds.getterBuildLog[buildId]}
-        size={50}
-      />
+      {!builds.getterBuildLog[buildId] && (
+          <object type="image/svg+xml" data={loader}>
+          </object>
+        )}
       {builds.getterBuildInfo[buildId] && (
         <HistoryDashbpard
           item={builds.getterBuildInfo[buildId]}

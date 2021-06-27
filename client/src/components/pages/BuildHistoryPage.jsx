@@ -1,4 +1,4 @@
-import ClockLoader from 'react-spinners/FadeLoader';
+import loader from '../../assets/icons/loader.svg';
 import HistoryDashbpard from '../dashboard/HistoryDashbpard.jsx';
 import { useState, useEffect } from 'react';
 import { builds, settings } from '../../store';
@@ -12,9 +12,14 @@ const BuildsHistoryPage = () => {
     //Получаем все билды в геттер getterBuildList, без ожидания
     builds.getBuildList();
     //Обновление state каждые n времени в настройках
-    const update = setInterval(() => {
-      builds.getBuildList();
-    }, Number(settings.settings.period) > 0 ? Number(settings.settings.period) * 1000 * 60 : 1000 * 60);
+    const update = setInterval(
+      () => {
+        builds.getBuildList();
+      },
+      Number(settings.settings.period) > 0
+        ? Number(settings.settings.period) * 1000 * 60
+        : 1000 * 60
+    );
     return () => {
       clearInterval(update);
     };
@@ -22,12 +27,23 @@ const BuildsHistoryPage = () => {
 
   return (
     <div className="app-page__builds">
-      {builds.status}
-      <ClockLoader
-        color={'#2787f5'}
-        loading={!Object.values(builds.getterBuildList).length && builds.status !== 'no data'}
-        size={50}
-      />
+      {!Object.values(builds.getterBuildList).length &&
+        builds.status === 'data' && (
+          <object
+            type="image/svg+xml"
+            data={loader}
+          >
+            {' '}
+          </object>
+        )}
+      {builds.status === "pending" && (
+        <div style={{position: 'relative' }}>
+          <div style={{opacity: '0' }}><HistoryDashbpard item={[]} key={'buildstatuspending'} /></div>
+          <object type="image/svg+xml" data={loader}>
+            {' '}
+          </object>
+        </div>
+      )}
       {builds.getterBuildList
         .filter((_, index) => index < step)
         .map((item) => (
