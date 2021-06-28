@@ -37,7 +37,7 @@ module.exports.cloneMainRepo = async (url, branchName) => {
 
         return await execFile('git', [
           'clone',
-          `https://github.com/${url}.git`,
+          `https://${process.env.GITHUB_KEY}@github.com/${url}.git`,
           repoPath,
         ]);
       } else {
