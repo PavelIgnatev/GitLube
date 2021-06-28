@@ -34,12 +34,12 @@ const BuildsHistoryPage = () => {
         </div>
       )}
       {!Object.values(builds.getterBuildList).length &&
-        builds.status === 'data' && (
+        (builds.status === 'data' || builds.status === 'pending') && (
           <object type="image/svg+xml" data={loader}>
             {' '}
           </object>
         )}
-      {builds.status === 'pending' && (
+      {builds.status === 'pending' && Object.values(builds.getterBuildList).length && (
         <div style={{ position: 'relative' }}>
           <div style={{ opacity: '0' }}>
             <HistoryDashbpard item={[]} key={'buildstatuspending'} />

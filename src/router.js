@@ -14,15 +14,20 @@ apiRouter.get('/builds/:buildId', api.getBuildsBuildId);
 apiRouter.get('/builds/:buildId/logs', cache(1000), api.getBuildsBuildIdLogs);
 
 const mainRouter = new express.Router();
+if (process.env.NODE_ENV === 'production') {
+  mainRouter.use(express.static(path.join(__dirname, '../client', 'build')));
+  mainRouter.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client', 'build', 'index.html'));
+  });
+} else {
+  mainRouter.use(
+    '/',
+    createProxyMiddleware({
+      target: 'http://localhost:3001',
+      changeOrigin: true,
+    })
+  );
+}
 
-mainRouter.use(
-  '/',
-  process.env.NODE_ENV === 'production'
-    ? express.static(path.resolve(__dirname, '..', 'client', 'build'))
-    : createProxyMiddleware({
-        target: 'http://localhost:3001',
-        changeOrigin: false,
-      })
-);
 exports.mainRouter = mainRouter;
 exports.apiRouter = apiRouter;

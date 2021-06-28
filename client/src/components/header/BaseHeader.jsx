@@ -28,11 +28,11 @@ const BaseHeader = () => {
     try {
       setButtonDisabled(true);
       const commitHash =
-        builds.getterBuildInfo[history.location.pathname.split('/').pop()]
+        builds.getterBuildInfo[history.location.pathname.split('/')[2]]
           .commitHash;
 
       const { data } = await builds.addQueueBuild(commitHash);
-      builds.status = "pending"
+      builds.status = 'pending';
       setButtonDisabled(false);
       history.push('/build/' + data.buildId);
     } catch (error) {
@@ -46,41 +46,47 @@ const BaseHeader = () => {
   return (
     <header className="app-header">
       {/* path / */}
-      {settings.status !== 'pending' && (<Route
-        exact
-        path="/"
-        render={() =>
-          !getter.repoName ? (
-            <>
-              <NavLink to="/" className="app-header__icon">
-                School CI server
-              </NavLink>
-              <ButtonForSettings action="Settings" src="gear.svg" size="big" />
-            </>
-          ) : (
-            <>
-              <BaseModalForRunBuild
-                modalIsOpen={modalIsOpen}
-                closeModal={closeModal}
-              />
-              <div className="app-header__repo">{getter.repoName}</div>
-              <div className="app-header__wrapper ">
-                <ButtonForActions
-                  action="Run build"
-                  src="play.svg"
-                  size="big"
-                  onClick={openModal}
-                />
+      {settings.status !== 'pending' && (
+        <Route
+          exact
+          path="/"
+          render={() =>
+            !getter.repoName ? (
+              <>
+                <NavLink to="/" className="app-header__icon">
+                  School CI server
+                </NavLink>
                 <ButtonForSettings
                   action="Settings"
                   src="gear.svg"
-                  size="mini"
+                  size="big"
                 />
-              </div>
-            </>
-          )
-        }
-      ></Route>)}
+              </>
+            ) : (
+              <>
+                <BaseModalForRunBuild
+                  modalIsOpen={modalIsOpen}
+                  closeModal={closeModal}
+                />
+                <div className="app-header__repo">{getter.repoName}</div>
+                <div className="app-header__wrapper ">
+                  <ButtonForActions
+                    action="Run build"
+                    src="play.svg"
+                    size="big"
+                    onClick={openModal}
+                  />
+                  <ButtonForSettings
+                    action="Settings"
+                    src="gear.svg"
+                    size="mini"
+                  />
+                </div>
+              </>
+            )
+          }
+        ></Route>
+      )}
 
       {/* path settings */}
       <Route
@@ -99,7 +105,9 @@ const BaseHeader = () => {
         path="/build/:id"
         render={() => (
           <>
-            <NavLink to="/" className="app-header__repo">{getter.repoName}</NavLink>
+            <NavLink to="/" className="app-header__repo">
+              {getter.repoName}
+            </NavLink>
             <div className="app-header__wrapper ">
               <ButtonForActions
                 action="Rebuild"

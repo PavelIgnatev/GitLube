@@ -10,7 +10,7 @@ import './BuildDetailsPage.sass';
 
 const BuildDetaildsPage = () => {
   const mobxLocation = makeMobxLocation({ arrayFormat: 'bracket' });
-  const buildId = toJS(mobxLocation).href.split('/').pop();
+  const buildId = toJS(mobxLocation).href.split('/')[4];
   const convert = new Convert({bg: "#fff", fg: '#55F'});
   
   function getDetails() {
@@ -60,7 +60,7 @@ const BuildDetaildsPage = () => {
           className="page-detail__pre"
           dangerouslySetInnerHTML={{
             __html: convert.toHtml(
-              builds.getterBuildLog[toJS(mobxLocation).href.split('/').pop()],
+              builds.getterBuildLog[buildId],
               {
                 colors: ['red'],
               }
