@@ -45,7 +45,7 @@ const SettingsPage = () => {
   }
 
   //Функция минимальной валидации
-  function minimalValid() {
+  function beforeRequestingTheServer() {
     let status = true;
     if (!Repository.length) {
       changeErrorForRepository('ERROR');
@@ -59,12 +59,13 @@ const SettingsPage = () => {
     }
     if (!BuildCommand.length) {
       changeErrorForBuildCommand('ERROR');
+      toast.error('The minimum length of the Build command field is 3 character');
       status = false;
     }
     return status;
   }
   //Функция окончательной валидации
-  function maximalValid(errorMessage) {
+  function afterRequestingTheServer(errorMessage) {
     //Валидация по дополнительным условиям
     if (errorMessage === 'This repository was not found, it may be private') {
       changeErrorForRepository('Error');
@@ -99,7 +100,7 @@ const SettingsPage = () => {
       );
       //Раздизейблим кнопку
       setButtonDisabled(false);
-      maximalValid(result.data.message);
+      afterRequestingTheServer(result.data.message);
       //Если будем очищать настройки вместе с билдами на node, то расскоментить следующие
       //builds.buildList = []
       //builds.status = "data"
@@ -115,7 +116,7 @@ const SettingsPage = () => {
     e.preventDefault();
 
     //Если минимальная проверка удалась
-    if (minimalValid()) {
+    if (beforeRequestingTheServer()) {
       postSettings();
     }
   }
