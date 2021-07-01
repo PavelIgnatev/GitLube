@@ -1,8 +1,8 @@
-import HistoryDashbpard from '../dashboard/HistoryDashbpard.jsx';
-import loader from '../../assets/icons/loader.svg';
+import HistoryDashbpard from '../../dashboard/HistoryDashbpard.jsx';
+import loader from '../../../assets/icons/loader.svg';
 import Convert from 'ansi-to-html';
 import { useEffect } from 'react';
-import { builds, settings } from '../../store';
+import { builds, settings } from '../../../store';
 import makeMobxLocation from 'mobx-location';
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';

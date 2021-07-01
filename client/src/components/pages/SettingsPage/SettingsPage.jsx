@@ -1,10 +1,10 @@
-import BaseButtonOrange from '../buttons/BaseButtonOrange';
-import BaseButtonGray from '../buttons/BaseButtonGray';
-import BaseInput from '../inputs/BaseInput';
+import BaseButtonOrange from '../../buttons/BaseButtonOrange';
+import BaseButtonGray from '../../buttons/BaseButtonGray';
+import BaseInput from '../../inputs/BaseInput';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { settings  } from '../../store';
+import { settings  } from '../../../store';
 import { observer } from 'mobx-react-lite';
 import makeMobxLocation from 'mobx-location';
 import { toJS } from 'mobx';

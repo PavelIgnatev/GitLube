@@ -1,8 +1,8 @@
 import { Route } from 'react-router-dom';
-import BuildDetaildsPage from '../components/pages/BuildDetailsPage.jsx';
-import BuildsHistoryPage from '../components/pages/BuildHistoryPage.jsx';
-import SettingsPage from '../components/pages/SettingsPage.jsx';
-import StartScreenPage from '../components/pages/StartScreenPage.jsx';
+import BuildDetaildsPage from '../components/pages/BuildDetailsPage/BuildDetailsPage.jsx';
+import BuildsHistoryPage from '../components/pages/BuildHistoryPage/BuildHistoryPage.jsx';
+import SettingsPage from '../components/pages/SettingsPage/SettingsPage.jsx';
+import StartScreenPage from '../components/pages/StartScreenPage/StartScreenPage.jsx';
 import { observer } from 'mobx-react-lite';
 import { settings } from '../store';
 
