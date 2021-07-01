@@ -11,7 +11,7 @@ import './BuildDetailsPage.sass';
 const BuildDetaildsPage = () => {
   const mobxLocation = makeMobxLocation({ arrayFormat: 'bracket' });
   const buildId = toJS(mobxLocation).href.split('/')[4];
-  const convert = new Convert({bg: "#fff", fg: '#55F'});
+  const convert = new Convert({bg: "#f2f2f2", fg: '#55F'});
   
   function getDetails() {
     if (buildId) {
