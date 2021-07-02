@@ -4,33 +4,32 @@ const repoPath = path.resolve(__dirname, '../../repo');
 
 module.exports.cloneMainRepo = async (url, branchName) => {
   try {
-    //Cначала проверяем, есть ли такой реп, чтобы не удалять папку с предыдущим сохраненным репом зря
-    //Это может вызвать ошибки в будущем, когда мы будем менять настройки на клиенте,
-    //не сохранятся настройки из-за ошибки, но реп на нашем api удалится
-    if (
+    const postGithub = async (url) =>
       JSON.parse(
         (
           await execFile('curl', [
             '-H',
             `Authorization: token ${process.env.GITHUB_KEY}`,
-            `https://api.github.com/repos/${url}`,
+            url,
           ])
         ).stdout
-      ).message !== 'Not Found'
-    ) {
+      );
+
+    const isReposotory = await postGithub(
+      `https://api.github.com/repos/${url}`
+    );
+
+    const isBranch = await postGithub(
+      `https://api.github.com/repos/${url}/branches`
+    );
+
+    //Cначала проверяем, есть ли такой реп, чтобы не удалять папку с предыдущим сохраненным репом зря
+    //Это может вызвать ошибки в будущем, когда мы будем менять настройки на клиенте,
+    //не сохранятся настройки из-за ошибки, но реп на нашем api удалится
+
+    if (isReposotory.message !== 'Not Found') {
       //Проверка на то, существует ли такой branch
-      if (
-        !branchName.length ||
-        JSON.parse(
-          (
-            await execFile('curl', [
-              '-H',
-              `Authorization: token ${process.env.GITHUB_KEY}`,
-              `https://api.github.com/repos/${url}/branches`,
-            ])
-          ).stdout
-        ).find((item) => item.name === branchName)
-      ) {
+      if (isBranch.find((item) => item.name === branchName)) {
         //Удаляем папочку рекурсивно если такой репозиторий существет
         await rmdir(repoPath, true);
         //Клонируем репозиторий

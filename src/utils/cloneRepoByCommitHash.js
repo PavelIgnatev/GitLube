@@ -21,12 +21,16 @@ module.exports.cloneRepoByCommitHash = async (
       `https://${process.env.GITHUB_KEY}@github.com/${url}.git`,
       repoPath,
     ]);
+
     await execFile('git', ['checkout', commitHash], { cwd: repoPath });
 
-    
-    const execAsyncEnv = { ...process.env, FORCE_COLOR: 3, TERM: 'xterm-256color' }
-    execAsyncEnv.npm_config_production = "false"
-    
+    const execAsyncEnv = {
+      ...process.env,
+      FORCE_COLOR: 3,
+      TERM: 'xterm-256color',
+    };
+    execAsyncEnv.npm_config_production = 'false';
+
     const result = await execAsync(command, {
       cwd: repoPath,
       env: execAsyncEnv,

@@ -79,6 +79,7 @@ const SettingsPage = () => {
     //Если ошибки были - кидаем тост, иначе - сохраняем настройки
     else if (errorMessage) {
       changeErrorForRepository('Error');
+      console.log(errorMessage)
       toast.error('Sorry, but you entered incorrect data, please try again.');
     } else {
       //Если не было ошибок, то значит post запрос на обновление настроек был доставлен, тогда обновляем настройки
@@ -112,7 +113,7 @@ const SettingsPage = () => {
     }
   }
   //Обработчик на клики по кнопкам
-  function onClickSave(e) {
+  function handleClickSave(e) {
     e.preventDefault();
 
     //Если минимальная проверка удалась
@@ -121,7 +122,7 @@ const SettingsPage = () => {
     }
   }
 
-  function onClickCancel(e) {
+  function handleClickCancel(e) {
     e.preventDefault();
     history.push('/');
   }
@@ -196,12 +197,12 @@ const SettingsPage = () => {
           <BaseButtonOrange
             buttonDisabled={buttonDisabled}
             text="Save"
-            onClick={onClickSave}
+            onClick={handleClickSave}
           />
           <BaseButtonGray
             buttonDisabled={buttonDisabled}
             text="Cancel"
-            onClick={onClickCancel}
+            onClick={handleClickCancel}
           />
         </div>
       </form>
