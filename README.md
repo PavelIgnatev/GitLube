@@ -54,13 +54,13 @@ v14.17.1
 
 8. Готово, открываем одну из ссылок в браузере
 
-   ```sh
-    http://localhost:3000/
-   ```
+   
+   [http://localhost:3000](http://localhost:3000/)
+   
 
-   ```sh
-    http://localhost:3001/
-   ```
+   
+   [http://localhost:3001](http://localhost:3001/)
+   
 
 ## Запуск тестов
 
