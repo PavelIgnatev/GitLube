@@ -1,7 +1,7 @@
 const { describe, expect, test } = require('@jest/globals');
-const { Api } = require('../../Api.js');
+const { Api } = require('../../../Api.js');
 
-describe('controllers/api/getBuild', () => {
+describe('controllers/api/getBuildsBuildIdLogs', () => {
   const state = `npm WARN read-shrinkwrap This version of npm is compatible with lockfileVersion@1, but package-lock.json was generated for lockfileVersion@2. I'll try to do my best with it!
   sh: vue-cli-service: command not found
   npm ERR! code ELIFECYCLE
@@ -17,7 +17,7 @@ describe('controllers/api/getBuild', () => {
   npm ERR! A complete log of this run can be found in:
   npm ERR!     /Users/user/.npm/_logs/2021-07-01T17_39_12_485Z-debug.log`;
 
-  test('Получение всех билдов через api', async () => {
+  test('Получение определенного лога билда по buildId через api', async () => {
     //Подготовка
     let api = new Api();
 
@@ -26,7 +26,7 @@ describe('controllers/api/getBuild', () => {
     };
 
     //Действие
-    await api.get('/api/build/log', {
+    await api.get('/build/log', {
       buildid: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
     });
 
@@ -34,7 +34,7 @@ describe('controllers/api/getBuild', () => {
     expect(api.items).toEqual(state);
   });
 
-  test('Проверка ручки для получения всех билдов через api', async () => {
+  test('Получение определенного лога билда по buildId через api', async () => {
     //Подготовка
     let api = new Api();
     let result;

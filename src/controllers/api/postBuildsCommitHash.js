@@ -20,6 +20,7 @@ module.exports = async (req, res) => {
     const { repoName, mainBranch, buildCommand } = (
       await axios.get('https://shri.yandex/hw/api/conf')
     ).data.data;
+
     //Обновляем репозиторий, чтобы далее делать поиск message, author, branch по свежим данным
     await cloneMainRepo(repoName, mainBranch);
 

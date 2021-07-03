@@ -38,8 +38,11 @@ module.exports.cloneRepoByCommitHash = async (
     });
 
     await rmdir(repoPath, true);
+    await rmdir(repoPath, true);
+
     return result.stdout + `\n[1;33m${result.stderr}`;
   } catch (error) {
+    await rmdir(repoPath, true);
     await rmdir(repoPath, true);
     throw error.stderr;
   }

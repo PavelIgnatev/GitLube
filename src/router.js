@@ -14,6 +14,7 @@ apiRouter.get('/builds/:buildId', api.getBuildsBuildId);
 apiRouter.get('/builds/:buildId/logs', cache(1000), api.getBuildsBuildIdLogs);
 
 const mainRouter = new express.Router();
+
 if (process.env.NODE_ENV === 'production') {
   mainRouter.use(express.static(path.join(__dirname, '../client', 'build')));
   mainRouter.get('/*', (req, res) => {

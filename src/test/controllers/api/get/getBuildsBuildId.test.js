@@ -1,5 +1,5 @@
 const { describe, expect, test } = require('@jest/globals');
-const { Api } = require('../../Api.js');
+const { Api } = require('../../../Api.js');
 
 describe('controllers/api/getBuildsBuildId', () => {
   const state = {
@@ -32,7 +32,7 @@ describe('controllers/api/getBuildsBuildId', () => {
     expect(api.items).toEqual(state);
   });
 
-  test('Проверка ручки для получения определенного билда по buildId через api', async () => {
+  test('Проверка работоспособности ручки для получения определенного билда по buildId через api', async () => {
     //Подготовка
     let api = new Api();
     let result;
