@@ -1,13 +1,17 @@
 const express = require('express');
-
+const setupMiddlewares = require('./middlewares');
 const { PORT } = require('./config');
 const { apiRouter, mainRouter } = require('./router');
+
 const app = express();
 
-app.use(express.json());
+// setup other
+setupMiddlewares(app);
 
+// api routes
 app.use('/api', apiRouter);
 
+// main routes
 app.use('/', mainRouter);
 
 app.listen(PORT, () => {

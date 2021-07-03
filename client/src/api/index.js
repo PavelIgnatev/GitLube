@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const path = 'http://localhost:3000';
+
 class Api {
   async get(url, params) {
-    let fullUrl = url;
+    let fullUrl = path + url;
     if (params) {
       fullUrl += '?' + new URLSearchParams(params).toString();
     }
@@ -11,11 +13,11 @@ class Api {
   }
   //Добавляем в очередь
   addQueueBuild(commitHash) {
-    return axios.post(`/api/builds/${commitHash}`);
+    return axios.post(`${path}/api/builds/${commitHash}`);
   }
   //Отправляем настройки
   postSettings(Repository, BuildCommand, MainBranch, Period) {
-    return axios.post('/api/settings', {
+    return axios.post(`${path}/api/settings`, {
       id: '8c3c6fa1-47de-4b48-808c-562eb458665sd',
       repoName: Repository,
       buildCommand: BuildCommand,
