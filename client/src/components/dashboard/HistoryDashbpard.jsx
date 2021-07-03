@@ -6,6 +6,7 @@ const historyDashboard = (props) => {
   //"status": "Canceled",
   //"status": "Success",
   //"status": "Fail"
+  
   function getDate(date) {
     return new Date(date).toLocaleString("en-US", {
       hour12: false,
