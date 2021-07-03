@@ -9,7 +9,7 @@ module.exports.cloneMainRepo = async (url, branchName) => {
         (
           await execFile('curl', [
             '-H',
-            `Authorization: token ${process.env.GITHUB_KEY}`,
+            `Authorization: token ${process.env.GITHUB_ACCESS_KEY}`,
             url,
           ])
         ).stdout
@@ -36,7 +36,7 @@ module.exports.cloneMainRepo = async (url, branchName) => {
 
         return await execFile('git', [
           'clone',
-          `https://${process.env.GITHUB_KEY}@github.com/${url}.git`,
+          `https://${process.env.GITHUB_ACCESS_KEY}@github.com/${url}.git`,
           repoPath,
         ]);
       } else {
