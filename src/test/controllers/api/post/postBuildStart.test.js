@@ -1,7 +1,7 @@
 const { describe, expect, test } = require('@jest/globals');
 const { Api } = require('../../../Api.js');
 
-describe('Ручка /build/start', () => {
+describe('Проверка ручки /build/start', () => {
   const body = {
     buildId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
     dateTime: '2021-07-02T19:27:09.323Z',

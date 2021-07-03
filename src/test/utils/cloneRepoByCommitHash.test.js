@@ -6,7 +6,7 @@ const {
 describe('utils/cloneRepoByCommitHash', () => {
   const commitHash = 'be575cfe4520c9466e01c192699ecae31daa4f04';
 
-  test('Возможно ли корректно клонировать любой репозиторий, откатить до нужного коммита и запустить для него выполенение любой команды с помощью метода cloneRepoByCommitHash', async () => {
+  test('Возможно ли корректно клонировать любой репозиторий, откатить до нужного коммита и запустить для него выполенение npm команды с помощью метода cloneRepoByCommitHash', async () => {
     //Подготовка
     let result;
 

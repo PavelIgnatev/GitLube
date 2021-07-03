@@ -1,7 +1,7 @@
 const { describe, expect, test } = require('@jest/globals');
 const { Api } = require('../../../Api.js');
 
-describe('Ручка /build/request', () => {
+describe('Проверка ручки /build/request', () => {
   const body = {
     commitMessage: 'page folders',
     commitHash: '22f2db02a16037b4fe4653a34b8bba598d5ede86',
