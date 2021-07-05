@@ -10,4 +10,8 @@ module.exports = {
     ecmaVersion: 12,
   },
   rules: {},
+  globals: {
+    describe: true,
+    it: true,
+  },
 };

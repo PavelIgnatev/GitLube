@@ -4,7 +4,7 @@ import BaseInput from '../../inputs/BaseInput';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { settings  } from '../../../store';
+import { settings } from '../../../store';
 import { observer } from 'mobx-react-lite';
 import makeMobxLocation from 'mobx-location';
 import { toJS } from 'mobx';
@@ -17,6 +17,7 @@ const SettingsPage = () => {
   const [errorForRepository, changeErrorForRepository] = useState('');
   const [errorForBuildCommand, changeErrorForBuildCommand] = useState('');
   const [errorForMainBranch, changeErrorForMainBranch] = useState('');
+  const [errorPeriod, changeErrorPeriod] = useState('');
 
   //Для disabled кнопки
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -47,7 +48,7 @@ const SettingsPage = () => {
   //Функция минимальной валидации
   function beforeRequestingTheServer() {
     let status = true;
-    if (!Repository.length) {
+    if (Repository.length < 3) {
       changeErrorForRepository('ERROR');
       toast.error('The minimum length of the repository field is 3 character');
       status = false;
@@ -57,14 +58,21 @@ const SettingsPage = () => {
       toast.error('Invalid input format, character / not found');
       status = false;
     }
-    if (!BuildCommand.length) {
+    if (BuildCommand.length < 3) {
       changeErrorForBuildCommand('ERROR');
-      toast.error('The minimum length of the Build command field is 3 character');
+      toast.error(
+        'The minimum length of the Build command field is 3 character'
+      );
+      status = false;
+    }
+    if (Number(Period) < 1) {
+      changeErrorPeriod('ERROR');
+      toast.error('The update period cannot be less than 1 minute');
       status = false;
     }
     return status;
   }
-  //Функция окончательной валидации
+  //Функция окончательной валидации после отправки запроса на сервер
   function afterRequestingTheServer(errorMessage) {
     //Валидация по дополнительным условиям
     if (errorMessage === 'This repository was not found, it may be private') {
@@ -79,7 +87,7 @@ const SettingsPage = () => {
     //Если ошибки были - кидаем тост, иначе - сохраняем настройки
     else if (errorMessage) {
       changeErrorForRepository('Error');
-      console.log(errorMessage)
+      console.log(errorMessage);
       toast.error('Sorry, but you entered incorrect data, please try again.');
     } else {
       //Если не было ошибок, то значит post запрос на обновление настроек был доставлен, тогда обновляем настройки
@@ -116,7 +124,7 @@ const SettingsPage = () => {
   function handleClickSave(e) {
     e.preventDefault();
 
-    //Если минимальная проверка удалась
+    //Если обработка до запроса на сервер проверка удалась
     if (beforeRequestingTheServer()) {
       postSettings();
     }
@@ -187,7 +195,11 @@ const SettingsPage = () => {
           <input
             className="base-input__input pr0"
             value={Period}
-            onChange={(e) => changePeriod(e.currentTarget.value.trim())}
+            style={errorPeriod === 'ERROR' ? { border: '2px solid red' } : {}}
+            onChange={(e) => {
+              changePeriod(e.currentTarget.value.trim());
+              changeErrorPeriod('');
+            }}
             type="number"
             onInput={(e) => (e.target.value = e.target.value.slice(0, 3))}
           />
