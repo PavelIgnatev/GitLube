@@ -1,7 +1,7 @@
 const { describe, expect, test } = require('@jest/globals');
 const {
   cloneRepoByCommitHash,
-} = require('../../utils/cloneRepoByCommitHash.js');
+} = require('../../../src/utils/cloneRepoByCommitHash.js');
 
 describe('utils/cloneRepoByCommitHash', () => {
   const commitHash = 'be575cfe4520c9466e01c192699ecae31daa4f04';
