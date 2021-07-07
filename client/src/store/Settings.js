@@ -18,7 +18,15 @@ class Settings {
   }
 
   async postSettings(Repository, BuildCommand, MainBranch, Period) {
-    return await api.postSettings(Repository, BuildCommand, MainBranch, Period);
+    this.status = 'waiting';
+    const result = await api.postSettings(
+      Repository,
+      BuildCommand,
+      MainBranch,
+      Period
+    );
+    this.status = 'done';
+    return result;
   }
 
   async getSettings() {

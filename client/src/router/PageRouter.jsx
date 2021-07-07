@@ -17,7 +17,7 @@ const RepoHeader = () => {
           builds.buildLogError ||
           builds.buildListError ||
           settings.settingsErorr) && <Redirect to="/page-not-found"></Redirect>}
-        {settings.status === 'done' && (
+        {settings.status !== 'pending' && (
           <Route
             exact
             path="/"

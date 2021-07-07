@@ -207,12 +207,12 @@ const SettingsPage = () => {
         </div>
         <div className="page-settings__btns">
           <BaseButtonOrange
-            buttonDisabled={buttonDisabled}
+            buttonDisabled={buttonDisabled || settings.status === 'waiting'}
             text="Save"
             onClick={handleClickSave}
           />
           <BaseButtonGray
-            buttonDisabled={buttonDisabled}
+            buttonDisabled={buttonDisabled || settings.status === 'waiting'}
             text="Cancel"
             onClick={handleClickCancel}
           />
