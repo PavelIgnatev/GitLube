@@ -3,14 +3,19 @@ import BuildDetaildsPage from '../components/pages/BuildDetailsPage/BuildDetails
 import BuildsHistoryPage from '../components/pages/BuildHistoryPage/BuildHistoryPage.jsx';
 import SettingsPage from '../components/pages/SettingsPage/SettingsPage.jsx';
 import StartScreenPage from '../components/pages/StartScreenPage/StartScreenPage.jsx';
+import PageNotFound from '../components/pages/PageNotFound/PageNotFound.jsx';
 import { observer } from 'mobx-react-lite';
-import { settings } from '../store';
+import { settings, builds } from '../store';
+import { Redirect } from 'react-router';
 
 const RepoHeader = () => {
   const getter = settings.getterSettings;
   return (
     <div className="app-page">
-      {settings.status !== 'pending' && (
+      {(builds.BuildInfoError || builds.buildLogError || builds.buildListError || settings.settingsErorr) && (
+        <Redirect to="/page-not-found"></Redirect>
+      )}
+      {settings.status === "done" && (
         <Route
           exact
           path="/"
@@ -21,6 +26,7 @@ const RepoHeader = () => {
       )}
       <Route exact path="/settings" component={SettingsPage}></Route>
       <Route exact path="/build/:number" component={BuildDetaildsPage}></Route>
+      <Route exact path="/page-not-found" component={PageNotFound}></Route>
     </div>
   );
 };

@@ -10,7 +10,7 @@
   "engineStrict": true,
   "scripts": {
     "serve": "nodemon --ignore repo/ src/server",
-    "test": "jest && ./node_modules/.bin/hermione",
+    "test": "jest src/test && ./node_modules/.bin/hermione",
     "prepare": "husky install"
   },
   "author": "Ignatev Pavel (palllkaignatev@gmail.com)",

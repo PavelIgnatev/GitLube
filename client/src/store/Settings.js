@@ -5,6 +5,8 @@ class Settings {
   settings = { repoName: '', buildCommand: '', mainBranch: '', period: '' };
   status = 'pending';
 
+  settingsErorr = false;
+
   constructor() {
     makeAutoObservable(this);
     //Сразу получаем настройки и они автоматически запишутся в state.settings
@@ -20,9 +22,14 @@ class Settings {
   }
 
   async getSettings() {
-    this.status = 'pending';
-    this.updateSettings((await api.get('/api/settings')).data);
-    this.status = 'done';
+    try {
+      this.settingsErorr = false;
+      this.updateSettings((await api.get('/api/settings')).data);
+      this.status = 'done';
+    } catch (err) {
+      console.log(err);
+      this.settingsErorr = true;
+    }
   }
 
   get getterSettings() {

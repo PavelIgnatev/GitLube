@@ -8,4 +8,12 @@ module.exports = {
       },
     },
   },
+  sets: {
+    desktop: {
+      files: [
+        'hermione/SettingsPage.hermione.js',
+        'hermione/MainPage.hermione.js',
+      ],
+    },
+  },
 };

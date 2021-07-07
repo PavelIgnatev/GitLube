@@ -5,6 +5,11 @@ class Builds {
   buildList = [];
   BuildInfo = {};
   buildLog = {};
+
+  buildListError = false;
+  BuildInfoError = false;
+  buildLogError = false;
+
   status = 'data';
 
   constructor() {
@@ -27,11 +32,7 @@ class Builds {
     return new Promise((res, rej) => setTimeout(() => res(), time));
   }
 
-  //Функции для асинхронных запросов
-  async getBuildList() {
-    //Решил замедлить, чтобы лоадер хоть видно было)
-    await this.sleep(1000);
-    this.updateBuildList((await api.get('/api/builds')).data);
+  updateBuildListStatus() {
     if (this.buildList.length < 1) {
       this.status = 'no data';
     } else {
@@ -39,18 +40,44 @@ class Builds {
     }
   }
 
+  //Функции для асинхронных запросов
+  async getBuildList() {
+    try {
+      this.buildListError = false;
+      const result = (await api.get('/api/builds')).data;
+
+      //Решил замедлить, чтобы лоадер хоть видно было)
+      await this.sleep(1000);
+      this.updateBuildList(result);
+
+      //Обновляем значение build list status
+      this.updateBuildListStatus();
+    } catch (err) {
+      console.log(err);
+      this.buildListError = true;
+    }
+  }
+
   async getBuildInfo(BuildId) {
-    this.updateBuildInfo(
-      (await api.get(`/api/builds/${BuildId}`)).data,
-      BuildId
-    );
+    try {
+      this.BuildInfoError = false;
+      const result = (await api.get(`/api/builds/${BuildId}`)).data;
+      this.updateBuildInfo(result, BuildId);
+    } catch (err) {
+      console.log(err);
+      this.BuildInfoError = true;
+    }
   }
 
   async getBuildLog(BuildId) {
-    this.updateBuildLog(
-      (await api.get(`/api/builds/${BuildId}/logs`)).data,
-      BuildId
-    );
+    try {
+      this.buildLogError = false;
+      const result = (await api.get(`/api/builds/${BuildId}/logs`)).data;
+      this.updateBuildLog(result, BuildId);
+    } catch (err) {
+      console.log(err);
+      this.buildLogError = true;
+    }
   }
   async addQueueBuild(commitHash) {
     return await api.addQueueBuild(commitHash);

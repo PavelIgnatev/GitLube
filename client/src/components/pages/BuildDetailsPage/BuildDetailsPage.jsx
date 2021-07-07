@@ -11,34 +11,33 @@ import './BuildDetailsPage.sass';
 const BuildDetaildsPage = () => {
   const mobxLocation = makeMobxLocation({ arrayFormat: 'bracket' });
   const buildId = toJS(mobxLocation).href.split('/')[4];
-  const convert = new Convert({bg: "#f2f2f2", fg: '#55F'});
-  
+  const convert = new Convert({ bg: '#f2f2f2', fg: '#55F' });
+
   function getDetails() {
     if (buildId) {
-      builds.getBuildLog(buildId);
+      if (!builds.getterBuildLog[buildId]) {
+        builds.getBuildLog(buildId);
+      }
+
       builds.getBuildInfo(buildId);
     }
   }
 
   useEffect(() => {
-    let update = '';
-    //Не делаем лишний запрос, если у нас на клиенте уже имеются данные для нужного buildId
-    //await не нужен, данные придут в getter
-    if (!builds.getterBuildLog[buildId]) {
-      getDetails();
+    getDetails();
 
-      //Обновление state каждые n времени в настройках
-      update = setInterval(
-        () => {
-          getDetails();
-        },
-        Number(settings.settings.period) > 0
-          ? Number(settings.settings.period) * 1000 * 60
-          : 1000 * 60
-      );
-    }
+    //Обновление state каждые n времени 
+    const interval = setInterval(
+      () => {
+        getDetails();
+      },
+      Number(settings.settings.period) > 0
+        ? Number(settings.settings.period) * 1000 * 60
+        : 1000 * 60
+    );
+
     return () => {
-      clearInterval(update);
+      clearInterval(interval);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toJS(mobxLocation).href]);
@@ -46,9 +45,10 @@ const BuildDetaildsPage = () => {
   return (
     <div className="page-detail">
       {!builds.getterBuildLog[buildId] && (
-          <object type="image/svg+xml" data={loader}>
-          </object>
-        )}
+        <object type="image/svg+xml" data={loader}>
+          {' '}
+        </object>
+      )}
       {builds.getterBuildInfo[buildId] && (
         <HistoryDashbpard
           item={builds.getterBuildInfo[buildId]}
@@ -59,12 +59,9 @@ const BuildDetaildsPage = () => {
         <pre
           className="page-detail__pre"
           dangerouslySetInnerHTML={{
-            __html: convert.toHtml(
-              builds.getterBuildLog[buildId],
-              {
-                colors: ['red'],
-              }
-            ),
+            __html: convert.toHtml(builds.getterBuildLog[buildId], {
+              colors: ['red'],
+            }),
           }}
         ></pre>
       )}

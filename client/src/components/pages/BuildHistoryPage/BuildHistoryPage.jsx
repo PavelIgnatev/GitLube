@@ -12,7 +12,8 @@ const BuildsHistoryPage = () => {
     //Получаем все билды в геттер getterBuildList, без ожидания
 
     builds.getBuildList();
-    //Обновление state каждые n времени в настройках
+
+    //Обновление state каждые n времени
     const update = setInterval(
       () => {
         builds.getBuildList();
