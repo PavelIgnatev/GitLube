@@ -30,7 +30,7 @@ describe('На главной странице', () => {
 
     //Проверяем произошел ли переход на страницу с историей сборок
     const page = await browser.$('.app-page__builds');
-    await page.waitForExist({ timeout: 1000 });
+    await page.waitForExist({ timeout: 10000 });
 
     //Для возможности проверяющим посмотреть что вообще произошло хотя бы в тесте
     await browser.pause(1500);
@@ -42,7 +42,7 @@ describe('На главной странице', () => {
     await browser.url('/');
 
     const sorry = await browser.$('.app-page__builds_sorry');
-    await sorry.waitForExist({ timeout: 1000 });
+    await sorry.waitForExist({ timeout: 10000 });
 
     //Для возможности проверяющим посмотреть что вообще произошло хотя бы в тесте
     await browser.pause(1500);
@@ -55,7 +55,7 @@ describe('На главной странице', () => {
 
     //Ожидаем загрузку страницы
     const PageBuilds = await browser.$('.app-page__builds');
-    await PageBuilds.waitForExist({ timeout: 1000 });
+    await PageBuilds.waitForExist({ timeout: 10000 });
 
     //Дожидаемся появления кнопки
     const button = await browser.$('.button-action');
@@ -75,12 +75,12 @@ describe('На главной странице', () => {
     //без учета времени выполнения других асинхронных методов
     await browser.url('/');
     const dashboard = await browser.$('.history-dashboard');
-    await dashboard.waitForExist({ timeout: 1000 });
+    await dashboard.waitForExist({ timeout: 10000 });
     await dashboard.click();
 
     //Ожидаем появление логов сборки
     const detail_pre = await browser.$('.page-detail__pre');
-    await detail_pre.waitForExist({ timeout: 1000 });
+    await detail_pre.waitForExist({ timeout: 10000 });
 
     //Для возможности проверяющим посмотреть что вообще произошло хотя бы в тесте
     await browser.pause(3000);
