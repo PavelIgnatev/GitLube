@@ -16,7 +16,8 @@ describe('utils/cloneRepoByCommitHash', () => {
       'PavelIgnatev/uber',
       commitHash,
       'npm -v',
-      'CloneRepoByCommitHash'
+      'CloneRepoByCommitHash',
+      true
     );
 
     result = result.replace(/\s+/g, '').trim();

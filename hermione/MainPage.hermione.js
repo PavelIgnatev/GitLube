@@ -80,7 +80,7 @@ describe('На главной странице', () => {
 
     //Ожидаем появление логов сборки
     const detail_pre = await browser.$('.page-detail__pre');
-    await detail_pre.waitForExist({ timeout: 5000 });
+    await detail_pre.waitForExist({ timeout: 10000 });
 
     //Для возможности проверяющим посмотреть что вообще произошло хотя бы в тесте
     await browser.pause(3000);
