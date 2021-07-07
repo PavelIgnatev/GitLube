@@ -20,8 +20,6 @@ describe('utils/cloneRepoByCommitHash', () => {
       true
     );
 
-    result = result.replace(/\s+/g, '').trim();
-
     //Проверка
     expect(result).toContain('6.14.13');
   });
