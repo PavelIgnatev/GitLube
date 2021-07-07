@@ -40,12 +40,14 @@ module.exports.cloneMainRepo = async (url, branchName) => {
           repoPath,
         ]);
       } else {
+        console.error(isBranch);
         throw {
           message: 'Your master branch was not found, default branch: main',
         };
       }
     } else {
       //Кидаем ошибку, что репозиторий не существует, не удаляя предыдущую папку с репом
+      console.error(isReposotory);
       throw { message: 'This repository was not found, it may be private' };
     }
   } catch (error) {

@@ -15,6 +15,12 @@ class Builds {
   constructor() {
     makeAutoObservable(this);
   }
+
+  updateStatusPending() {
+    this.status = 'pending';
+    this.getBuildList();
+  }
+
   //Функции для обновления состояния
   updateBuildList(newBuildList) {
     this.buildList = newBuildList;
@@ -29,7 +35,7 @@ class Builds {
   }
 
   sleep(time) {
-    return new Promise((res, rej) => setTimeout(() => res(), time));
+    return new Promise((res) => setTimeout(() => res(), time));
   }
 
   updateBuildListStatus() {
@@ -48,6 +54,7 @@ class Builds {
 
       //Решил замедлить, чтобы лоадер хоть видно было)
       await this.sleep(1000);
+
       this.updateBuildList(result);
 
       //Обновляем значение build list status

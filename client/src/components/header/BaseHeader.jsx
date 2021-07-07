@@ -2,7 +2,7 @@ import ButtonForSettings from '../buttons/ButtonForSettings';
 import ButtonForActions from '../buttons/ButtonForActions';
 import BaseModalForRunBuild from '../../components/modal/BaseModalForRunBuild.jsx';
 import { builds, settings } from '../../store/index.js';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, Redirect, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { Route } from 'react-router-dom';
@@ -15,6 +15,7 @@ const BaseHeader = () => {
 
   let [buttonDisabled, setButtonDisabled] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
+  let [redirect, setRedirect] = useState(false)
 
   function openModal() {
     setIsOpen(true);
@@ -32,9 +33,10 @@ const BaseHeader = () => {
           .commitHash;
 
       const { data } = await builds.addQueueBuild(commitHash);
-      builds.status = 'pending';
       setButtonDisabled(false);
-      history.push('/build/' + data.buildId);
+      
+      setRedirect('/build/' + data.buildId);
+      builds.updateStatusPending('pending');
     } catch (error) {
       setButtonDisabled(false);
       toast.error(
@@ -116,6 +118,7 @@ const BaseHeader = () => {
                 buttonDisabled={buttonDisabled}
                 onClick={postCommitHashForRebuild}
               />
+              {redirect && <Redirect to={redirect}></Redirect>}
               <ButtonForSettings action="Settings" src="gear.svg" size="mini" />
             </div>
           </>

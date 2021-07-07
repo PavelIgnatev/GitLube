@@ -4,17 +4,16 @@ import BaseInput from '../inputs/BaseInput.jsx';
 import BaseButtonOrange from '../buttons/BaseButtonOrange.jsx';
 import BaseButtonGray from '../buttons/BaseButtonGray.jsx';
 import { toast } from 'react-toastify';
-import { useHistory } from 'react-router';
 import { builds } from '../../store/index.js';
 import './BaseModal.sass';
+import { Redirect } from 'react-router';
 
 Modal.setAppElement('#root');
 const BaseModalForRunBuild = (props) => {
-  const history = useHistory();
-
   let [errorCommitHash, changeErrorCommitHash] = useState('');
   let [commitHash, changeCommitHash] = useState('');
   let [buttonDisabled, setButtonDisabled] = useState(false);
+  let [redirect, setRedirect] = useState(false);
 
   function minimalValid() {
     let status = true;
@@ -33,11 +32,14 @@ const BaseModalForRunBuild = (props) => {
     if (minimalValid() !== false) {
       try {
         setButtonDisabled(true);
+
         const { data } = await builds.addQueueBuild(commitHash);
-        builds.status = "pending"
+
         setButtonDisabled(false);
         dischargeModal();
-        history.push('/build/' + data.buildId);
+
+        setRedirect('/build/' + data.buildId);
+        builds.updateStatusPending('pending');
       } catch (error) {
         setButtonDisabled(false);
         changeErrorCommitHash('Error');
@@ -56,6 +58,8 @@ const BaseModalForRunBuild = (props) => {
 
   return (
     <Modal isOpen={props.modalIsOpen} onRequestClose={dischargeModal}>
+      {redirect}
+      {redirect && <Redirect to={redirect}></Redirect>}
       <form>
         <div className="base-modal__title">New Build</div>
         <div className="base-modal__subtitle">
