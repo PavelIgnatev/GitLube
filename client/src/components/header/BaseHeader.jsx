@@ -118,7 +118,7 @@ const BaseHeader = () => {
                 buttonDisabled={buttonDisabled}
                 onClick={postCommitHashForRebuild}
               />
-              {redirect && <Redirect to={redirect}></Redirect>}
+              {redirect &&  <Redirect to={redirect}></Redirect>}
               <ButtonForSettings action="Settings" src="gear.svg" size="mini" />
             </div>
           </>

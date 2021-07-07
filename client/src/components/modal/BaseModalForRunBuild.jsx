@@ -36,10 +36,10 @@ const BaseModalForRunBuild = (props) => {
         const { data } = await builds.addQueueBuild(commitHash);
 
         setButtonDisabled(false);
-        dischargeModal();
 
-        setRedirect('/build/' + data.buildId);
         builds.updateStatusPending('pending');
+        setRedirect('/build/' + data.buildId);
+        dischargeModal();
       } catch (error) {
         setButtonDisabled(false);
         changeErrorCommitHash('Error');
@@ -57,40 +57,43 @@ const BaseModalForRunBuild = (props) => {
   }
 
   return (
-    <Modal isOpen={props.modalIsOpen} onRequestClose={dischargeModal}>
-      {redirect}
-      {redirect && <Redirect to={redirect}></Redirect>}
-      <form>
-        <div className="base-modal__title">New Build</div>
-        <div className="base-modal__subtitle">
-          Enter the commit hash which you want to build
-        </div>
-        <BaseInput
-          id="hash"
-          placeholder="Commit hash"
-          onChange={(e) => {
-            changeCommitHash(e.currentTarget.value.trim());
-            changeErrorCommitHash('');
-          }}
-          classes="modal"
-          value={commitHash}
-          error={errorCommitHash}
-          autoFocus={true}
-        />
-        <div className="page-settings__btns">
-          <BaseButtonOrange
-            text="Run build"
-            buttonDisabled={buttonDisabled}
-            onClick={postCommitHash}
+    <>
+      {redirect && props.modalIsOpen && builds.status === 'pending' && (
+        <Redirect to={redirect}></Redirect>
+      )}
+      <Modal isOpen={props.modalIsOpen} onRequestClose={dischargeModal}>
+        <form>
+          <div className="base-modal__title">New Build</div>
+          <div className="base-modal__subtitle">
+            Enter the commit hash which you want to build
+          </div>
+          <BaseInput
+            id="hash"
+            placeholder="Commit hash"
+            onChange={(e) => {
+              changeCommitHash(e.currentTarget.value.trim());
+              changeErrorCommitHash('');
+            }}
+            classes="modal"
+            value={commitHash}
+            error={errorCommitHash}
+            autoFocus={true}
           />
-          <BaseButtonGray
-            text="Cancel"
-            buttonDisabled={buttonDisabled}
-            onClick={dischargeModal}
-          />
-        </div>
-      </form>
-    </Modal>
+          <div className="page-settings__btns">
+            <BaseButtonOrange
+              text="Run build"
+              buttonDisabled={buttonDisabled}
+              onClick={postCommitHash}
+            />
+            <BaseButtonGray
+              text="Cancel"
+              buttonDisabled={buttonDisabled}
+              onClick={dischargeModal}
+            />
+          </div>
+        </form>
+      </Modal>
+    </>
   );
 };
 export default BaseModalForRunBuild;
