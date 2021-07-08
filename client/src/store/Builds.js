@@ -16,12 +16,12 @@ class Builds {
     makeAutoObservable(this);
   }
 
+  //Функции для обновления состояния
   updateStatusPending() {
     this.status = 'pending';
     this.getBuildList();
   }
 
-  //Функции для обновления состояния
   updateBuildList(newBuildList) {
     this.buildList = newBuildList;
   }
