@@ -12,7 +12,7 @@ module.exports = (app) => {
 
   app.use(
     cors({
-      origin: ['http://localhost:3001'],
+      origin: ['http://localhost:3001', 'https://gitlubereact.web.app'],
     })
   );
 

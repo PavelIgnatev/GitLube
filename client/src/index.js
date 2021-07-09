@@ -5,6 +5,8 @@ import { ToastContainer } from 'react-toastify';
 import App from './components/App.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/sass/index.sass';
+import './statistics/collectingStatistics.js';
+import './statistics/viewingStatistics.js';
 
 ReactDOM.render(
   <React.StrictMode>
