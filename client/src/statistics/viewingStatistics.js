@@ -96,7 +96,7 @@ function showSession(data, requestId) {
 }
 
 fetch(
-  'https://shri.yandex/hw/stat/data?counterId=aa3a34b8-f79d-4bc5-9191-3624a46f5645'
+  'https://shri.yandex/hw/stat/data?counterId=a46cb0a0-3480-4744-a2e0-648a8b789ed4'
 )
   .then((res) => res.json())
   .then((result) => {
