@@ -86,8 +86,8 @@ try {
     for (const perfEntry of perfEntries) {
       totalBlockingTime += perfEntry.duration - 50;
     }
-    counter.send('TBT', totalBlockingTime);
   });
+  counter.send('TBT', totalBlockingTime);
   observer.observe({ type: 'longtask', buffered: true });
 } catch (e) {}
 
