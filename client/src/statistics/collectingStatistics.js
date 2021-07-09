@@ -93,11 +93,13 @@ try {
 
 //CumulativeLayoutShift
 try {
-  new PerformanceObserver((entryList) => {
-    for (const entry of entryList.getEntries()) {
-      if (!entry.hadRecentInput) {
-        counter.send('CLS', entry.value);
-      }
+  let cumulativeLayoutShiftScore = 0;
+
+  const observer = new PerformanceObserver((list) => {
+    for (const entry of list.getEntries()) {
+      cumulativeLayoutShiftScore += entry.value;
     }
-  }).observe({ type: 'layout-shift', buffered: true });
+  });
+  counter.send('CLS', cumulativeLayoutShiftScore);
+  observer.observe({ entryTypes: ['layoutShift'] });
 } catch {}
