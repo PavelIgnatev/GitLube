@@ -20,7 +20,7 @@ function browser() {
 }
 
 counter.init(
-  'd7d34c0b-1c7c-4f2c-a6ee-4518f36ae9cc',
+  'aa3a34b8-f79d-4bc5-9191-3624a46f5645',
   String(Math.random()).substr(2, 12),
   'send test'
 );
