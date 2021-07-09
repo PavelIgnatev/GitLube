@@ -17,9 +17,6 @@ describe('Со страницы настроек', () => {
     //Появился ли тост с текстом ошибки
     const page = await browser.$('.Toastify__toast-body');
     await page.waitForExist();
-
-    //Для возможности проверяющим посмотреть что вообще произошло хотя бы в тесте
-    await browser.pause(3000);
   });
 
   it('не произойдет перехода на главную страницу, если репозиторий, который был указан, не существует (интеграционный тест)', async function () {
@@ -42,12 +39,9 @@ describe('Со страницы настроек', () => {
 
     await button.click();
 
-    //Для возможности проверяющим посмотреть что вообще произошло хотя бы в тесте
-    await browser.pause(3000);
-
     //Появился ли тост с текстом ошибки
     const page = await browser.$('.Toastify__toast-body');
-    await page.waitForExist();
+    await page.waitForExist({ timeout: 10000 });
   });
   it('не произойдет перехода на главную страницу, если branch, который был указан, не существует (интеграционный тест)', async function () {
     const browser = this.browser;
@@ -69,11 +63,8 @@ describe('Со страницы настроек', () => {
 
     await button.click();
 
-    //Для возможности проверяющим посмотреть что вообще произошло хотя бы в тесте
-    await browser.pause(3000);
-
     //Появился ли тост с текстом ошибки
     const page = await browser.$('.Toastify__toast-body');
-    await page.waitForExist();
+    await page.waitForExist({ timeout: 10000 });
   });
 });
