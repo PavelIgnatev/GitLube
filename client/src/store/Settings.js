@@ -9,8 +9,6 @@ class Settings {
 
   constructor() {
     makeAutoObservable(this);
-    //Сразу получаем настройки и они автоматически запишутся в state.settings
-    this.getSettings();
   }
 
   updateSettings(newSettings) {

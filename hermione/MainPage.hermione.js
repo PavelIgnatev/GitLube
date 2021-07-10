@@ -44,7 +44,7 @@ describe('На главной странице', () => {
     await sorry.waitForExist({ timeout: 10000 });
   });
 
-  it('при наличии настроек присутствует кнопка Run build, по нажатию на которую открывается модальное окно с активным инпутом, после чего пользователь вводит в данное поле commitHash, нажимает на кнопку Send, ожидает, и, если все удачно, то это означает, что сборка была успешно добавлена в очередь и, соответственно, произошёл переход на страницу с информацией о добавленной сборке, после чего, спустя некоторое время, пользователь увидел результат сборки (e2e тест)', async function () {
+  it('при наличии настроек присутствует кнопка Run build, по нажатию на которую открывается модальное окно с активным инпутом, после чего пользователь вводит в данное поле commitHash, нажимает на кнопку Send, ожидает, и, если все удачно, то это означает, что сборка была успешно добавлена в очередь (e2e тест)', async function () {
     const browser = this.browser;
 
     await browser.url('/');
@@ -54,7 +54,7 @@ describe('На главной странице', () => {
     await PageBuilds.waitForExist({ timeout: 10000 });
 
     //Дожидаемся появления кнопки
-    const button = await browser.$('.button-action');
+    const button = await browser.$('.base-button__gray');
     await button.waitForExist();
 
     await button.click();
@@ -65,19 +65,7 @@ describe('На главной странице', () => {
 
     //Произошел ли переход на страницу с информацией о сборке
     const page = await browser.$('.history-dashboard');
-    await page.waitForExist({ timeout: 10000 });
-
-    //Делаем переход на главную, чтобы обновить данные о статусе сборки, т.к время выполнения теста 60 секунд, а
-    //минимальное время для обновления состояния без обновления страницы и перехода по страницами все те же 60 секунд
-    //без учета времени выполнения других асинхронных методов
-    await browser.url('/');
-    const dashboard = await browser.$('.history-dashboard');
-    await dashboard.waitForExist({ timeout: 10000 });
-    await dashboard.click();
-
-    //Ожидаем появление логов сборки
-    const detail_pre = await browser.$('.page-detail__pre');
-    await detail_pre.waitForExist({ timeout: 10000 });
+    await page.waitForExist({ timeout: 20000 });
   });
   it('при наличии настроек и сборок в очереди, кликнув на одну из сборок, можно получить полную информацию о ее содержимом, после чего повторно добавить сборку в очередь с помощью кнопки rebuild (e2e тест)', async function () {
     const browser = this.browser;

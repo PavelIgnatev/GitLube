@@ -97,7 +97,7 @@ function showSession(data, requestId) {
 }
 
 fetch(
-  'https://shri.yandex/hw/stat/data?counterId=86299992-80a2-43ac-b17c-951218666c7e'
+  'https://shri.yandex/hw/stat/data?counterId=f5024e24-6697-4cc1-9c71-9e4bdc23e255'
 )
   .then((res) => res.json())
   .then((result) => {
@@ -105,22 +105,22 @@ fetch(
 
     console.log('__________________________________________________');
     console.log(
-      'Получаем за 2021-07-10 метрику "connect", "TTFB", "FCP", "LCP", "FID", "TTI", "TBT" и "CLS" соответственно'
+      'Получаем метрику "connect", "TTFB", "FCP", "LCP", "FID", "TTI", "TBT" и "CLS" за 2021-07-10 для страницы настроек по путю "/settings"'
     );
 
-    calcMetricByDate(data, 'send test', 'connect', '2021-07-10');
-    calcMetricByDate(data, 'send test', 'TTFB', '2021-07-10');
-    calcMetricByDate(data, 'send test', 'FCP', '2021-07-10');
-    calcMetricByDate(data, 'send test', 'LCP', '2021-07-10');
-    calcMetricByDate(data, 'send test', 'FID', '2021-07-10');
-    calcMetricByDate(data, 'send test', 'TTI', '2021-07-10');
-    calcMetricByDate(data, 'send test', 'TBT', '2021-07-10');
-    calcMetricByDate(data, 'send test', 'CLS', '2021-07-10');
+    calcMetricByDate(data, '/settings', 'connect', '2021-07-10');
+    calcMetricByDate(data, '/settings', 'TTFB', '2021-07-10');
+    calcMetricByDate(data, '/settings', 'FCP', '2021-07-10');
+    calcMetricByDate(data, '/settings', 'LCP', '2021-07-10');
+    calcMetricByDate(data, '/settings', 'FID', '2021-07-10');
+    calcMetricByDate(data, '/settings', 'TTI', '2021-07-10');
+    calcMetricByDate(data, '/settings', 'TBT', '2021-07-10');
+    calcMetricByDate(data, '/settings', 'CLS', '2021-07-10');
 
     console.log('__________________________________________________');
-    console.log('Получаем сессию пользователя с requestId === "728318666584"');
+    console.log('Получаем сессию пользователя с requestId === "238546558765"');
 
-    showSession(data, 728318666584);
+    showSession(data, 238546558765);
 
     console.log('__________________________________________________');
     console.log(

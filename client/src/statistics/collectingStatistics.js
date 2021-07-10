@@ -20,9 +20,9 @@ function browser() {
 }
 
 counter.init(
-  '86299992-80a2-43ac-b17c-951218666c7e',
+  'f5024e24-6697-4cc1-9c71-9e4bdc23e255',
   String(Math.random()).substr(2, 12),
-  'send test'
+  window.location.pathname
 );
 
 counter.setAdditionalParams({
@@ -34,6 +34,7 @@ counter.setAdditionalParams({
       ? 'touch'
       : 'desktop',
   browser: browser(),
+  page: window.location.pathname,
 });
 
 //connect
@@ -94,11 +95,12 @@ try {
 //CumulativeLayoutShift
 try {
   var CLS = 0;
-  new PerformanceObserver((list) => {
+  let observer = new PerformanceObserver((list) => {
     list.getEntries().forEach((entry) => {
       if (entry.hadRecentInput) return;
       CLS += entry.value;
     });
-    counter.send('CLS', CLS);
-  }).observe({ type: 'layout-shift', buffered: true });
+  });
+  counter.send('CLS', CLS);
+  observer.observe({ type: 'layout-shift', buffered: true });
 } catch {}
