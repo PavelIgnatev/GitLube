@@ -29,7 +29,12 @@ describe('Со страницы настроек', () => {
     const build = await browser.$('#build');
     const number = await browser.$('.pr0');
     const button = await browser.$('.base-button__orange');
-    await browser.pause(100);
+
+    await repository.waitForExist({ timeout: 10000 });
+    await branch.waitForExist({ timeout: 10000 });
+    await build.waitForExist({ timeout: 10000 });
+    await number.waitForExist({ timeout: 10000 });
+    await button.waitForExist({ timeout: 10000 });
 
     //Изменяем значения
     await repository.setValue('repository/doesnotexist');
@@ -53,7 +58,12 @@ describe('Со страницы настроек', () => {
     const build = await browser.$('#build');
     const number = await browser.$('.pr0');
     const button = await browser.$('.base-button__orange');
-    await browser.pause(100);
+
+    await repository.waitForExist({ timeout: 10000 });
+    await branch.waitForExist({ timeout: 10000 });
+    await build.waitForExist({ timeout: 10000 });
+    await number.waitForExist({ timeout: 10000 });
+    await button.waitForExist({ timeout: 10000 });
 
     //Очищаем значения
     await repository.setValue('PavelIgnatev/repository-for-test');

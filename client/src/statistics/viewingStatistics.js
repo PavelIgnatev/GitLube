@@ -34,26 +34,27 @@ function calcMetricByDate(data, page, name, date) {
 function compareMetric(data) {
   const slice = {};
 
-  const additional = Object.keys(data[0].additional);
+  const additional = Object.keys(data.pop().additional);
 
   additional.forEach((item) => (slice[item] = {}));
 
   data.forEach((element) => {
     additional.forEach((item) => {
       let obj = {};
+      const name = element.additional[item]
+        ? element.additional[item]
+        : 'Не известно';
+
       obj[element.name] = [element.value];
 
-      return slice[item][element.additional[item]]
-        ? slice[item][element.additional[item]][element.name]
-          ? slice[item][element.additional[item]][element.name].push(
-              element.value
-            )
-          : (slice[item][element.additional[item]][element.name] = [
-              element.value,
-            ])
-        : (slice[item][element.additional[item]] = obj);
+      return slice[item][name]
+        ? slice[item][name][element.name]
+          ? slice[item][name][element.name].push(element.value)
+          : (slice[item][name][element.name] = [element.value])
+        : (slice[item][name] = obj);
     });
   });
+  console.log(slice);
 
   additional.forEach((addit) => {
     Object.keys(slice[addit]).forEach((element) => {
@@ -96,7 +97,7 @@ function showSession(data, requestId) {
 }
 
 fetch(
-  'https://shri.yandex/hw/stat/data?counterId=a46cb0a0-3480-4744-a2e0-648a8b789ed4'
+  'https://shri.yandex/hw/stat/data?counterId=86299992-80a2-43ac-b17c-951218666c7e'
 )
   .then((res) => res.json())
   .then((result) => {
@@ -104,29 +105,29 @@ fetch(
 
     console.log('__________________________________________________');
     console.log(
-      'Получаем за 2021-07-09 метрику "connect", "TTFB", "FCP", "LCP", "FID", "TTI", "TBT" и "CLS" соответственно'
+      'Получаем за 2021-07-10 метрику "connect", "TTFB", "FCP", "LCP", "FID", "TTI", "TBT" и "CLS" соответственно'
     );
 
-    calcMetricByDate(data, 'send test', 'connect', '2021-07-09');
-    calcMetricByDate(data, 'send test', 'TTFB', '2021-07-09');
-    calcMetricByDate(data, 'send test', 'FCP', '2021-07-09');
-    calcMetricByDate(data, 'send test', 'LCP', '2021-07-09');
-    calcMetricByDate(data, 'send test', 'FID', '2021-07-09');
-    calcMetricByDate(data, 'send test', 'TTI', '2021-07-09');
-    calcMetricByDate(data, 'send test', 'TBT', '2021-07-09');
-    calcMetricByDate(data, 'send test', 'CLS', '2021-07-09');
+    calcMetricByDate(data, 'send test', 'connect', '2021-07-10');
+    calcMetricByDate(data, 'send test', 'TTFB', '2021-07-10');
+    calcMetricByDate(data, 'send test', 'FCP', '2021-07-10');
+    calcMetricByDate(data, 'send test', 'LCP', '2021-07-10');
+    calcMetricByDate(data, 'send test', 'FID', '2021-07-10');
+    calcMetricByDate(data, 'send test', 'TTI', '2021-07-10');
+    calcMetricByDate(data, 'send test', 'TBT', '2021-07-10');
+    calcMetricByDate(data, 'send test', 'CLS', '2021-07-10');
 
     console.log('__________________________________________________');
-    console.log('Получаем сессию пользователя с requestId === "130718071753"');
+    console.log('Получаем сессию пользователя с requestId === "728318666584"');
 
-    showSession(data, 130718071753);
+    showSession(data, 728318666584);
 
     console.log('__________________________________________________');
     console.log(
-      'Получаем все значения метрики "connect" за несколько дней ["2021-07-08", "2021-07-09"]'
+      'Получаем все значения метрики "FID" за несколько дней ["2021-07-09", "2021-07-10"]'
     );
 
-    showMetricByPeriod(data, ['2021-07-08', '2021-07-09'], 'connect');
+    showMetricByPeriod(data, ['2021-07-09', '2021-07-10'], 'FID');
 
     console.log('__________________________________________________');
 

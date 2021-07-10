@@ -20,7 +20,7 @@ function browser() {
 }
 
 counter.init(
-  'a46cb0a0-3480-4744-a2e0-648a8b789ed4',
+  '86299992-80a2-43ac-b17c-951218666c7e',
   String(Math.random()).substr(2, 12),
   'send test'
 );
@@ -74,7 +74,7 @@ try {
 } catch (e) {}
 
 //TimeToInteractive
-window.getPageTTI.then((data) => {
+window.getReferentialTTI().then((data) => {
   counter.send('TTI', data);
 });
 
