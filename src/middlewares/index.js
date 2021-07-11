@@ -27,6 +27,6 @@ module.exports = (app) => {
     delayMs: 1000,
   });
 
-  app.use(speedLimiter);
   app.use(limiter);
+  app.use(speedLimiter);
 };

@@ -20,7 +20,7 @@ function browser() {
 }
 
 counter.init(
-  'f5024e24-6697-4cc1-9c71-9e4bdc23e255',
+  '4b0505a8-4211-423a-974a-4627af7af069',
   String(Math.random()).substr(2, 12),
   window.location.pathname
 );
@@ -34,7 +34,10 @@ counter.setAdditionalParams({
       ? 'touch'
       : 'desktop',
   browser: browser(),
-  page: window.location.pathname,
+  page:
+    window.location.pathname.split('/')[1] === 'build'
+      ? '/build/:buildId'
+      : window.location.pathname,
 });
 
 //connect

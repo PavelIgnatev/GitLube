@@ -97,7 +97,7 @@ function showSession(data, requestId) {
 }
 
 fetch(
-  'https://shri.yandex/hw/stat/data?counterId=f5024e24-6697-4cc1-9c71-9e4bdc23e255'
+  'https://shri.yandex/hw/stat/data?counterId=4b0505a8-4211-423a-974a-4627af7af069'
 )
   .then((res) => res.json())
   .then((result) => {
@@ -108,26 +108,26 @@ fetch(
       'Получаем метрику "connect", "TTFB", "FCP", "LCP", "FID", "TTI", "TBT" и "CLS" за 2021-07-10 для страницы настроек по путю "/settings"'
     );
 
-    calcMetricByDate(data, '/settings', 'connect', '2021-07-10');
-    calcMetricByDate(data, '/settings', 'TTFB', '2021-07-10');
-    calcMetricByDate(data, '/settings', 'FCP', '2021-07-10');
-    calcMetricByDate(data, '/settings', 'LCP', '2021-07-10');
-    calcMetricByDate(data, '/settings', 'FID', '2021-07-10');
-    calcMetricByDate(data, '/settings', 'TTI', '2021-07-10');
-    calcMetricByDate(data, '/settings', 'TBT', '2021-07-10');
-    calcMetricByDate(data, '/settings', 'CLS', '2021-07-10');
+    calcMetricByDate(data, '/settings', 'connect', '2021-07-11');
+    calcMetricByDate(data, '/settings', 'TTFB', '2021-07-11');
+    calcMetricByDate(data, '/settings', 'FCP', '2021-07-11');
+    calcMetricByDate(data, '/settings', 'LCP', '2021-07-11');
+    calcMetricByDate(data, '/settings', 'FID', '2021-07-11');
+    calcMetricByDate(data, '/settings', 'TTI', '2021-07-11');
+    calcMetricByDate(data, '/settings', 'TBT', '2021-07-11');
+    calcMetricByDate(data, '/settings', 'CLS', '2021-07-11');
 
     console.log('__________________________________________________');
-    console.log('Получаем сессию пользователя с requestId === "238546558765"');
+    console.log('Получаем сессию пользователя с requestId === "564963172056"');
 
-    showSession(data, 238546558765);
+    showSession(data, 564963172056);
 
     console.log('__________________________________________________');
     console.log(
-      'Получаем все значения метрики "FID" за несколько дней ["2021-07-09", "2021-07-10"]'
+      'Получаем все значения метрики "FID" за несколько дней ["2021-07-10", "2021-07-11"]'
     );
 
-    showMetricByPeriod(data, ['2021-07-09', '2021-07-10'], 'FID');
+    showMetricByPeriod(data, ['2021-07-10', '2021-07-11'], 'FID');
 
     console.log('__________________________________________________');
 

@@ -65,7 +65,7 @@ describe('На главной странице', () => {
 
     //Произошел ли переход на страницу с информацией о сборке
     const page = await browser.$('.history-dashboard');
-    await page.waitForExist({ timeout: 20000 });
+    await page.waitForExist({ timeout: 10000 });
   });
   it('при наличии настроек и сборок в очереди, кликнув на одну из сборок, можно получить полную информацию о ее содержимом, после чего повторно добавить сборку в очередь с помощью кнопки rebuild (e2e тест)', async function () {
     const browser = this.browser;
