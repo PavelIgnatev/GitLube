@@ -7,10 +7,16 @@ module.exports = async (req, res) => {
   try {
     await cloneMainRepo(req.body.repoName, req.body.mainBranch);
 
-    //Очищать ли настройки?
-    //await axios.delete('https://shri.yandex/hw/api/conf');
+    //Очищаем настройки
+    await axios.delete('https://shri.yandex/hw/api/conf');
 
     let result = await axios.post('https://shri.yandex/hw/api/conf', req.body);
+
+    try {
+      await axios.post('http://localhost:8080/update-settings', req.body);
+    } catch (error) {
+      console.log('не смог отправить настройки на сервер');
+    }
 
     return res.json(result.data);
   } catch (error) {

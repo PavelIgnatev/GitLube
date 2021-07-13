@@ -1,27 +1,29 @@
-import { NavLink } from "react-router-dom";
-import "./HistoryDashbpard.sass";
+import { NavLink } from 'react-router-dom';
+import './HistoryDashbpard.sass';
 const historyDashboard = (props) => {
   //"status": "InProgress"
   //status": "Waiting"
   //"status": "Canceled",
   //"status": "Success",
   //"status": "Fail"
-  
+
   function getDate(date) {
-    return new Date(date).toLocaleString("en-US", {
+    return new Date(date).toLocaleString('en-US', {
       hour12: false,
       timeZone: 'Europe/Moscow',
-      timeZoneName: "short",
-      day: "numeric",
-      month: "short",
-      hour: "numeric",
-      minute: "numeric",
+      timeZoneName: 'short',
+      day: 'numeric',
+      month: 'short',
+      hour: 'numeric',
+      minute: 'numeric',
     });
   }
 
   function getTime(date) {
-    const hours = Math.floor(Number(date) /1000 / 60 / 60);
-    return `${hours} h ${Math.floor(Number(date) / 1000 / 60) - hours * 60} min`;
+    const hours = Math.floor(Number(date) / 1000 / 60 / 60);
+    return `${hours} h ${
+      Math.floor(Number(date) / 1000 / 60) - hours * 60
+    } min`;
   }
 
   return (
@@ -29,7 +31,7 @@ const historyDashboard = (props) => {
       className={`history-dashboard history-dashboard__${props.item.status}`}
       to={`/build/${props.item.id}`}
     >
-      <div style={{ display: "flex", flex: 1 }}>
+      <div style={{ display: 'flex', flex: 1 }}>
         <div
           className={`history-dashboard__status history-dashboard__status_${props.item.status}`}
         ></div>
@@ -43,12 +45,10 @@ const historyDashboard = (props) => {
             </div>
           </div>
           <div className="history-dashboard__line">
-            <div style={{ display: "flex" }}>
+            <div style={{ display: 'flex' }}>
               <img
                 className="history-dashboard__branchName_img"
-                src={
-                  require(`./../../assets/icons/code-commit.svg`).default
-                }
+                src={require(`./../../assets/icons/code-commit.svg`).default}
                 alt="code-commit"
               />
               <div className="history-dashboard__branchName">
@@ -58,7 +58,7 @@ const historyDashboard = (props) => {
                 {String(props.item.commitHash).slice(0, 7)}
               </div>
             </div>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: 'flex' }}>
               <img
                 className="history-dashboard__name_img"
                 src={require(`./../../assets/icons/user.svg`).default}
@@ -71,13 +71,15 @@ const historyDashboard = (props) => {
             {(props.item.start || Number(props.item.duration) > -1) && (
               <div
                 className="history-dashboard__lines"
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
               ></div>
             )}
-            <div
+            {(props.item.start || Number(props.item.duration) > -1) && (
+              <div
                 className="history-dashboard__lines_id"
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
               ></div>
+            )}
           </div>
         </div>
       </div>
