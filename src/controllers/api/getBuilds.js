@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
       .data.data;
   } catch (error) {
     console.error(error.message);
-    return res.status(error.response.status).end(error.message);
+    return res.status(500).end(error.message);
   }
 
   return res.json(data);

@@ -4,16 +4,37 @@ const { axios } = require('../../config/index.js');
 const cloneMainRepo = require('../../utils/cloneMainRepo.js').cloneMainRepo;
 
 module.exports = async (req, res) => {
+  let result;
+  let changeSettings = false;
   try {
-    await cloneMainRepo(req.body.repoName, req.body.mainBranch);
+    let data = (await axios.get('https://shri.yandex/hw/api/conf')).data.data;
+    let body = req.body;
 
-    //Очищаем настройки
-    await axios.delete('https://shri.yandex/hw/api/conf');
+    data.period = String(data.period);
 
-    let result = await axios.post('https://shri.yandex/hw/api/conf', req.body);
+    delete data.id;
+    delete body.id;
+
+    if (JSON.stringify(data) === JSON.stringify(body)) {
+      return res.json('');
+    }
+
+    if (data.repoName !== body.repoName) {
+      await cloneMainRepo(body.repoName, body.mainBranch);
+
+      //Очищаем настройки
+      await axios.delete('https://shri.yandex/hw/api/conf');
+
+      changeSettings = true;
+    }
+
+    result = await axios.post('https://shri.yandex/hw/api/conf', body);
 
     try {
-      await axios.post('http://localhost:8080/update-settings', req.body);
+      await axios.post('http://localhost:8080/update-settings', {
+        ...body,
+        changeSettings,
+      });
     } catch (error) {
       console.log('не смог отправить настройки на сервер');
     }
