@@ -7,7 +7,14 @@ module.exports = async (req, res) => {
   let result;
   let changeSettings = false;
   try {
-    let data = (await axios.get('https://shri.yandex/hw/api/conf')).data.data;
+    let data = (await axios.get('https://shri.yandex/hw/api/conf')).data
+      .data ?? {
+      id: '',
+      repoName: '',
+      buildCommand: '',
+      mainBranch: '',
+      period: '',
+    };
     let body = req.body;
 
     data.period = String(data.period);
