@@ -15,5 +15,5 @@ app.use('/api', apiRouter);
 app.use('/', mainRouter);
 
 app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+  console.log(`Приложение успешно запущен на порту ${PORT}`);
 });
