@@ -14,6 +14,7 @@ v14.17.1
    git clone https://github.com/PavelIgnatev/GitLube.git
    cd GitLube
    ```
+
 2. ### Важно!
 
    Записать в .env файл свой SWAGGER_KEY (для удобства можно отредактировать файл .envexample). <br>
@@ -22,6 +23,7 @@ v14.17.1
    В моем приложении в .env файле требуется ввести также и GITHUB_ACCESS_KEY,
    но если у вас его нет, то можно воспользоваться моим, который уже там введен.
    ```
+
 3. Открыть первый таб консоли и прописать:
 
    ```sh
@@ -30,11 +32,11 @@ v14.17.1
    npm run build --prod
    cd ..
    ```
-   
+
 4. В этом же табе консоли прописать
-  
+
    ```sh
-   npm install
+   npm ci
    npm run serve --prod
    ```
 
@@ -59,7 +61,7 @@ v14.17.1
 3. Открыть первый таб консоли и прописать:
 
    ```sh
-   npm install
+   npm ci
    ```
 
 4. Запустить dev-сервер
@@ -77,7 +79,7 @@ v14.17.1
 6. Запустить установку зависимостей
 
    ```sh
-    npm install
+    npm ci
    ```
 
 7. Запустить клиентскую часть приложения
@@ -99,7 +101,7 @@ v14.17.1
    Запускаем selenium в отдельном (на данный момент 3 табе)
 
    ```sh
-   selenium-standalone install && selenium-standalone start
+   selenium-standalone ci && selenium-standalone start
    ```
 
 3. Создаем 4 таб консоли и запускаем тесты:
