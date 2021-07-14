@@ -10,16 +10,13 @@
   "engineStrict": true,
   "scripts": {
     "serve": "nodemon --ignore repo/ src/server",
-    "test": "jest src/test && ./node_modules/.bin/hermione",
+    "test": "jest ./src/test && ./node_modules/.bin/hermione",
     "prepare": "husky install"
   },
   "author": "Ignatev Pavel (palllkaignatev@gmail.com)",
   "license": "ISC",
   "devDependencies": {
-    "axios": "^0.21.1",
-    "chromedriver": "^91.0.1",
     "eslint": "^7.28.0",
-    "express": "^4.17.1",
     "hermione": "^4.0.0-alpha.9",
     "husky": "^6.0.0",
     "jest": "^26.6.0",
@@ -36,11 +33,12 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
-    "env": "^0.0.2",
     "express-rate-limit": "^5.3.0",
     "express-slow-down": "^1.4.0",
     "helmet": "^4.6.0",
     "http-proxy-middleware": "^2.0.0",
-    "memory-cache": "^0.2.0"
+    "memory-cache": "^0.2.0",
+    "express": "^4.17.1",
+    "axios": "^0.21.1"
   }
 }
