@@ -95,7 +95,7 @@ v14.17.1
    Запускаем selenium в отдельном (на данный момент 3 табе)
 
    ```sh
-   selenium-standalone ci && selenium-standalone start
+   selenium-standalone install && selenium-standalone start
    ```
 
 3. Создаем 4 таб консоли и запускаем тесты:
