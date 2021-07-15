@@ -18,11 +18,8 @@ v14.17.1
 2. ### Важно!
 
    Записать в .env файл свой SWAGGER_KEY (для удобства можно отредактировать файл .envexample). <br>
-
-   ```text
-   В моем приложении в .env файле требуется ввести также и GITHUB_ACCESS_KEY,
-   но если у вас его нет, то можно воспользоваться моим, который уже там введен.
-   ```
+   В моем приложении в .env файле требуется ввести также и GITHUB_ACCESS_KEY. <br>
+   Получить его можно благодаря данному [туториалу.](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 
 3. Открыть первый таб консоли и прописать:
 
@@ -52,11 +49,8 @@ v14.17.1
 2. ### Важно!
 
    Записать в .env файл свой SWAGGER_KEY (для удобства можно отредактировать файл .envexample). <br>
-
-   ```text
-   В моем приложении в .env файле требуется ввести также и GITHUB_ACCESS_KEY,
-   но если у вас его нет, то можно воспользоваться моим, который уже там введен.
-   ```
+   В моем приложении в .env файле требуется ввести также и GITHUB_ACCESS_KEY. <br>
+   Получить его можно благодаря данному [туториалу.](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 
 3. Открыть первый таб консоли и прописать:
 
