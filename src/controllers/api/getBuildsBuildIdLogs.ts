@@ -2,7 +2,7 @@ import { axios } from '../../config'
 import { Request, Response } from 'express';
 
 //Получение логов сборки
-export async function getBuildsBuildIdLogs(req: Request, res: Response) {
+export async function getBuildsBuildIdLogs(req: Request, res: Response): Promise<any> {
   let data: string | null = null;
 
   try {

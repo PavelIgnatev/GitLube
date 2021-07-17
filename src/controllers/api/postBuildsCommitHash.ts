@@ -10,7 +10,7 @@ import { cloneMainRepo } from '../../utils/cloneMainRepo'
 
 
 //Добавление сборки в очередь
-export async function postBuildsCommitHash(req: Request, res: Response) {
+export async function postBuildsCommitHash(req: Request, res: Response): Promise<any> {
   let buildId: string | null = null;
   try {
     // Получаем repoName и mainBranch

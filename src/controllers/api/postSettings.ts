@@ -4,7 +4,7 @@ import { SettingsModel } from '../../@types/SettingsModel'
 import { cloneMainRepo } from '../../utils/cloneMainRepo'
 
 //Cохранение настроек
-export async function postSettings(req: Request, res: Response) {
+export async function postSettings(req: Request, res: Response): Promise<any> {
   let result: any;
   let changeSettings: boolean = false;
 

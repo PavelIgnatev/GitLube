@@ -3,7 +3,7 @@ import { InterfaceIsName, InterfaceIsMessage } from "../@types/InterfaceIsValue"
 import { isString } from '../@types/checkValueInObject'
 
 import path from 'path'
-const repoPath = path.resolve(__dirname, '../../repo');
+const repoPath: string = path.resolve(__dirname, '../../repo');
 
 export async function cloneMainRepo(url: string, branchName: string): Promise<void> {
   try {

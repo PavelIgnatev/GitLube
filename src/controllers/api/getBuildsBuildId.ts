@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { BuildModel } from '../../@types/BuildModel';
 
 //Получение информации о конкретной сборке
-export async function getBuildsBuildId(req: Request, res: Response) {
+export async function getBuildsBuildId(req: Request, res: Response): Promise<any> {
   let data: BuildModel | null = null;
 
   try {

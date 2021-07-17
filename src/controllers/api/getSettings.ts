@@ -4,7 +4,7 @@ import { SettingsModel } from '../../@types/SettingsModel';
 
 
 //Получение настроек
-export async function getSettings(req: Request, res: Response) {
+export async function getSettings(req: Request, res: Response): Promise<any> {
   let data: SettingsModel | null = null;
 
   try {
