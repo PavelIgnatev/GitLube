@@ -53,14 +53,12 @@ getFCP((fcpValue) => {
 
 //LargestContentfulPaint
 try {
-  let result;
   const observer = new PerformanceObserver((list) => {
     const entries = list.getEntries();
     const entry = entries[entries.length - 1];
     const largestPaintTime = entry.startTime;
-    result = largestPaintTime;
+    counter.send('LCP', largestPaintTime);
   });
-  counter.send('LCP', result);
   observer.observe({ type: 'largest-contentful-paint', buffered: true });
 } catch {}
 
