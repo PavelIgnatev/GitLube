@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "allowJs": true,
+    "strict": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    // "declaration": true, думаю d.ts нам на сервере не нужны
+    "module": "CommonJS",
+    "skipLibCheck": true
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "include": ["./src/"]
+}

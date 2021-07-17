@@ -1,25 +1,29 @@
-const { execFile, rmdir } = require('./promisify.js');
-const path = require('path');
+import { execFile, rmdir } from './promisify'
+import { InterfaceIsName, InterfaceIsMessage } from "../@types/InterfaceIsValue";
+import { isString } from '../@types/checkValueInObject'
+
+import path from 'path'
 const repoPath = path.resolve(__dirname, '../../repo');
 
-module.exports.cloneMainRepo = async (url, branchName) => {
+export async function cloneMainRepo(url: string, branchName: string): Promise<void> {
   try {
-    const postGithub = async (url) =>
-      JSON.parse(
+    const postGithub = async (url: string): Promise<any> => {
+      return JSON.parse(
         (
           await execFile('curl', [
             '-H',
             `Authorization: token ${process.env.GITHUB_ACCESS_KEY}`,
             url,
-          ])
-        ).stdout
+          ], {})
+        ).stdout.toString()
       );
+    }
 
-    const isReposotory = await postGithub(
+    const isReposotory: InterfaceIsMessage = await postGithub(
       `https://api.github.com/repos/${url}`
     );
 
-    const isBranch = await postGithub(
+    const isBranch: Array<object> = await postGithub(
       `https://api.github.com/repos/${url}/branches`
     );
 
@@ -29,16 +33,17 @@ module.exports.cloneMainRepo = async (url, branchName) => {
 
     if (isReposotory.message !== 'Not Found') {
       //Проверка на то, существует ли такой branch
-      if (isBranch.find((item) => item.name === branchName)) {
+      if (isBranch.find((item: InterfaceIsName) => item.name === branchName)) {
+
         //Удаляем папочку рекурсивно если такой репозиторий существет
         await rmdir(repoPath, true);
-        //Клонируем репозиторий
 
-        return await execFile('git', [
+        //Клонируем репозиторий
+        await execFile('git', [
           'clone',
           `https://${process.env.GITHUB_ACCESS_KEY}@github.com/${url}.git`,
           repoPath,
-        ]);
+        ], {});
       } else {
         console.error(isBranch);
         throw {
@@ -46,6 +51,7 @@ module.exports.cloneMainRepo = async (url, branchName) => {
         };
       }
     } else {
+
       //Кидаем ошибку, что репозиторий не существует, не удаляя предыдущую папку с репом
       console.error(isReposotory);
       throw { message: 'This repository was not found, it may be private' };

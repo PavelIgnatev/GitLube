@@ -32,7 +32,7 @@ class Api {
         repoName: Repository,
         buildCommand: BuildCommand,
         mainBranch: MainBranch.length > 0 ? MainBranch : 'main',
-        period: Period.length > 0 ? Period : '1',
+        period: Number(Period.length > 0 ? Period : 1),
       });
     } else {
       return { data: { message: undefined } };

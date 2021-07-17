@@ -1,18 +1,18 @@
-const { execFile } = require('./promisify.js');
-
-const path = require('path');
+import { execFile } from './promisify'
+import path from 'path'
 //Получаем branch по commitHash
-module.exports.getBranch = async (commitHash, repoLink = '../../repo') => {
+export async function getBranch(commitHash: string, repoLink: string = '../../repo'): Promise<string | undefined> {
   try {
     return (
       await execFile('git', ['branch', '-a', '--contains', commitHash], {
         cwd: path.resolve(__dirname, repoLink),
       })
     ).stdout
+      .toString()
       .replace('* ', '')
       .trim()
       .split('/')
-      .pop();
+      .pop()
   } catch (error) {
     console.error(error.message);
     throw { message: 'Commit hash is invalid' };

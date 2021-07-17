@@ -1,10 +1,11 @@
-const express = require('express');
-const cache = require('./utils/cache.js');
-const api = require('./controllers/api');
-const { createProxyMiddleware } = require('http-proxy-middleware');
-const path = require('path');
+import express from 'express'
+import { cache } from './utils/cache'
+import { createProxyMiddleware } from 'http-proxy-middleware'
+import { Router } from 'express'
+import { api } from './controllers/api'
+import path from 'path'
 
-const apiRouter = new express.Router();
+const apiRouter: Router = Router()
 
 apiRouter.get('/settings', api.getSettings);
 apiRouter.post('/settings', api.postSettings);
@@ -13,7 +14,7 @@ apiRouter.post('/builds/:commitHash', api.postBuildsCommitHash);
 apiRouter.get('/builds/:buildId', api.getBuildsBuildId);
 apiRouter.get('/builds/:buildId/logs', cache(1000), api.getBuildsBuildIdLogs);
 
-const mainRouter = new express.Router();
+const mainRouter: Router = Router()
 
 if (process.env.NODE_ENV === 'production') {
   mainRouter.use(express.static(path.join(__dirname, '../client', 'build')));
@@ -30,5 +31,4 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
-exports.mainRouter = mainRouter;
-exports.apiRouter = apiRouter;
+export { mainRouter, apiRouter };

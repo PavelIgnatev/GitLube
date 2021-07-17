@@ -1,7 +1,7 @@
-const express = require('express');
-const setupMiddlewares = require('./middlewares');
-const { PORT } = require('./config');
-const { apiRouter, mainRouter } = require('./router');
+import express from 'express'
+import { setupMiddlewares } from './middlewares'
+import { PORT } from './config'
+import { apiRouter, mainRouter } from './router'
 
 const app = express();
 
