@@ -156,11 +156,15 @@ const SettingsPage = () => {
         </div>
         <BaseInput
           id="repository"
-          required="true"
+          required={true}
           label="Github repository"
           placeholder="user-name/repo-name"
           onChange={(e) => {
             changeRepository(e.currentTarget.value.trim());
+            changeErrorForRepository('');
+          }}
+          onClear={() => {
+            changeRepository('');
             changeErrorForRepository('');
           }}
           value={Repository}
@@ -168,11 +172,15 @@ const SettingsPage = () => {
         />
         <BaseInput
           id="build"
-          required="true"
+          required={true}
           label="Build command"
           placeholder="npm ci && npm run build"
           onChange={(e) => {
             changeBuildCommand(e.currentTarget.value);
+            changeErrorForBuildCommand('');
+          }}
+          onClear={() => {
+            changeBuildCommand('');
             changeErrorForBuildCommand('');
           }}
           value={BuildCommand}
@@ -180,11 +188,15 @@ const SettingsPage = () => {
         />
         <BaseInput
           id="branch"
-          required="false"
+          required={false}
           label="Main branch"
           placeholder="main"
           onChange={(e) => {
             changeMainBranch(e.currentTarget.value.trim());
+            changeErrorForMainBranch('');
+          }}
+          onClear={() => {
+            changeMainBranch('');
             changeErrorForMainBranch('');
           }}
           value={MainBranch}

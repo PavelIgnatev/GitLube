@@ -1,6 +1,7 @@
 import './BaseInput.sass';
+import { InputModel } from '../../@types/InputModel';
 
-const BaseInput = (props) => {
+const BaseInput = (props: InputModel) => {
   return (
     <div className="base-input">
       <label
@@ -9,7 +10,7 @@ const BaseInput = (props) => {
         style={{ color: props.error ? 'red' : '' }}
       >
         {props.label}
-        {props.required === 'true' && (
+        {props.required && (
           <span style={{ color: 'red', marginLeft: '2px' }}>*</span>
         )}
       </label>
@@ -27,7 +28,7 @@ const BaseInput = (props) => {
       {props.value && (
         <div
           className="base-input__clear"
-          onClick={() => props.onChange({ currentTarget: { value: '' } })}
+          onClick={props.onClear}
         ></div>
       )}
     </div>

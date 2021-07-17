@@ -14,12 +14,12 @@ class Api {
   }
 
   //Добавляем в очередь
-  async addQueueBuild(commitHash: string): Promise<AxiosResponse<string>> {
+  async addQueueBuild(commitHash: string): Promise<AxiosResponse<any>> {
     return await axios.post(`${path}/api/builds/${commitHash}` as string);
   }
 
   //Отправляем настройки
-  async postSettings(Repository: string, BuildCommand: string, MainBranch: string, Period: number): Promise<AxiosResponse<string>> {
+  async postSettings(Repository: string, BuildCommand: string, MainBranch: string, Period: number): Promise<AxiosResponse<any>> {
     return await axios.post(`${path}/api/settings`, {
       id: '8c3c6fa1-47de-4b48-808c-562eb458665sd',
       repoName: Repository,
