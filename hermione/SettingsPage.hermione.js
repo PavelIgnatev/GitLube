@@ -1,4 +1,4 @@
-const { axios } = require('../src/config/index.js');
+const { axios } = require('../src/config/index');
 
 describe('Со страницы настроек', () => {
   it('не должен поступать запрос на сервер, если обязательные поля не заполнены (интеграционный тест)', async function () {
