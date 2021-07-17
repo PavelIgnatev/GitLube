@@ -1,5 +1,5 @@
 import loader from '../../../assets/icons/loader.svg';
-import HistoryDashbpard from '../../dashboard/HistoryDashbpard.jsx';
+import HistoryDashbpard from '../../dashboard/HistoryDashbpard';
 import { useState, useEffect } from 'react';
 import { builds, settings } from '../../../store';
 import { observer } from 'mobx-react-lite';

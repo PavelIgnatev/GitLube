@@ -1,6 +1,6 @@
-import PageRouter from '../router/PageRouter.jsx';
-import BaseFooter from './footer/BaseFooter.jsx';
-import BaseHeader from './header/BaseHeader.jsx';
+import PageRouter from '../router/PageRouter';
+import BaseFooter from './footer/BaseFooter';
+import BaseHeader from './header/BaseHeader';
 import { settings } from '../store/index';
 import { useEffect } from 'react';
 

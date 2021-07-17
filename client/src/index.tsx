@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './components/App';
+
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import App from './components/App.jsx';
+
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/sass/index.sass';
-import './statistics/collectingStatistics.js';
-import './statistics/viewingStatistics.js';
+import './statistics/collectingStatistics';
+import './statistics/viewingStatistics';
 
 ReactDOM.render(
   <React.StrictMode>

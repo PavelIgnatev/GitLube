@@ -1,13 +1,16 @@
 import { NavLink } from 'react-router-dom';
 import './HistoryDashbpard.sass';
-const historyDashboard = (props) => {
+import { BuildModelForItem } from '../../@types/BuildModel/BuildModelForItem';
+
+const historyDashboard = (props: BuildModelForItem) => {
   //"status": "InProgress"
   //status": "Waiting"
   //"status": "Canceled",
   //"status": "Success",
   //"status": "Fail"
 
-  function getDate(date) {
+
+  function getDate(date: string): string {
     return new Date(date).toLocaleString('en-US', {
       hour12: false,
       timeZone: 'Europe/Moscow',
@@ -19,11 +22,10 @@ const historyDashboard = (props) => {
     });
   }
 
-  function getTime(date) {
-    const hours = Math.floor(Number(date) / 1000 / 60 / 60);
-    return `${hours} h ${
-      Math.floor(Number(date) / 1000 / 60) - hours * 60
-    } min`;
+  function getTime(date: number): string {
+    const hours = Math.floor(date / 1000 / 60 / 60);
+    return `${hours} h ${Math.floor(date / 1000 / 60) - hours * 60
+      } min`;
   }
 
   return (
@@ -54,9 +56,10 @@ const historyDashboard = (props) => {
               <div className="history-dashboard__branchName">
                 {props.item.branchName}
               </div>
-              <div className="history-dashboard__commitHash">
-                {String(props.item.commitHash).slice(0, 7)}
-              </div>
+              {props.item.commitHash && <div className="history-dashboard__commitHash">
+                {props.item.commitHash.slice(0, 7)}
+              </div>}
+
             </div>
             <div style={{ display: 'flex' }}>
               <img
@@ -68,13 +71,13 @@ const historyDashboard = (props) => {
                 {props.item.authorName}
               </div>
             </div>
-            {(props.item.start || Number(props.item.duration) > -1) && (
+            {(props.item.start || props.item.duration > -1) && (
               <div
                 className="history-dashboard__lines"
                 style={{ display: 'none' }}
               ></div>
             )}
-            {(props.item.start || Number(props.item.duration) > -1) && (
+            {(props.item.start || props.item.duration > -1) && (
               <div
                 className="history-dashboard__lines_id"
                 style={{ display: 'none' }}
@@ -83,7 +86,7 @@ const historyDashboard = (props) => {
           </div>
         </div>
       </div>
-      {(props.item.start || Number(props.item.duration) > -1) && (
+      {(props.item.start || props.item.duration > -1) && (
         <div className="history-dashboard__info">
           {props.item.start && (
             <div className="history-dashboard__line">
@@ -97,7 +100,7 @@ const historyDashboard = (props) => {
               </div>
             </div>
           )}
-          {Number(props.item.duration) > -1 && (
+          {props.item.duration > -1 && (
             <div className="history-dashboard__line">
               <img
                 className="history-dashboard__clock"

@@ -1,13 +1,13 @@
-import "./StartScreenPage.sass";
-import keyandscrewdriver from "../../../assets/icons/keyandscrewdriver.svg";
-import BaseButtonOrange from "../../buttons/BaseButtonOrange.jsx";
-import { useHistory } from "react-router-dom";
+import './StartScreenPage.sass';
+import keyandscrewdriver from '../../../assets/icons/keyandscrewdriver.svg';
+import BaseButtonOrange from '../../buttons/BaseButtonOrange';
+import { useHistory } from 'react-router-dom';
 
 const StartScreenPage = () => {
   let history = useHistory();
 
   function RedirectToBuildHistory() {
-    history.push("/settings");
+    history.push('/settings');
   }
 
   return (

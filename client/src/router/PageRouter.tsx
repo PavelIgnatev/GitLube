@@ -1,15 +1,16 @@
 import { Route, Switch } from 'react-router-dom';
-import BuildDetaildsPage from '../components/pages/BuildDetailsPage/BuildDetailsPage.jsx';
-import BuildsHistoryPage from '../components/pages/BuildHistoryPage/BuildHistoryPage.jsx';
-import SettingsPage from '../components/pages/SettingsPage/SettingsPage.jsx';
-import StartScreenPage from '../components/pages/StartScreenPage/StartScreenPage.jsx';
-import PageNotFound from '../components/pages/PageNotFound/PageNotFound.jsx';
+import BuildDetaildsPage from '../components/pages/BuildDetailsPage/BuildDetailsPage';
+import BuildsHistoryPage from '../components/pages/BuildHistoryPage/BuildHistoryPage';
+import SettingsPage from '../components/pages/SettingsPage/SettingsPage';
+import StartScreenPage from '../components/pages/StartScreenPage/StartScreenPage';
+import PageNotFound from '../components/pages/PageNotFound/PageNotFound';
 import { observer } from 'mobx-react-lite';
 import { settings, builds } from '../store';
 import { Redirect } from 'react-router';
+import { SettingsModel } from '../@types/SettingsModel';
 
 const RepoHeader = () => {
-  const getter = settings.getterSettings;
+  const getter: SettingsModel = settings.getterSettings;
   return (
     <div className="app-page">
       <Switch>

@@ -1,10 +1,10 @@
 import Modal from 'react-modal';
 import { useState } from 'react';
-import BaseInput from '../inputs/BaseInput.jsx';
-import BaseButtonOrange from '../buttons/BaseButtonOrange.jsx';
-import BaseButtonGray from '../buttons/BaseButtonGray.jsx';
+import BaseInput from '../inputs/BaseInput';
+import BaseButtonOrange from '../buttons/BaseButtonOrange';
+import BaseButtonGray from '../buttons/BaseButtonGray';
 import { toast } from 'react-toastify';
-import { builds } from '../../store/index.js';
+import { builds } from '../../store/index';
 import './BaseModal.sass';
 import { Redirect } from 'react-router';
 

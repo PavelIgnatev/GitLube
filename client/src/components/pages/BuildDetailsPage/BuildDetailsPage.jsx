@@ -1,4 +1,4 @@
-import HistoryDashbpard from '../../dashboard/HistoryDashbpard.jsx';
+import HistoryDashbpard from '../../dashboard/HistoryDashbpard';
 import loader from '../../../assets/icons/loader.svg';
 import Convert from 'ansi-to-html';
 import { useEffect } from 'react';
@@ -26,7 +26,7 @@ const BuildDetaildsPage = () => {
   useEffect(() => {
     getDetails();
 
-    //Обновление state каждые n времени 
+    //Обновление state каждые n времени
     const interval = setInterval(
       () => {
         getDetails();

@@ -1,8 +1,10 @@
-import "./ButtonForActions.sass";
+import "./sass/ButtonForActions.sass";
+import { NavLink } from "react-router-dom";
+import { ButtonModel } from '../../@types/ButtonModel';
 
-const ButtonForActions = (props) => {
+const ButtonForActions = (props: ButtonModel) => {
   return (
-    <button disabled={props.buttonDisabled} className="button-action base-button__gray" onClick={props.onClick}>
+    <NavLink to="/settings" className={`button-action base-button__gray base-button__gray_${props.size}`}>
       <div className="button-action__wrapper">
         <img
           className="button-action__img"
@@ -13,7 +15,7 @@ const ButtonForActions = (props) => {
       {props.size === "big" && (
         <div className="button-action__action">{props.action}</div>
       )}
-    </button>
+    </NavLink>
   );
 };
 export default ButtonForActions;

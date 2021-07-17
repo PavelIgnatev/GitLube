@@ -40,7 +40,7 @@ const SettingsPage = () => {
       repoName: Repository,
       buildCommand: BuildCommand,
       mainBranch: MainBranch,
-      period: Period,
+      period: Number(Period),
     });
     history.push('/');
   }
