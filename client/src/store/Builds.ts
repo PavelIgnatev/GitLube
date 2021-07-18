@@ -54,7 +54,7 @@ class Builds {
   async getBuildList(): Promise<void> {
     try {
       this.buildListError = false;
-      const result = (await api.get('/api/builds')).data;
+      const result: BuildListModel = (await api.get('/api/builds')).data;
 
       //Решил замедлить, чтобы лоадер хоть видно было)
       await this.sleep(1000);
@@ -72,7 +72,7 @@ class Builds {
   async getBuildInfo(BuildId: string): Promise<void> {
     try {
       this.BuildInfoError = false;
-      const result = (await api.get(`/api/builds/${BuildId}`)).data;
+      const result: BuildModel = (await api.get(`/api/builds/${BuildId}`)).data;
       this.updateBuildInfo(result, BuildId);
     } catch (err) {
       console.log(err);
@@ -83,7 +83,7 @@ class Builds {
   async getBuildLog(BuildId: string): Promise<void> {
     try {
       this.buildLogError = false;
-      const result = (await api.get(`/api/builds/${BuildId}/logs`)).data;
+      const result: string = (await api.get(`/api/builds/${BuildId}/logs`)).data;
       this.updateBuildLog(result, BuildId);
     } catch (err) {
       console.log(err);
