@@ -17,7 +17,7 @@ class Settings {
     this.settings = newSettings;
   }
 
-  async postSettings(Repository: string, BuildCommand: string, MainBranch: string, Period: number): Promise<AxiosResponse<string>> {
+  async postSettings(Repository: string, BuildCommand: string, MainBranch: string, Period: number): Promise<AxiosResponse<any>> {
     this.status = 'waiting';
     const result = await api.postSettings(
       Repository,

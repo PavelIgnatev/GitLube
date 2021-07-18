@@ -6,18 +6,17 @@ import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { settings, builds } from '../../../store';
 import { observer } from 'mobx-react-lite';
-import makeMobxLocation from 'mobx-location';
-import { toJS } from 'mobx';
+
 import './SettingsPage.sass';
 
 const SettingsPage = () => {
   const history = useHistory();
-  const mobxLocation = makeMobxLocation({ arrayFormat: 'bracket' });
+
   //Для определения ошибок
-  const [errorForRepository, changeErrorForRepository] = useState('');
-  const [errorForBuildCommand, changeErrorForBuildCommand] = useState('');
-  const [errorForMainBranch, changeErrorForMainBranch] = useState('');
-  const [errorPeriod, changeErrorPeriod] = useState('');
+  const [errorForRepository, changeErrorForRepository] = useState(false);
+  const [errorForBuildCommand, changeErrorForBuildCommand] = useState(false);
+  const [errorForMainBranch, changeErrorForMainBranch] = useState(false);
+  const [errorPeriod, changeErrorPeriod] = useState(false);
 
   //Для disabled кнопки
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -35,7 +34,7 @@ const SettingsPage = () => {
   const [Period, changePeriod] = useState(settings.getterSettings.period ?? '');
 
   //Обновляем state настроек
-  function updateSettings() {
+  function updateSettings(): void {
     settings.updateSettings({
       repoName: Repository,
       buildCommand: BuildCommand,
@@ -46,47 +45,47 @@ const SettingsPage = () => {
   }
 
   //Функция минимальной валидации
-  function beforeRequestingTheServer() {
+  function beforeRequestingTheServer(): boolean {
     let status = true;
     if (Repository.length < 3) {
-      changeErrorForRepository('ERROR');
+      changeErrorForRepository(true);
       toast.error('The minimum length of the repository field is 3 character');
       status = false;
     }
     if (Repository.split('/').length === 1) {
-      changeErrorForRepository('ERROR');
+      changeErrorForRepository(true);
       toast.error('Invalid input format, character / not found');
       status = false;
     }
     if (BuildCommand.length < 3) {
-      changeErrorForBuildCommand('ERROR');
+      changeErrorForBuildCommand(true);
       toast.error(
         'The minimum length of the Build command field is 3 character'
       );
       status = false;
     }
     if (Number(Period) < 1) {
-      changeErrorPeriod('ERROR');
+      changeErrorPeriod(true);
       toast.error('The update period cannot be less than 1 minute');
       status = false;
     }
     return status;
   }
   //Функция окончательной валидации после отправки запроса на сервер
-  function afterRequestingTheServer(errorMessage) {
+  function afterRequestingTheServer(errorMessage: string): void {
     //Валидация по дополнительным условиям
     if (errorMessage === 'This repository was not found, it may be private') {
-      changeErrorForRepository('Error');
+      changeErrorForRepository(true);
       toast.error(errorMessage);
     } else if (
       errorMessage === 'Your master branch was not found, default branch: main'
     ) {
-      changeErrorForMainBranch('Error');
+      changeErrorForMainBranch(true);
       toast.error(errorMessage);
     }
     //Если ошибки были - кидаем тост, иначе - сохраняем настройки
     else if (errorMessage) {
-      changeErrorForRepository('Error');
+      changeErrorForRepository(true);
       console.log(errorMessage);
       toast.error('Sorry, but you entered incorrect data, please try again.');
     } else {
@@ -96,7 +95,7 @@ const SettingsPage = () => {
   }
 
   //Отправляем запрос на api, который, если что, вернет нам текст ошибки
-  async function postSettings() {
+  async function postSettings(): Promise<void> {
     try {
       //Задизейблим кнопку
       setButtonDisabled(true);
@@ -121,7 +120,7 @@ const SettingsPage = () => {
     }
   }
   //Обработчик на клики по кнопкам
-  function handleClickSave(e) {
+  function handleClickSave(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
 
     //Если обработка до запроса на сервер проверка удалась
@@ -130,7 +129,7 @@ const SettingsPage = () => {
     }
   }
 
-  function handleClickCancel(e) {
+  function handleClickCancel(e: React.ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();
     history.push('/');
   }
@@ -143,9 +142,9 @@ const SettingsPage = () => {
     changeMainBranch(settings.getterSettings.mainBranch ?? '');
     //Period стандартно 1, пользователю и не обязательно это знать
     changePeriod(settings.getterSettings.period ?? '');
-    return null;
+    return () => undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [settings.getterSettings, toJS(mobxLocation).href]);
+  }, [settings.getterSettings]);
 
   return (
     <div className="page-settings">
@@ -159,61 +158,64 @@ const SettingsPage = () => {
           required={true}
           label="Github repository"
           placeholder="user-name/repo-name"
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             changeRepository(e.currentTarget.value.trim());
-            changeErrorForRepository('');
+            changeErrorForRepository(false);
           }}
           onClear={() => {
             changeRepository('');
-            changeErrorForRepository('');
+            changeErrorForRepository(false);
           }}
           value={Repository}
           error={errorForRepository}
+          autoFocus={false}
         />
         <BaseInput
           id="build"
           required={true}
           label="Build command"
           placeholder="npm ci && npm run build"
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             changeBuildCommand(e.currentTarget.value);
-            changeErrorForBuildCommand('');
+            changeErrorForBuildCommand(false);
           }}
           onClear={() => {
             changeBuildCommand('');
-            changeErrorForBuildCommand('');
+            changeErrorForBuildCommand(false);
           }}
           value={BuildCommand}
           error={errorForBuildCommand}
+          autoFocus={false}
         />
         <BaseInput
           id="branch"
           required={false}
           label="Main branch"
           placeholder="main"
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             changeMainBranch(e.currentTarget.value.trim());
-            changeErrorForMainBranch('');
+            changeErrorForMainBranch(false);
           }}
           onClear={() => {
             changeMainBranch('');
-            changeErrorForMainBranch('');
+            changeErrorForMainBranch(false);
           }}
           value={MainBranch}
           error={errorForMainBranch}
+          autoFocus={false}
         />
         <div className="page-settings__period">
           Synchronize every
           <input
             className="base-input__input pr0"
             value={Period}
-            style={errorPeriod === 'ERROR' ? { border: '2px solid red' } : {}}
-            onChange={(e) => {
-              changePeriod(e.currentTarget.value.trim());
-              changeErrorPeriod('');
+            style={errorPeriod === true ? { border: '2px solid red' } : {}}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              changePeriod(parseInt(e.currentTarget.value));
+              changeErrorPeriod(false);
             }}
             type="number"
-            onInput={(e) => (e.target.value = e.target.value.slice(0, 3))}
+            onInput={(e: React.ChangeEvent<HTMLInputElement>) => (e.target.value = e.target.value.slice(0, 3))}
           />
           minutes
         </div>

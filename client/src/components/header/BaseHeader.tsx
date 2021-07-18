@@ -45,6 +45,7 @@ const BaseHeader = () => {
       //Делаем редирект только если пользователь находится на данной странице
       setRedirect(`/build/${data.buildId}`);
       builds.updateStatusPending();
+      
     } catch (error) {
       setButtonDisabled(false);
       toast.error(

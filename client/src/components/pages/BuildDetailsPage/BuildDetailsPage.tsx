@@ -3,14 +3,12 @@ import loader from '../../../assets/icons/loader.svg';
 import Convert from 'ansi-to-html';
 import { useEffect } from 'react';
 import { builds, settings } from '../../../store';
-import makeMobxLocation from 'mobx-location';
-import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import './BuildDetailsPage.sass';
 
 const BuildDetaildsPage = () => {
-  const mobxLocation = makeMobxLocation({ arrayFormat: 'bracket' });
-  const buildId = toJS(mobxLocation).href.split('/')[4];
+
+  const buildId: string = window.location.pathname.split('/')[2];
   const convert = new Convert({ bg: '#f2f2f2', fg: '#55F' });
 
   function getDetails() {
@@ -18,7 +16,6 @@ const BuildDetaildsPage = () => {
       if (!builds.getterBuildLog[buildId]) {
         builds.getBuildLog(buildId);
       }
-
       builds.getBuildInfo(buildId);
     }
   }
@@ -31,8 +28,8 @@ const BuildDetaildsPage = () => {
       () => {
         getDetails();
       },
-      Number(settings.settings.period) > 0
-        ? Number(settings.settings.period) * 1000 * 60
+      settings.settings.period > 0
+        ? settings.settings.period * 1000 * 60
         : 1000 * 60
     );
 
@@ -40,7 +37,7 @@ const BuildDetaildsPage = () => {
       clearInterval(interval);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [toJS(mobxLocation).href]);
+  }, [builds.status]);
 
   return (
     <div className="page-detail">
@@ -59,9 +56,7 @@ const BuildDetaildsPage = () => {
         <pre
           className="page-detail__pre"
           dangerouslySetInnerHTML={{
-            __html: convert.toHtml(builds.getterBuildLog[buildId], {
-              colors: ['red'],
-            }),
+            __html: convert.toHtml(builds.getterBuildLog[buildId]),
           }}
         ></pre>
       )}

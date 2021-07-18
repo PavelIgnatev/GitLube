@@ -9,8 +9,8 @@ const BuildsHistoryPage = () => {
   let [step, changeStep] = useState(9);
 
   useEffect(() => {
-    //Получаем все билды в геттер getterBuildList, без ожидания
 
+    //Получаем все билды в геттер getterBuildList, без ожидания
     builds.getBuildList();
 
     //Обновление state каждые n времени
@@ -43,7 +43,18 @@ const BuildsHistoryPage = () => {
       {builds.status === 'pending' && builds.getterBuildList.length > 0 && (
         <div style={{ position: 'relative' }}>
           <div style={{ opacity: '0' }}>
-            <HistoryDashbpard item={[]} key={'buildstatuspending'} />
+            <HistoryDashbpard item={{
+              id: '',
+              configurationId: '',
+              buildNumber: 0,
+              commitMessage: '',
+              commitHash: '',
+              branchName: '',
+              authorName: '',
+              status: '',
+              start: '',
+              duration: 0
+            }} key={'buildstatuspending'} />
           </div>
           <object type="image/svg+xml" data={loader}>
             {' '}

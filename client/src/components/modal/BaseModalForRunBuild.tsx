@@ -31,7 +31,7 @@ const BaseModalForRunBuild = (props: { closeModal: Function, modalIsOpen: boolea
 
   async function postCommitHash(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    if (minimalValid() !== false) {
+    if (minimalValid()) {
       try {
         setButtonDisabled(true);
 
