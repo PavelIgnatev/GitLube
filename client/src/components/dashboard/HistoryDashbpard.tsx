@@ -14,7 +14,7 @@ const historyDashboard = (props: BuildModelForItem) => {
     return new Date(date).toLocaleString('en-US', {
       hour12: false,
       timeZone: 'Europe/Moscow',
-      timeZoneName: 'short',
+
       day: 'numeric',
       month: 'short',
       hour: 'numeric',
@@ -24,8 +24,9 @@ const historyDashboard = (props: BuildModelForItem) => {
 
   function getTime(date: number): string {
     const hours = Math.floor(date / 1000 / 60 / 60);
-    return `${hours} h ${Math.floor(date / 1000 / 60) - hours * 60
-      } min`;
+    const minutes = Math.floor((date / (1000 * 60)) % 60)
+    const seconds = Math.floor((date / 1000) % 60);
+    return `${hours} h ${minutes} min ${seconds} sec`;
   }
 
   return (
