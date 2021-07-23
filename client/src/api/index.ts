@@ -15,7 +15,7 @@ class Api {
 
   //Добавляем в очередь
   async addQueueBuild(commitHash: string): Promise<AxiosResponse<any>> {
-    return await axios.post(`${path}/api/builds/${commitHash}` as string);
+    return await axios.post(`${path}/api/builds/${commitHash}`);
   }
 
   //Отправляем настройки

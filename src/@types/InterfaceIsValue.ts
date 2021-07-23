@@ -6,7 +6,8 @@ interface InterfaceIsMessage {
   message: string;
 }
 
-export {
-  InterfaceIsName,
-  InterfaceIsMessage
+interface InterfaceIsData {
+  data: string;
 }
+
+export { InterfaceIsName, InterfaceIsMessage, InterfaceIsData };

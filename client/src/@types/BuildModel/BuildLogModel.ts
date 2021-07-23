@@ -1,3 +1,3 @@
 export interface BuildLogModel {
-  [key: string]: string
+  [key: string]: string;
 }

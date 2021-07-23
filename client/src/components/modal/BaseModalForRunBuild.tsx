@@ -5,8 +5,9 @@ import BaseButtonOrange from '../buttons/BaseButtonOrange';
 import BaseButtonGray from '../buttons/BaseButtonGray';
 import { toast } from 'react-toastify';
 import { builds } from '../../store/index';
-import './BaseModal.sass';
 import { Redirect } from 'react-router';
+import React from 'react'
+import './BaseModal.sass';
 
 Modal.setAppElement('#root');
 

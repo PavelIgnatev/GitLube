@@ -15,8 +15,8 @@ export async function postBuildsCommitHash(req: Request, res: Response): Promise
   try {
     // Получаем repoName и mainBranch
     const { repoName, mainBranch } = ((
-      await axios.get('https://shri.yandex/hw/api/conf')
-    ).data.data as SettingsModel);
+      await axios.get<SettingsModel>('https://shri.yandex/hw/api/conf')
+    ).data.data);
 
     //Обновляем репозиторий, чтобы далее делать поиск message, author, branch по свежим данным
     await cloneMainRepo(repoName, mainBranch);

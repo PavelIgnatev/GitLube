@@ -23,6 +23,8 @@
     "@types/memory-cache": "^0.2.1",
     "@types/node": "^16.3.3",
     "@types/uuid": "^8.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
     "chromedriver": "^91.0.1",
     "eslint": "^7.28.0",
     "hermione": "^4.0.0-alpha.9",

@@ -52,28 +52,27 @@ getFCP((fcpValue) => {
 });
 
 //LargestContentfulPaint
-try {
-  const observer = new PerformanceObserver((list) => {
-    const entries = list.getEntries();
-    const entry = entries[entries.length - 1];
-    const largestPaintTime = entry.startTime;
-    counter.send('LCP', largestPaintTime);
-  });
-  observer.observe({ type: 'largest-contentful-paint', buffered: true });
-} catch {}
+const LargestContentfulPaint = new PerformanceObserver((list) => {
+  const entries = list.getEntries();
+  const entry = entries[entries.length - 1];
+  const largestPaintTime = entry.startTime;
+  counter.send('LCP', largestPaintTime);
+});
+LargestContentfulPaint.observe({
+  type: 'largest-contentful-paint',
+  buffered: true,
+});
 
 //FirstInputDelay
-try {
-  const observer = new PerformanceObserver((list) => {
-    for (const entry of list.getEntries()) {
-      counter.send('FID', entry.processingStart - entry.startTime);
-    }
-  });
-  observer.observe({
-    type: 'first-input',
-    buffered: true,
-  });
-} catch (e) {}
+const FirstInputDelay = new PerformanceObserver((list) => {
+  for (const entry of list.getEntries()) {
+    counter.send('FID', entry.processingStart - entry.startTime);
+  }
+});
+FirstInputDelay.observe({
+  type: 'first-input',
+  buffered: true,
+});
 
 //TimeToInteractive
 window.getReferentialTTI().then((data) => {
@@ -81,27 +80,23 @@ window.getReferentialTTI().then((data) => {
 });
 
 //TotalBlockingTime
-try {
-  let totalBlockingTime = 0;
-  let observer = new PerformanceObserver(function (list) {
-    let perfEntries = list.getEntries();
-    for (const perfEntry of perfEntries) {
-      totalBlockingTime += perfEntry.duration - 50;
-    }
-  });
-  counter.send('TBT', totalBlockingTime);
-  observer.observe({ type: 'longtask', buffered: true });
-} catch (e) {}
+let totalBlockingTimeTime = 0;
+let TotalBlockingTime = new PerformanceObserver(function (list) {
+  let perfEntries = list.getEntries();
+  for (const perfEntry of perfEntries) {
+    totalBlockingTimeTime += perfEntry.duration - 50;
+  }
+});
+counter.send('TBT', totalBlockingTimeTime);
+TotalBlockingTime.observe({ type: 'longtask', buffered: true });
 
 //CumulativeLayoutShift
-try {
-  var CLS = 0;
-  let observer = new PerformanceObserver((list) => {
-    list.getEntries().forEach((entry) => {
-      if (entry.hadRecentInput) return;
-      CLS += entry.value;
-    });
+var CLS = 0;
+let CumulativeLayoutShift = new PerformanceObserver((list) => {
+  list.getEntries().forEach((entry) => {
+    if (entry.hadRecentInput) return;
+    CLS += entry.value;
   });
-  counter.send('CLS', CLS);
-  observer.observe({ type: 'layout-shift', buffered: true });
-} catch {}
+});
+counter.send('CLS', CLS);
+CumulativeLayoutShift.observe({ type: 'layout-shift', buffered: true });

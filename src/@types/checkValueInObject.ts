@@ -31,5 +31,5 @@ export {
   isArrayString,
   isArrayNumber,
   isArrayBoolean,
-  isArrayObject
-}
+  isArrayObject,
+};

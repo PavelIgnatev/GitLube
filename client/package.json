@@ -51,6 +51,9 @@
     "@babel/preset-react": "^7.14.5",
     "@types/react-modal": "^3.12.1",
     "@types/react-router-dom": "^5.1.8",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint-config-react-app": "^6.0.0",
     "react-dev-utils": "^7.0.1"
   }
 }
