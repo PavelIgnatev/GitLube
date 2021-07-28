@@ -35,8 +35,8 @@ v14.17.1
 
    ```sh
    cd client
-   npm ci --only=production
-   npm run build --prod
+   npm ci
+   npm run build
    cd ..
    ```
 
